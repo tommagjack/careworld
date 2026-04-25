@@ -152,8 +152,8 @@
         <section id="view-admin-login" class="view-section text-center">
             <div class="max-w-md mx-auto glass-card p-10 mt-10">
                 <h2 class="text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
-                <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์" class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
-                <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700">เข้าสู่ระบบกิลด์</button>
+                <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
+                <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700">เข้าสู่กิลด์</button>
                 <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-sm font-bold">กลับหน้าหลัก</button>
             </div>
         </section>
@@ -306,26 +306,12 @@
 
                 <!-- Tab: Manage Market -->
                 <div id="tab-manage-market" class="admin-content hidden">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">🛒 จัดการตลาดไอเทม</h3>
-                        <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-3 py-1 rounded shadow-sm hover:bg-gray-200 text-sm font-bold"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+                    <div class="flex justify-between items-center mb-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> จัดการตลาดไอเทม</h3>
+                        <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
                     </div>
-                    <div class="overflow-x-auto bg-gray-50 rounded-xl border border-gray-200">
-                        <table class="w-full text-left border-collapse text-sm">
-                            <thead>
-                                <tr class="bg-gray-200 text-gray-700">
-                                    <th class="p-3 w-16 text-center">รูป</th>
-                                    <th class="p-3">ชื่อไอเทม</th>
-                                    <th class="p-3">ราคา</th>
-                                    <th class="p-3">จำนวน</th>
-                                    <th class="p-3">Effect</th>
-                                    <th class="p-3 text-center">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-market-list">
-                                <tr><td colspan="6" class="text-center py-4 text-gray-400">คลิกที่ปุ่มรีเฟรชเพื่อโหลดตลาดไอเทม</td></tr>
-                            </tbody>
-                        </table>
+                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4">
+                        <!-- Admin market items inject here -->
                     </div>
                 </div>
 
@@ -388,7 +374,8 @@
                 currentGuild: null,
                 allGuilds: [],
                 otherGuilds: [], 
-                cart: [] 
+                cart: [],
+                marketItems: [] 
             },
 
             navigate: function(viewId) {
@@ -580,19 +567,23 @@
                     const grid = document.getElementById('market-grid');
                     grid.innerHTML = '';
                     items.forEach(item => {
+                        const displayEffect = item.effect === '#ERROR!' || !item.effect ? 'ไม่มีพลังพิเศษ' : item.effect;
                         grid.innerHTML += `
-                            <div class="glass-card p-4 text-center hover-bounce flex flex-col justify-between border-4 border-pink-100">
-                                <div class="relative z-10">
-                                    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 w-24 h-24 mx-auto rounded-full border-4 border-white shadow-md flex items-center justify-center mb-3">
-                                        <img src="${item.image}" class="w-16 h-16 object-contain drop-shadow-md">
+                            <div class="glass-card p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md">
+                                <div class="relative z-10 flex flex-col items-center w-full">
+                                    <div class="relative w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                                        <div class="absolute inset-0 bg-[#fff5eb] rounded-full scale-110"></div>
+                                        <div class="relative z-10 w-20 h-20 bg-[#fdbba7] rounded-full flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                            <img src="${item.image}" class="w-12 h-12 object-contain drop-shadow-sm">
+                                        </div>
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-xl text-purple-700 mb-1 leading-tight">${item.name}</h3>
-                                    <p class="text-xs text-gray-600 mb-3 h-8 overflow-hidden font-medium">${item.description}</p>
-                                    <div class="inline-block bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-full border border-blue-200 mb-2"><i class="fa-solid fa-bolt"></i> ${item.effect}</div>
-                                    ${item.maxPerGuild ? `<div class="text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="mb-3"></div>'}
+                                    <h3 class="font-fantasy font-bold text-2xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                    <p class="text-sm text-gray-500 mb-3 h-10 overflow-hidden font-medium px-2">${item.description}</p>
+                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                    ${item.maxPerGuild ? `<div class="text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 px-3 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น</div>` : '<div class="mb-3"></div>'}
                                 </div>
                                 
-                                <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-pink-400 hover:bg-pink-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-lg relative z-10 flex justify-center items-center gap-2 shadow">
+                                <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-[#f472b6] hover:bg-[#ec4899] text-white font-fantasy font-bold py-3 px-2 rounded-xl text-lg relative z-10 flex justify-center items-center gap-2 shadow-md transition-transform mt-auto">
                                     <i class="fa-solid fa-cart-plus"></i> เพิ่มลงตะกร้า (${item.price} Gold)
                                 </button>
                             </div>
@@ -958,8 +949,32 @@
             editGuildPrompt: async function(guildId, currentName, currentAvatar) {
                 const { value: formValues } = await Swal.fire({
                     title: 'แก้ไขข้อมูลกิลด์',
-                    html: `<div class="text-left mb-2 text-sm font-bold text-gray-600">ชื่อกิลด์:</div><input id="swal-input-name" class="swal2-input m-0 w-full mb-4" value="${currentName}"><div class="text-left mb-2 text-sm font-bold text-gray-600">Avatar URL:</div><input id="swal-input-avatar" class="swal2-input m-0 w-full" value="${currentAvatar}">`,
-                    focusConfirm: false, showCancelButton: true, confirmButtonText: 'บันทึก', cancelButtonText: 'ยกเลิก',
+                    html: `
+                        <div class="text-left mt-4 space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อกิลด์:</label>
+                                <input id="swal-input-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentName}">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Avatar URL:</label>
+                                <input id="swal-input-avatar" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentAvatar}">
+                            </div>
+                        </div>
+                    `,
+                    focusConfirm: false, 
+                    showCancelButton: true, 
+                    confirmButtonText: 'บันทึกการแก้ไข', 
+                    cancelButtonText: 'ยกเลิก',
+                    width: '32rem',
+                    padding: '2rem',
+                    customClass: {
+                        popup: 'rounded-2xl shadow-2xl border-0',
+                        title: 'text-2xl font-bold text-gray-700',
+                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
+                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
+                        actions: 'mt-6'
+                    },
+                    buttonsStyling: false,
                     preConfirm: () => { return { name: document.getElementById('swal-input-name').value, avatar: document.getElementById('swal-input-avatar').value } }
                 });
 
@@ -1016,12 +1031,12 @@
                 const val = document.getElementById('new-item-effect-val').value;
                 let finalEffect = "";
                 
-                // แปลงค่าให้ตรงกับ Parser ด้านหลัง
+                // แปลงค่าให้ตรงกับ Parser ด้านหลัง (เพิ่ม ' ด้านหน้าเพื่อป้องกัน Google Sheet มองเป็นสูตร)
                 if (type === 'Random') finalEffect = "สุ่ม";
-                else if (type === '+Score') finalEffect = `+${val} Score`;
-                else if (type === '-Score') finalEffect = `-${val} Score`;
-                else if (type === '+Coins') finalEffect = `+${val} Coins`;
-                else if (type === '-Coins') finalEffect = `-${val} Coins`;
+                else if (type === '+Score') finalEffect = `'+${val} Score`;
+                else if (type === '-Score') finalEffect = `'-${val} Score`;
+                else if (type === '+Coins') finalEffect = `'+${val} Coins`;
+                else if (type === '-Coins') finalEffect = `'-${val} Coins`;
                 else if (type === 'StealScore') finalEffect = `ขโมย ${val} Score`;
                 else if (type === 'HelpScore') finalEffect = `ช่วย ${val} Score`;
                 else if (type === 'MultiplyScore') finalEffect = `x${val} Score`;
@@ -1056,31 +1071,150 @@
                 try {
                     Swal.fire({ title: 'กำลังดึงข้อมูลตลาด...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                     const items = await this.apiCall('getMarket');
+                    this.state.marketItems = items;
                     Swal.close();
                     
-                    const tbody = document.getElementById('admin-market-list');
-                    tbody.innerHTML = '';
+                    const grid = document.getElementById('admin-market-grid');
+                    grid.innerHTML = '';
                     if (items.length === 0) {
-                        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-400">ยังไม่มีไอเทมในตลาด</td></tr>`;
+                        grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 font-bold bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">ยังไม่มีไอเทมในตลาด</div>`;
                         return;
                     }
 
                     items.forEach(item => {
-                        tbody.innerHTML += `
-                            <tr class="border-b border-gray-100 hover:bg-gray-100 transition">
-                                <td class="p-3 text-center"><img src="${item.image}" class="w-10 h-10 mx-auto rounded-lg bg-white border border-gray-200 object-contain p-1"></td>
-                                <td class="p-3 font-bold text-gray-800">${item.name}</td>
-                                <td class="p-3 text-yellow-600 font-bold"><i class="fa-solid fa-coins"></i> ${item.price}</td>
-                                <td class="p-3 font-mono">${item.stock}</td>
-                                <td class="p-3 text-xs text-purple-600">${item.effect}</td>
-                                <td class="p-3 text-center">
-                                    <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 px-3 py-1 rounded-lg shadow-sm hover:bg-red-200 text-sm"><i class="fa-solid fa-trash"></i> ลบ</button>
-                                </td>
-                            </tr>
+                        const displayEffect = item.effect === '#ERROR!' || !item.effect ? '<span class="text-gray-400">ไม่มีพลังพิเศษ</span>' : `<span class="text-purple-600">${item.effect}</span>`;
+                        grid.innerHTML += `
+                            <div class="glass-card p-4 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group">
+                                <div class="absolute top-2 right-2 flex gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                                    <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition"><i class="fa-solid fa-pen text-xs"></i></button>
+                                    <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition"><i class="fa-solid fa-trash text-xs"></i></button>
+                                </div>
+                                <div class="relative z-10 flex flex-col items-center w-full mt-2">
+                                    <div class="relative w-20 h-20 mx-auto mb-3 flex items-center justify-center">
+                                        <div class="absolute inset-0 bg-[#fff5eb] rounded-full scale-110"></div>
+                                        <div class="relative z-10 w-16 h-16 bg-[#fdbba7] rounded-full flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                            <img src="${item.image}" class="w-10 h-10 object-contain drop-shadow-sm">
+                                        </div>
+                                    </div>
+                                    <h3 class="font-fantasy font-bold text-lg text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                    <p class="text-[11px] text-gray-500 mb-2 h-8 overflow-hidden font-medium px-2 leading-snug">${item.description}</p>
+                                    
+                                    <div class="w-full bg-yellow-50 rounded-lg py-1.5 px-3 mb-2 border border-yellow-100 flex justify-between items-center text-xs shadow-inner">
+                                        <span class="font-bold text-yellow-700">ราคา:</span>
+                                        <span class="font-bold text-yellow-600"><i class="fa-solid fa-coins"></i> ${item.price}</span>
+                                    </div>
+                                    <div class="w-full bg-gray-50 rounded-lg py-1.5 px-3 mb-3 border border-gray-200 flex justify-between items-center text-xs shadow-inner">
+                                        <span class="font-bold text-gray-600">สต็อก:</span>
+                                        <span class="font-mono font-bold text-gray-700">${item.stock} ชิ้น</span>
+                                    </div>
+                                    
+                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                    ${item.maxPerGuild ? `<div class="text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
+                                </div>
+                            </div>
                         `;
                     });
                 } catch (error) {
                     Swal.fire('❌ Error', error.message, 'error');
+                }
+            },
+
+            editItemPrompt: async function(itemId) {
+                const item = this.state.marketItems.find(i => i.itemId === itemId);
+                if (!item) return;
+                
+                // นำ ' ออกเวลาแสดงผลให้แอดมินดู (ถ้ามี)
+                let displayEffect = item.effect || '';
+                if(displayEffect.startsWith("'")) {
+                    displayEffect = displayEffect.substring(1);
+                }
+
+                const { value: formValues } = await Swal.fire({
+                    title: 'แก้ไขไอเทม',
+                    html: `
+                        <div class="text-left mt-4 space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อไอเทม:</label>
+                                <input id="swal-item-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.name}">
+                            </div>
+                            
+                            <div class="flex gap-4">
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">ราคา (Gold):</label>
+                                    <input id="swal-item-price" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.price}">
+                                </div>
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">สต็อก (ชิ้น):</label>
+                                    <input id="swal-item-stock" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.stock}">
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4">
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">จำกัดถือครอง (ต่อทีม):</label>
+                                    <input id="swal-item-max" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.maxPerGuild || ''}" placeholder="ไม่จำกัด">
+                                </div>
+                                <div class="w-1/2">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">Effect:</label>
+                                    <input id="swal-item-effect" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${displayEffect}" placeholder="เช่น +10 Score">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Image URL:</label>
+                                <input id="swal-item-image" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.image || ''}">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">รายละเอียด:</label>
+                                <textarea id="swal-item-desc" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 resize-none" rows="3">${item.description || ''}</textarea>
+                            </div>
+                        </div>
+                    `,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    confirmButtonText: 'บันทึกการแก้ไข',
+                    cancelButtonText: 'ยกเลิก',
+                    width: '32rem',
+                    padding: '2rem',
+                    customClass: {
+                        popup: 'rounded-2xl shadow-2xl border-0',
+                        title: 'text-2xl font-bold text-gray-700',
+                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
+                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
+                        actions: 'mt-6'
+                    },
+                    buttonsStyling: false,
+                    preConfirm: () => {
+                        let parsedEffect = document.getElementById('swal-item-effect').value;
+                        // ป้องกัน Error จาก Google Sheet มองเป็นสูตรเวลาแอดมินพิมพ์มือ
+                        if (parsedEffect.startsWith('+') || parsedEffect.startsWith('-') || parsedEffect.startsWith('=')) {
+                            parsedEffect = "'" + parsedEffect;
+                        }
+
+                        return {
+                            itemId: itemId,
+                            name: document.getElementById('swal-item-name').value,
+                            price: document.getElementById('swal-item-price').value,
+                            stock: document.getElementById('swal-item-stock').value,
+                            maxPerGuild: document.getElementById('swal-item-max').value,
+                            effect: parsedEffect,
+                            image: document.getElementById('swal-item-image').value,
+                            description: document.getElementById('swal-item-desc').value,
+                        }
+                    }
+                });
+
+                if (formValues) {
+                    if (!formValues.name || !formValues.price) return Swal.fire('Error', 'ต้องระบุชื่อและราคาไอเทม', 'error');
+                    try {
+                        Swal.fire({ title: 'กำลังบันทึก...', didOpen: () => Swal.showLoading() });
+                        await this.apiCall('editItem', formValues);
+                        Swal.fire('✅ แก้ไขสำเร็จ', '', 'success');
+                        this.loadAdminMarket();
+                    } catch (error) {
+                        Swal.fire('❌ Error', error.message, 'error');
+                    }
                 }
             },
 
