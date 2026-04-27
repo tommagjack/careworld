@@ -54,7 +54,7 @@
         .animate-float { animation: float 3s ease-in-out infinite; }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         
-        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #e0c3fc; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #fff; border: 2px solid #e0c3fc; border-radius: 10px; }
         
@@ -68,82 +68,82 @@
 <body class="text-gray-700 min-h-screen relative font-sans">
 
     <!-- Background Decors -->
-    <div class="fixed top-10 left-10 text-6xl opacity-50 animate-float z-[-1]">☁️</div>
-    <div class="fixed top-20 right-20 text-5xl opacity-50 animate-float z-[-1]" style="animation-delay: 1s;">✨</div>
-    <div class="fixed bottom-10 left-20 text-6xl opacity-50 animate-float z-[-1]" style="animation-delay: 2s;">🔮</div>
-    <div class="fixed bottom-20 right-10 text-6xl opacity-50 animate-float z-[-1]" style="animation-delay: 1.5s;">🏰</div>
+    <div class="fixed top-10 left-10 text-6xl opacity-50 animate-float z-[-1] hidden sm:block">☁️</div>
+    <div class="fixed top-20 right-10 sm:right-20 text-4xl sm:text-5xl opacity-50 animate-float z-[-1]" style="animation-delay: 1s;">✨</div>
+    <div class="fixed bottom-10 left-10 sm:left-20 text-5xl sm:text-6xl opacity-50 animate-float z-[-1]" style="animation-delay: 2s;">🔮</div>
+    <div class="fixed bottom-20 right-5 sm:right-10 text-5xl sm:text-6xl opacity-50 animate-float z-[-1]" style="animation-delay: 1.5s;">🏰</div>
 
     <!-- Floating Cart Button -->
-    <button id="floating-cart" onclick="app.toggleCart()" class="fixed bottom-6 right-6 bg-pink-500 text-white p-4 rounded-full shadow-lg hover:scale-110 transition z-40 hidden border-4 border-white">
-        <i class="fa-solid fa-basket-shopping text-2xl drop-shadow-md"></i>
-        <span id="cart-badge" class="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 font-bold w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-sm shadow">0</span>
+    <button id="floating-cart" onclick="app.toggleCart()" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-pink-500 text-white p-3 sm:p-4 rounded-full shadow-lg hover:scale-110 transition z-40 hidden border-4 border-white">
+        <i class="fa-solid fa-basket-shopping text-xl sm:text-2xl drop-shadow-md"></i>
+        <span id="cart-badge" class="absolute -top-2 -right-2 bg-yellow-400 text-yellow-900 font-bold w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white flex items-center justify-center text-xs sm:text-sm shadow">0</span>
     </button>
 
     <!-- Cart Modal -->
-    <div id="cart-modal" class="fixed inset-0 bg-purple-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card w-full max-w-lg p-4 sm:p-6 max-h-[80vh] flex flex-col">
+    <div id="cart-modal" class="fixed inset-0 bg-purple-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="glass-card w-[95%] sm:w-full max-w-lg p-4 sm:p-6 max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center mb-4 border-b-2 border-purple-100 pb-2">
-                <h2 class="text-xl sm:text-2xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-cart-shopping text-pink-400"></i> ตะกร้าเวทมนตร์</h2>
-                <button onclick="app.toggleCart()" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+                <h2 class="text-lg sm:text-2xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-cart-shopping text-pink-400"></i> ตะกร้าเวทมนตร์</h2>
+                <button onclick="app.toggleCart()" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-xl sm:text-2xl"></i></button>
             </div>
             <div id="cart-items" class="flex-1 overflow-y-auto pr-2 space-y-3 mb-4">
                 <!-- Cart items inject -->
             </div>
             <div class="border-t-2 border-dashed border-purple-200 pt-4 mt-auto">
                 <div class="flex justify-between items-center mb-4 bg-yellow-50 p-3 rounded-xl border border-yellow-200">
-                    <span class="font-bold text-gray-700 text-lg">ยอดรวมตะกร้า:</span>
-                    <span class="font-fantasy font-bold text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
+                    <span class="font-bold text-gray-700 text-sm sm:text-lg">ยอดรวมตะกร้า:</span>
+                    <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
-                <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-base sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อชำระเงิน
+                <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Navbar -->
-    <nav class="p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
+    <nav class="p-3 sm:p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
-            <h1 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
+            <h1 class="text-lg sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
                 <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORLD
             </h1>
-            <div id="nav-user" class="hidden flex items-center gap-2 sm:gap-4 font-semibold text-xs sm:text-base">
+            <div id="nav-user" class="hidden flex items-center gap-1.5 sm:gap-4 font-semibold text-[10px] sm:text-base">
                 <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-2 sm:px-3 py-1 rounded-full border border-purple-200 transition shadow-sm" title="รีเฟรชข้อมูล"><i class="fa-solid fa-rotate-right"></i></button>
-                <span id="nav-coins" class="bg-yellow-50 text-yellow-700 px-2 sm:px-3 py-1 rounded-full border-2 border-yellow-200"><i class="fa-solid fa-coins text-yellow-500"></i> 0</span>
-                <span id="nav-score" class="bg-blue-50 text-blue-700 px-2 sm:px-3 py-1 rounded-full border-2 border-blue-200"><i class="fa-solid fa-star text-blue-500"></i> 0</span>
-                <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold ml-1 sm:ml-0"><i class="fa-solid fa-sign-out-alt"></i></button>
+                <span id="nav-coins" class="bg-yellow-50 text-yellow-700 px-2 sm:px-3 py-1 rounded-full border-2 border-yellow-200 flex items-center gap-1"><i class="fa-solid fa-coins text-yellow-500"></i> <span id="nav-coins-text">0</span></span>
+                <span id="nav-score" class="bg-blue-50 text-blue-700 px-2 sm:px-3 py-1 rounded-full border-2 border-blue-200 flex items-center gap-1"><i class="fa-solid fa-star text-blue-500"></i> <span id="nav-score-text">0</span></span>
+                <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold ml-1 sm:ml-0" title="ออกจากระบบ"><i class="fa-solid fa-sign-out-alt text-sm sm:text-base"></i></button>
             </div>
             <div id="nav-admin" class="hidden">
                 <div class="flex items-center gap-2 sm:gap-4 font-semibold text-xs sm:text-base">
-                    <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200 transition shadow-sm"><i class="fa-solid fa-rotate-right"></i> รีเฟรช</button>
-                    <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold text-sm sm:text-base"><i class="fa-solid fa-sign-out-alt"></i> ออกจากระบบ</button>
+                    <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-2 sm:px-3 py-1 rounded-full border border-purple-200 transition shadow-sm"><i class="fa-solid fa-rotate-right"></i><span class="hidden sm:inline ml-1"> รีเฟรช</span></button>
+                    <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold text-xs sm:text-base"><i class="fa-solid fa-sign-out-alt"></i><span class="hidden sm:inline ml-1"> ออกจากระบบ</span></button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto p-4 py-8">
+    <main class="max-w-6xl mx-auto p-3 sm:p-4 py-6 sm:py-8">
         
         <!-- ================= LOGIN VIEW ================= -->
         <section id="view-login" class="view-section active text-center">
-            <div class="max-w-md mx-auto glass-card p-10 mt-10 sm:mt-16">
+            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-16">
                 <!-- Logo Area -->
-                <div class="relative w-40 h-40 mx-auto mb-4 flex items-center justify-center">
+                <div class="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-4 flex items-center justify-center">
                     <div class="absolute inset-0 bg-yellow-50/80 rounded-full scale-110"></div>
-                    <div class="relative z-10 w-28 h-28 bg-[#f4f6ff] rounded-full flex items-center justify-center border-[4px] border-white shadow-sm animate-float overflow-hidden">
+                    <div class="relative z-10 w-24 h-24 sm:w-28 sm:h-28 bg-[#f4f6ff] rounded-full flex items-center justify-center border-[4px] border-white shadow-sm animate-float overflow-hidden">
                         <img src="https://img1.pic.in.th/images/l.ogo.png" class="w-full h-full object-cover" alt="Logo">
                     </div>
                 </div>
                 
-                <h2 class="text-4xl font-fantasy font-bold mb-2 text-[#8a4fff] drop-shadow-sm tracking-wide">เริ่มการผจญภัย</h2>
-                <p class="text-gray-500 mb-8 font-medium text-sm sm:text-base">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
+                <h2 class="text-3xl sm:text-4xl font-fantasy font-bold mb-2 text-[#8a4fff] drop-shadow-sm tracking-wide">เริ่มการผจญภัย</h2>
+                <p class="text-gray-500 mb-6 sm:mb-8 font-medium text-xs sm:text-sm px-4">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
-                <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-4 rounded-2xl shadow-md hover:shadow-lg text-lg sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อเข้าเกม
+                <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-3 sm:py-4 rounded-2xl shadow-md hover:shadow-lg text-base sm:text-xl flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อเข้าเกม
                 </button>
 
-                <div class="mt-8 border-t border-dashed border-gray-200 pt-6">
-                    <button onclick="app.navigate('admin-login')" class="text-[#a855f7] hover:text-[#8a4fff] font-bold text-sm sm:text-base flex items-center justify-center gap-2 mx-auto transition">
+                <div class="mt-6 sm:mt-8 border-t border-dashed border-gray-200 pt-4 sm:pt-6">
+                    <button onclick="app.navigate('admin-login')" class="text-[#a855f7] hover:text-[#8a4fff] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 mx-auto transition">
                         <i class="fa-solid fa-crown"></i> สำหรับมาสเตอร์กิลด์ (Admin)
                     </button>
                 </div>
@@ -152,41 +152,41 @@
 
         <!-- ================= ADMIN LOGIN ================= -->
         <section id="view-admin-login" class="view-section text-center">
-            <div class="max-w-md mx-auto glass-card p-10 mt-10">
-                <h2 class="text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
-                <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
-                <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700">เข้าสู่กิลด์</button>
-                <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-sm font-bold">กลับหน้าหลัก</button>
+            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10">
+                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
+                <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-base sm:text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
+                <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700 text-sm sm:text-base">เข้าสู่กิลด์</button>
+                <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-xs sm:text-sm font-bold">กลับหน้าหลัก</button>
             </div>
         </section>
 
         <!-- ================= PLAYER DASHBOARD ================= -->
         <section id="view-dashboard" class="view-section">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="col-span-1 glass-card p-6 text-center hover-bounce">
-                    <div class="relative w-32 h-32 mx-auto mb-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="col-span-1 glass-card p-4 sm:p-6 text-center hover-bounce">
+                    <div class="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
                         <img id="dash-avatar" src="" class="w-full h-full rounded-full border-4 border-yellow-400 shadow-md bg-white object-cover">
-                        <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-lg border-2 border-white shadow">Lv.1</div>
+                        <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-lg border-2 border-white shadow">Lv.1</div>
                     </div>
-                    <h2 id="dash-name" class="text-3xl font-fantasy font-bold text-purple-600 mb-4 drop-shadow-sm">ชื่อกิลด์</h2>
-                    <div class="flex justify-center gap-4 mb-6">
-                        <div class="bg-yellow-50 p-3 rounded-2xl w-24 border-2 border-yellow-200 shadow-sm">
-                            <i class="fa-solid fa-coins text-yellow-500 text-2xl mb-1 drop-shadow-sm"></i>
-                            <div id="dash-coins-val" class="font-bold text-xl text-yellow-700">0</div>
-                            <div class="text-xs font-bold text-yellow-600">Gold</div>
+                    <h2 id="dash-name" class="text-2xl sm:text-3xl font-fantasy font-bold text-purple-600 mb-4 drop-shadow-sm px-2 truncate">ชื่อกิลด์</h2>
+                    <div class="flex justify-center gap-3 sm:gap-4 mb-6">
+                        <div class="bg-yellow-50 p-2 sm:p-3 rounded-2xl w-20 sm:w-24 border-2 border-yellow-200 shadow-sm flex flex-col justify-center items-center">
+                            <i class="fa-solid fa-coins text-yellow-500 text-xl sm:text-2xl mb-1 drop-shadow-sm"></i>
+                            <div id="dash-coins-val" class="font-bold text-lg sm:text-xl text-yellow-700 truncate w-full text-center">0</div>
+                            <div class="text-[10px] sm:text-xs font-bold text-yellow-600">Gold</div>
                         </div>
-                        <div class="bg-blue-50 p-3 rounded-2xl w-24 border-2 border-blue-200 shadow-sm">
-                            <i class="fa-solid fa-star text-blue-500 text-2xl mb-1 drop-shadow-sm"></i>
-                            <div id="dash-score-val" class="font-bold text-xl text-blue-700">0</div>
-                            <div class="text-xs font-bold text-blue-600">Fame</div>
+                        <div class="bg-blue-50 p-2 sm:p-3 rounded-2xl w-20 sm:w-24 border-2 border-blue-200 shadow-sm flex flex-col justify-center items-center">
+                            <i class="fa-solid fa-star text-blue-500 text-xl sm:text-2xl mb-1 drop-shadow-sm"></i>
+                            <div id="dash-score-val" class="font-bold text-lg sm:text-xl text-blue-700 truncate w-full text-center">0</div>
+                            <div class="text-[10px] sm:text-xs font-bold text-blue-600">Fame</div>
                         </div>
                     </div>
-                    <button onclick="app.navigate('market')" class="w-full bg-pink-400 text-white font-fantasy font-bold py-3 rounded-xl hover:bg-pink-500 border-2 border-white"><i class="fa-solid fa-shop"></i> ไปร้านค้าเวทมนตร์</button>
+                    <button onclick="app.navigate('market')" class="w-full bg-pink-400 text-white font-fantasy font-bold py-2 sm:py-3 rounded-xl hover:bg-pink-500 border-2 border-white text-sm sm:text-base"><i class="fa-solid fa-shop"></i> ไปร้านค้าเวทมนตร์</button>
                 </div>
 
-                <div class="col-span-1 md:col-span-2 glass-card p-6">
-                    <h3 class="text-2xl font-fantasy font-bold mb-4 text-purple-600 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-briefcase text-yellow-500"></i> กระเป๋ามิติ</h3>
-                    <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="col-span-1 lg:col-span-2 glass-card p-4 sm:p-6">
+                    <h3 class="text-xl sm:text-2xl font-fantasy font-bold mb-4 text-purple-600 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-briefcase text-yellow-500"></i> กระเป๋ามิติ</h3>
+                    <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                         <!-- Items inject here -->
                     </div>
                 </div>
@@ -195,83 +195,91 @@
 
         <!-- ================= PLAYER MARKET ================= -->
         <section id="view-market" class="view-section">
-            <div class="flex items-center justify-between mb-6 glass-card p-4">
-                <h2 class="text-3xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-shop text-pink-400"></i> ร้านค้าเวทมนตร์</h2>
-                <button onclick="app.navigate('dashboard')" class="bg-purple-100 px-4 py-2 rounded-xl text-purple-700 font-bold hover:bg-purple-200 border-2 border-purple-200"><i class="fa-solid fa-arrow-left"></i> กลับกระเป๋า</button>
+            <div class="flex items-center justify-between mb-4 sm:mb-6 glass-card p-3 sm:p-4">
+                <h2 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-shop text-pink-400"></i> ร้านค้าเวทมนตร์</h2>
+                <button onclick="app.navigate('dashboard')" class="bg-purple-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-purple-700 font-bold hover:bg-purple-200 border-2 border-purple-200 text-xs sm:text-base whitespace-nowrap"><i class="fa-solid fa-arrow-left"></i> กลับกระเป๋า</button>
             </div>
-            <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-20">
+            <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-20">
                 <!-- Market items inject here -->
             </div>
         </section>
 
         <!-- ================= ADMIN DASHBOARD ================= -->
         <section id="view-admin" class="view-section">
-            <h2 class="text-2xl sm:text-3xl font-fantasy font-bold text-purple-800 mb-6 drop-shadow-sm"><i class="fa-solid fa-chess-king text-yellow-500"></i> สมาคมกิลด์ (Admin)</h2>
+            <h2 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-800 mb-4 sm:mb-6 drop-shadow-sm flex items-center gap-2"><i class="fa-solid fa-chess-king text-yellow-500"></i> สมาคมกิลด์ (Admin)</h2>
             
-            <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="app.switchAdminTab('leaderboard')" class="admin-tab bg-purple-500 text-white px-3 sm:px-4 py-2 rounded-xl shadow text-sm sm:text-base"><i class="fa-solid fa-trophy"></i> Leaderboard</button>
-                <button onclick="app.switchAdminTab('manage-guild')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-sm sm:text-base"><i class="fa-solid fa-users"></i> จัดการทีม</button>
-                <button onclick="app.switchAdminTab('manage-item')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-sm sm:text-base"><i class="fa-solid fa-box"></i> สร้างไอเทม</button>
-                <button onclick="app.switchAdminTab('manage-market')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-sm sm:text-base"><i class="fa-solid fa-store"></i> ตลาดไอเทม</button>
-                <button onclick="app.switchAdminTab('special-event')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-sm sm:text-base"><i class="fa-solid fa-wand-magic-sparkles"></i> Special Event</button>
-                <button onclick="app.switchAdminTab('logs')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-sm sm:text-base"><i class="fa-solid fa-list"></i> ประวัติ</button>
-                <button onclick="app.initDB()" class="bg-red-400 text-white px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-red-500 text-sm sm:text-base w-full sm:w-auto mt-2 sm:mt-0"><i class="fa-solid fa-database"></i> Setup DB</button>
+            <!-- Admin Tabs Scrollable on Mobile -->
+            <div class="w-full overflow-x-auto pb-2 mb-4 sm:mb-6 custom-scrollbar">
+                <div class="flex gap-2 w-max sm:w-auto sm:flex-wrap">
+                    <button onclick="app.switchAdminTab('leaderboard')" class="admin-tab bg-purple-500 text-white px-3 sm:px-4 py-2 rounded-xl shadow text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-trophy mr-1"></i> Leaderboard</button>
+                    <button onclick="app.switchAdminTab('manage-guild')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-users mr-1"></i> จัดการทีม</button>
+                    <button onclick="app.switchAdminTab('manage-item')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-box mr-1"></i> สร้างไอเทม</button>
+                    <button onclick="app.switchAdminTab('manage-market')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-store mr-1"></i> ตลาดไอเทม</button>
+                    <button onclick="app.switchAdminTab('special-event')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Special Event</button>
+                    <button onclick="app.switchAdminTab('logs')" class="admin-tab bg-white text-gray-600 px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-gray-50 text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-list mr-1"></i> ประวัติ</button>
+                    <button onclick="app.initDB()" class="bg-red-400 text-white px-3 sm:px-4 py-2 rounded-xl shadow hover:bg-red-500 text-xs sm:text-sm whitespace-nowrap sm:ml-auto"><i class="fa-solid fa-database mr-1"></i> Setup DB</button>
+                </div>
             </div>
 
-            <div class="glass-card rounded-[2rem] p-4 sm:p-6 shadow-lg min-h-[400px]">
+            <div class="glass-card rounded-2xl sm:rounded-[2rem] p-3 sm:p-6 shadow-lg min-h-[400px]">
                 <!-- Tab: Leaderboard -->
                 <div id="tab-leaderboard" class="admin-content active">
-                    <h3 class="text-2xl font-fantasy font-bold mb-4 text-purple-700">🏆 อันดับกิลด์นักผจญภัย</h3>
-                    <div id="leaderboard-cards" class="flex flex-col gap-4 bg-gray-50 p-4 rounded-2xl border-2 border-purple-100">
+                    <h3 class="text-xl sm:text-2xl font-fantasy font-bold mb-4 text-purple-700">🏆 อันดับกิลด์นักผจญภัย</h3>
+                    <div id="leaderboard-cards" class="flex flex-col gap-3 sm:gap-4 bg-gray-50 p-2 sm:p-4 rounded-xl sm:rounded-2xl border border-purple-100">
                         <!-- Cards will be injected here -->
                     </div>
                 </div>
 
                 <!-- Tab: Manage Guild -->
                 <div id="tab-manage-guild" class="admin-content hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white p-4 rounded-2xl border-2 border-pink-100">
-                            <h3 class="font-bold mb-4">➕ สร้างทีมใหม่</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-pink-100">
+                            <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-pink-600"><i class="fa-solid fa-circle-plus"></i> สร้างทีมใหม่</h3>
                             <div class="flex gap-2 mb-3">
-                                <input type="text" id="new-guild-teamNo" placeholder="ทีมที่" class="w-1/4 p-2 border rounded-lg focus:outline-none focus:border-pink-400 text-center">
-                                <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-3/4 p-2 border rounded-lg focus:outline-none focus:border-pink-400">
+                                <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-16 sm:w-20 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center">
+                                <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="flex-1 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400">
                             </div>
-                            <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2 mb-3 border rounded-lg focus:outline-none focus:border-pink-400">
-                            <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2 rounded-lg font-bold">สร้างทีม</button>
+                            <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2 text-sm sm:text-base mb-3 border rounded-lg focus:outline-none focus:border-pink-400">
+                            <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm">สร้างทีม</button>
                         </div>
-                        <div class="bg-white p-4 rounded-2xl border-2 border-blue-100">
-                            <h3 class="font-bold mb-4">🔗 ผูก NFC กับทีม</h3>
-                            <select id="map-guild-id" class="w-full p-2 mb-3 border rounded-lg focus:outline-none focus:border-blue-400">
+                        
+                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-blue-100">
+                            <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-blue-600"><i class="fa-solid fa-link"></i> ผูก NFC กับทีม</h3>
+                            <select id="map-guild-id" class="w-full p-2 text-sm sm:text-base mb-3 border rounded-lg focus:outline-none focus:border-blue-400">
                                 <option value="">-- เลือกทีม --</option>
                             </select>
-                            <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2 rounded-lg font-bold">แตะ NFC เพื่อผูก</button>
+                            <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm">แตะ NFC เพื่อผูก</button>
                         </div>
-                        <div class="bg-white p-4 rounded-2xl border-2 border-yellow-100 md:col-span-2">
-                            <h3 class="font-bold mb-4">🎯 มอบ / ลด คะแนนและเหรียญ</h3>
-                            <div class="flex gap-2 mb-3">
-                                <select id="edit-guild-id" class="flex-1 p-2 border rounded-lg focus:outline-none focus:border-yellow-400"></select>
+
+                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-yellow-100 lg:col-span-2">
+                            <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-yellow-600"><i class="fa-solid fa-bullseye"></i> มอบ / ลด คะแนนและเหรียญ</h3>
+                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
+                                <select id="edit-guild-id" class="w-full sm:flex-1 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400"></select>
                             </div>
-                            <div class="flex gap-4">
-                                <input type="number" id="edit-score" placeholder="คะแนน (+/-)" class="flex-1 p-2 border rounded-lg focus:outline-none focus:border-yellow-400">
-                                <input type="number" id="edit-coins" placeholder="เหรียญ (+/-)" class="flex-1 p-2 border rounded-lg focus:outline-none focus:border-yellow-400">
-                                <button onclick="app.updateScore()" class="bg-yellow-400 text-white px-6 py-2 rounded-lg font-bold">อัปเดต</button>
+                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                                <div class="flex gap-2 w-full sm:flex-1">
+                                    <input type="number" id="edit-score" placeholder="คะแนน (+/-)" class="w-1/2 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400">
+                                    <input type="number" id="edit-coins" placeholder="เหรียญ (+/-)" class="w-1/2 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400">
+                                </div>
+                                <button onclick="app.updateScore()" class="w-full sm:w-auto bg-yellow-400 text-white px-6 py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm whitespace-nowrap">อัปเดต</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden">
-                        <div class="p-4 border-b border-gray-100 bg-white">
-                            <h3 class="font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
+                    <!-- Responsive Admin Table -->
+                    <div class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden">
+                        <div class="p-3 sm:p-4 border-b border-gray-100 bg-gray-50/50">
+                            <h3 class="font-bold text-gray-700 text-sm sm:text-base flex items-center gap-2"><i class="fa-solid fa-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
                         </div>
-                        <div class="overflow-x-auto p-4 pt-0">
-                            <table class="w-full text-left border-collapse text-sm mt-4">
+                        <div class="w-full overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left border-collapse text-sm min-w-[550px]">
                                 <thead>
-                                    <tr class="bg-gray-100 text-gray-700">
-                                        <th class="p-3 rounded-tl-lg rounded-bl-lg w-16 text-center font-bold">ทีมที่</th>
-                                        <th class="p-3 w-20 text-center font-bold">Avatar</th>
-                                        <th class="p-3 font-bold">ชื่อทีม</th>
-                                        <th class="p-3 text-center font-bold">สถานะ NFC</th>
-                                        <th class="p-3 rounded-tr-lg rounded-br-lg text-right w-48 font-bold">จัดการ</th>
+                                    <tr class="bg-gray-100 text-gray-600 text-xs sm:text-sm whitespace-nowrap border-b border-gray-200">
+                                        <th class="p-2 sm:p-3 w-12 sm:w-16 text-center font-bold">ทีมที่</th>
+                                        <th class="p-2 sm:p-3 w-16 sm:w-20 text-center font-bold">Avatar</th>
+                                        <th class="p-2 sm:p-3 font-bold">ชื่อทีม</th>
+                                        <th class="p-2 sm:p-3 text-center font-bold">สถานะ NFC</th>
+                                        <th class="p-2 sm:p-3 text-right w-24 sm:w-40 font-bold pr-4">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="manage-guild-list"></tbody>
@@ -282,17 +290,21 @@
 
                 <!-- Tab: Manage Item -->
                 <div id="tab-manage-item" class="admin-content hidden">
-                    <h3 class="text-xl font-bold mb-4">📦 สร้างไอเทมใหม่ลงตลาด</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
-                        <input type="text" id="new-item-name" placeholder="ชื่อไอเทม" class="p-2 border rounded-lg">
-                        <input type="number" id="new-item-price" placeholder="ราคา (Gold)" class="p-2 border rounded-lg">
-                        <input type="number" id="new-item-stock" placeholder="จำนวนที่วางขาย (เว้นว่าง = 999)" class="p-2 border rounded-lg">
-                        <input type="text" id="new-item-image" placeholder="Image URL (เว้นว่างได้)" class="p-2 border rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-bold mb-4">📦 สร้างไอเทมใหม่ลงตลาด</h3>
+                    <div class="flex flex-col gap-3 max-w-2xl mx-auto bg-gray-50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 shadow-inner">
+                        <input type="text" id="new-item-name" placeholder="ชื่อไอเทม" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
                         
-                        <div class="sm:col-span-2 bg-purple-50 p-4 rounded-xl border border-purple-200">
-                            <label class="block text-sm font-bold text-purple-700 mb-2">ตั้งค่าพลังเวทย์ (Effect)</label>
-                            <div class="flex gap-2">
-                                <select id="new-item-effect-type" class="p-2 border rounded-lg flex-1 focus:outline-none focus:border-purple-400" onchange="app.toggleEffectInput()">
+                        <div class="flex gap-2">
+                            <input type="number" id="new-item-price" placeholder="ราคา (Gold)" class="w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                            <input type="number" id="new-item-stock" placeholder="จำนวน (เว้นว่าง=999)" class="w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                        </div>
+                        
+                        <input type="text" id="new-item-image" placeholder="Image URL (เว้นว่างได้)" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                        
+                        <div class="bg-purple-50 p-3 sm:p-4 rounded-xl border border-purple-200">
+                            <label class="block text-xs sm:text-sm font-bold text-purple-700 mb-2">ตั้งค่าพลังเวทย์ (Effect)</label>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <select id="new-item-effect-type" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400" onchange="app.toggleEffectInput()">
                                     <option value="">ไม่มีพลังพิเศษ</option>
                                     <option value="+Score">เพิ่ม Fame (+Score)</option>
                                     <option value="-Score">ลด Fame (-Score) [โจมตี]</option>
@@ -304,62 +316,63 @@
                                     <option value="MultiplyScore">คูณ Fame (x เท่า)</option>
                                     <option value="Random">สุ่มดวง (Gacha)</option>
                                 </select>
-                                <input type="number" id="new-item-effect-val" placeholder="จำนวนตัวเลข" class="p-2 border rounded-lg w-1/3 hidden focus:outline-none focus:border-purple-400">
+                                <input type="number" id="new-item-effect-val" placeholder="ตัวเลข" class="w-full sm:w-24 p-2.5 text-sm sm:text-base border rounded-lg hidden focus:outline-none focus:border-purple-400 text-center">
                             </div>
                         </div>
 
-                        <input type="number" id="new-item-max" placeholder="จำกัดถือครองสูงสุดต่อทีม (ชิ้น)" class="p-2 border rounded-lg sm:col-span-2">
-                        <textarea id="new-item-desc" placeholder="รายละเอียดของไอเทม" class="p-2 border rounded-lg sm:col-span-2"></textarea>
-                        <button onclick="app.createItem()" class="bg-purple-500 text-white py-3 rounded-lg font-bold sm:col-span-2 shadow-md hover:bg-purple-600 transition">✨ สร้างไอเทม</button>
+                        <input type="number" id="new-item-max" placeholder="จำกัดถือครองสูงสุดต่อทีม (เว้นว่าง=ไม่จำกัด)" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                        <textarea id="new-item-desc" placeholder="รายละเอียดของไอเทม" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400 resize-none h-20"></textarea>
+                        
+                        <button onclick="app.createItem()" class="bg-purple-500 text-white py-3 rounded-lg font-bold shadow-md hover:bg-purple-600 transition mt-2">✨ สร้างไอเทม</button>
                     </div>
                 </div>
 
                 <!-- Tab: Manage Market -->
                 <div id="tab-manage-market" class="admin-content hidden">
-                    <div class="flex justify-between items-center mb-4 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                        <h3 class="text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> จัดการตลาดไอเทม</h3>
-                        <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
+                    <div class="flex justify-between items-center mb-4 bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="text-base sm:text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> ตลาดไอเทม</h3>
+                        <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold flex items-center gap-1.5"><i class="fa-solid fa-rotate"></i> <span class="hidden sm:inline">รีเฟรช</span></button>
                     </div>
-                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4">
+                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-4">
                         <!-- Admin market items inject here -->
                     </div>
                 </div>
 
                 <!-- Tab: Special Event -->
                 <div id="tab-special-event" class="admin-content hidden text-center">
-                    <h3 class="text-xl font-bold mb-2">🃏 สุ่มการ์ดโชคชะตา</h3>
-                    <p class="text-gray-500 mb-6">เลือกการ์ด 1 ใบ แล้วแตะ NFC เพื่อรับผล</p>
-                    <div class="flex justify-center gap-4 flex-wrap mb-8">
-                        <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
-                        <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
-                        <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
-                        <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
-                        <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 mt-4 text-purple-800">🃏 สุ่มการ์ดโชคชะตา</h3>
+                    <p class="text-gray-500 mb-6 text-sm sm:text-base">เลือกการ์ด 1 ใบ แล้วให้กิลด์แตะการ์ด เพื่อรับผลลัพธ์</p>
+                    <div class="flex justify-center gap-3 sm:gap-4 flex-wrap mb-8">
+                        <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
+                        <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
+                        <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
+                        <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
+                        <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
                     </div>
-                    <button onclick="app.resetCards()" class="text-sm text-gray-400 underline font-bold">รีเซ็ตการ์ด</button>
+                    <button onclick="app.resetCards()" class="text-sm text-gray-400 underline font-bold px-4 py-2 hover:text-gray-600">รีเซ็ตการ์ด</button>
                 </div>
 
                 <!-- Tab: Logs -->
                 <div id="tab-logs" class="admin-content hidden">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold">📜 ประวัติ (Logs)</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-700"><i class="fa-solid fa-scroll text-purple-400"></i> ประวัติ</h3>
                         <div class="flex gap-2">
-                            <button onclick="app.loadLogs()" class="bg-gray-100 text-gray-600 px-3 py-1 rounded shadow-sm hover:bg-gray-200 text-sm font-bold"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
-                            <button onclick="app.clearLogs()" class="bg-red-100 text-red-600 px-3 py-1 rounded shadow-sm hover:bg-red-200 text-sm font-bold"><i class="fa-solid fa-trash"></i> ล้างประวัติ</button>
+                            <button onclick="app.loadLogs()" class="bg-gray-100 text-gray-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold"><i class="fa-solid fa-rotate"></i></button>
+                            <button onclick="app.clearLogs()" class="bg-red-100 text-red-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-sm hover:bg-red-200 text-xs sm:text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-trash"></i> <span class="hidden sm:inline">ล้างประวัติ</span></button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto h-96 bg-gray-50 rounded-xl border border-gray-200">
-                        <table class="w-full text-left border-collapse text-sm">
+                    <div class="w-full overflow-x-auto bg-white rounded-xl border border-gray-200 shadow-sm custom-scrollbar h-[60vh] sm:h-96">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm min-w-[600px]">
                             <thead>
-                                <tr class="bg-gray-200 text-gray-700 sticky top-0 shadow-sm z-10">
-                                    <th class="p-3">เวลา</th>
-                                    <th class="p-3">กิลด์</th>
-                                    <th class="p-3">Action</th>
-                                    <th class="p-3">รายละเอียด</th>
+                                <tr class="bg-gray-50 text-gray-600 sticky top-0 shadow-sm z-10 border-b border-gray-200">
+                                    <th class="p-3 w-32 font-bold whitespace-nowrap">เวลา</th>
+                                    <th class="p-3 w-40 font-bold whitespace-nowrap">กิลด์</th>
+                                    <th class="p-3 w-28 font-bold text-center whitespace-nowrap">Action</th>
+                                    <th class="p-3 font-bold whitespace-nowrap">รายละเอียด</th>
                                 </tr>
                             </thead>
                             <tbody id="logs-body">
-                                <tr><td colspan="4" class="text-center py-4 text-gray-400">คลิกที่ปุ่มรีเฟรชเพื่อโหลดประวัติ</td></tr>
+                                <tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">คลิกที่ปุ่มรีเฟรชเพื่อโหลดประวัติ</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -385,7 +398,8 @@
                 allGuilds: [],
                 otherGuilds: [], 
                 cart: [],
-                marketItems: [] 
+                marketItems: [],
+                inventory: []
             },
 
             navigate: function(viewId) {
@@ -440,7 +454,6 @@
                 return result.data;
             },
 
-            // --- REFRESH DATA (Smart Refresh) ---
             refreshData: async function() {
                 if (document.getElementById('view-dashboard').classList.contains('active')) {
                     if (this.state.currentGuild) {
@@ -474,7 +487,6 @@
                 }
             },
 
-            // --- NFC Smart Matcher (แปลงรหัสให้ตรงกับเครื่องอ่าน USB) ---
             generateNFCVariants: function(serialNumber) {
                 if (!serialNumber) return [];
                 const parts = serialNumber.split(':');
@@ -606,8 +618,8 @@
                 document.getElementById('dash-coins-val').textContent = g.coins;
                 document.getElementById('dash-score-val').textContent = g.score;
                 
-                document.getElementById('nav-coins').innerHTML = `<i class="fa-solid fa-coins text-yellow-500"></i> ${g.coins}`;
-                document.getElementById('nav-score').innerHTML = `<i class="fa-solid fa-star text-blue-500"></i> ${g.score}`;
+                document.getElementById('nav-coins-text').textContent = g.coins;
+                document.getElementById('nav-score-text').textContent = g.score;
 
                 const invGrid = document.getElementById('inventory-grid');
                 invGrid.innerHTML = '';
@@ -619,17 +631,17 @@
                     validInventory.forEach(item => {
                         const effectStr = (item.effect || '').replace(/'/g, "\\'");
                         invGrid.innerHTML += `
-                            <div class="inv-slot p-3 text-center hover-bounce relative flex flex-col justify-between group">
+                            <div class="inv-slot p-2 sm:p-3 text-center hover-bounce relative flex flex-col justify-between group bg-white">
                                 <div class="absolute inset-0 bg-white opacity-50 rounded-lg pointer-events-none group-hover:opacity-80 transition"></div>
                                 <div class="relative z-10">
-                                    <div class="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold w-7 h-7 rounded-full flex items-center justify-center border-2 border-white shadow-md">${item.qty}</div>
-                                    <div class="w-16 h-16 mx-auto rounded-xl border-2 border-white shadow-sm overflow-hidden mb-2 bg-gray-50">
+                                    <div class="absolute -top-3 -right-3 bg-red-500 text-white text-[10px] sm:text-xs font-bold w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center border-2 border-white shadow-md">${item.qty}</div>
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-2 bg-gray-50">
                                         <img src="${item.image}" class="w-full h-full object-cover" alt="${item.name}">
                                     </div>
-                                    <div class="font-fantasy font-bold text-sm text-gray-800 truncate leading-tight">${item.name}</div>
-                                    <div class="text-[10px] font-bold text-purple-500 mb-3 bg-purple-50 rounded px-1 py-0.5 inline-block border border-purple-100 truncate w-full">${item.effect}</div>
+                                    <div class="font-fantasy font-bold text-xs sm:text-sm text-gray-800 truncate leading-tight">${item.name}</div>
+                                    <div class="text-[9px] sm:text-[10px] font-bold text-purple-500 mb-2 sm:mb-3 bg-purple-50 rounded px-1 py-0.5 inline-block border border-purple-100 truncate w-full">${item.effect || 'ไม่มีพลัง'}</div>
                                 </div>
-                                <button onclick="app.useItem('${item.itemId}', '${item.name}', '${effectStr}')" class="w-full bg-green-400 hover:bg-green-500 text-white text-xs font-bold py-2 rounded-lg border-2 border-white relative z-10 shadow-sm">
+                                <button onclick="app.useItem('${item.itemId}', '${item.name}', '${effectStr}')" class="w-full bg-green-400 hover:bg-green-500 text-white text-[10px] sm:text-xs font-bold py-1.5 sm:py-2 rounded-lg border border-white relative z-10 shadow-sm">
                                     <i class="fa-solid fa-hand-sparkles"></i> ใช้งาน
                                 </button>
                             </div>
@@ -649,21 +661,21 @@
                     items.forEach(item => {
                         const displayEffect = item.effect === '#ERROR!' || !item.effect ? 'ไม่มีพลังพิเศษ' : item.effect;
                         grid.innerHTML += `
-                            <div class="glass-card p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md">
+                            <div class="glass-card p-4 sm:p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md">
                                 <div class="relative z-10 flex flex-col items-center w-full">
-                                    <div class="relative w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 flex items-center justify-center">
                                         <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
-                                        <div class="relative z-10 w-24 h-24 bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                        <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
                                             <img src="${item.image}" class="w-full h-full object-cover">
                                         </div>
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-2xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
-                                    <p class="text-sm text-gray-500 mb-3 h-10 overflow-hidden font-medium px-2">${item.description}</p>
-                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
-                                    ${item.maxPerGuild ? `<div class="text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 px-3 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น</div>` : '<div class="mb-3"></div>'}
+                                    <h3 class="font-fantasy font-bold text-xl sm:text-2xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                    <p class="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 h-8 sm:h-10 overflow-hidden font-medium px-1 sm:px-2">${item.description}</p>
+                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                    ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 px-2 sm:px-3 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น</div>` : '<div class="mb-3"></div>'}
                                 </div>
                                 
-                                <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-[#f472b6] hover:bg-[#ec4899] text-white font-fantasy font-bold py-3 px-2 rounded-xl text-lg relative z-10 flex justify-center items-center gap-2 shadow-md transition-transform mt-auto">
+                                <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-[#f472b6] hover:bg-[#ec4899] text-white font-fantasy font-bold py-2 sm:py-3 px-2 rounded-xl text-sm sm:text-lg relative z-10 flex justify-center items-center gap-1.5 sm:gap-2 shadow-md transition-transform mt-auto">
                                     <i class="fa-solid fa-cart-plus"></i> เพิ่มลงตะกร้า (${item.price} Gold)
                                 </button>
                             </div>
@@ -709,21 +721,21 @@
                 
                 let total = 0;
                 if (this.state.cart.length === 0) {
-                    cartContainer.innerHTML = '<div class="text-center text-gray-400 py-8 font-bold border-2 border-dashed border-gray-200 rounded-xl">🛒 ตะกร้าว่างเปล่า</div>';
+                    cartContainer.innerHTML = '<div class="text-center text-gray-400 py-8 font-bold border-2 border-dashed border-gray-200 rounded-xl text-sm sm:text-base">🛒 ตะกร้าว่างเปล่า</div>';
                 } else {
                     this.state.cart.forEach((item, index) => {
                         total += item.price * item.qty;
                         cartContainer.innerHTML += `
-                            <div class="flex items-center gap-3 bg-gray-50 p-3 rounded-xl border border-gray-200 shadow-sm">
-                                <img src="${item.image}" class="w-14 h-14 rounded-xl bg-white border border-gray-200 object-cover shadow-sm shrink-0">
-                                <div class="flex-1">
-                                    <div class="font-fantasy font-bold text-purple-700 leading-tight">${item.name}</div>
-                                    <div class="text-xs font-bold text-gray-500 mt-1"><i class="fa-solid fa-coins text-yellow-500"></i> ${item.price} / ชิ้น</div>
+                            <div class="flex items-center gap-2 sm:gap-3 bg-gray-50 p-2 sm:p-3 rounded-xl border border-gray-200 shadow-sm">
+                                <img src="${item.image}" class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border border-gray-200 object-cover shadow-sm shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-fantasy font-bold text-sm sm:text-base text-purple-700 leading-tight truncate">${item.name}</div>
+                                    <div class="text-[10px] sm:text-xs font-bold text-gray-500 mt-0.5 sm:mt-1"><i class="fa-solid fa-coins text-yellow-500"></i> ${item.price} / ชิ้น</div>
                                 </div>
-                                <div class="flex items-center gap-2 bg-white rounded-lg border border-gray-200 p-1">
-                                    <button onclick="app.updateCartQty(${index}, -1)" class="w-6 h-6 bg-red-100 text-red-600 rounded shadow-sm flex items-center justify-center hover:bg-red-200 transition"><i class="fa-solid fa-minus text-[10px]"></i></button>
-                                    <span class="font-bold w-6 text-center text-gray-700">${item.qty}</span>
-                                    <button onclick="app.updateCartQty(${index}, 1)" class="w-6 h-6 bg-green-100 text-green-600 rounded shadow-sm flex items-center justify-center hover:bg-green-200 transition"><i class="fa-solid fa-plus text-[10px]"></i></button>
+                                <div class="flex items-center gap-1.5 sm:gap-2 bg-white rounded-lg border border-gray-200 p-1 shrink-0">
+                                    <button onclick="app.updateCartQty(${index}, -1)" class="w-5 h-5 sm:w-6 sm:h-6 bg-red-50 text-red-600 rounded flex items-center justify-center hover:bg-red-100 transition"><i class="fa-solid fa-minus text-[8px] sm:text-[10px]"></i></button>
+                                    <span class="font-bold w-4 sm:w-6 text-center text-xs sm:text-sm text-gray-700">${item.qty}</span>
+                                    <button onclick="app.updateCartQty(${index}, 1)" class="w-5 h-5 sm:w-6 sm:h-6 bg-green-50 text-green-600 rounded flex items-center justify-center hover:bg-green-100 transition"><i class="fa-solid fa-plus text-[8px] sm:text-[10px]"></i></button>
                                 </div>
                             </div>
                         `;
@@ -780,11 +792,12 @@
                     this.state.currentGuild.coins = res.newCoins;
                     const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
                     this.state.inventory = freshData.inventory;
-                    document.getElementById('nav-coins').innerHTML = `<i class="fa-solid fa-coins text-yellow-500"></i> ${res.newCoins}`;
+                    document.getElementById('nav-coins-text').textContent = res.newCoins;
 
                     this.state.cart = []; 
                     this.updateCartUI();
                     this.toggleCart(); 
+                    this.loadDashboard();
 
                     Swal.fire('🎉 ซื้อสำเร็จ!', `ไอเทมทั้งหมดถูกส่งเข้ากระเป๋ามิติแล้ว`, 'success');
                 } catch (error) {
@@ -842,7 +855,7 @@
                     this.state.otherGuilds = freshData.otherGuilds; 
                     this.loadDashboard();
                     
-                    let effectHTML = res.effectMsg ? `<div class="mt-4 bg-pink-50 p-3 rounded-xl border-2 border-pink-200 text-pink-600 font-bold drop-shadow-sm">${res.effectMsg}</div>` : '';
+                    let effectHTML = res.effectMsg ? `<div class="mt-4 bg-pink-50 p-3 rounded-xl border-2 border-pink-200 text-pink-600 font-bold drop-shadow-sm text-sm">${res.effectMsg}</div>` : '';
                     Swal.fire({ title: '✨ ใช้งานสำเร็จ!', html: `พลังของ <b>${itemName}</b> ทำงานแล้ว! ${effectHTML}`, icon: 'success' });
                 } catch (error) {
                     Swal.fire('❌ พลังเวทย์ล้มเหลว', error.message || error, 'error');
@@ -882,38 +895,38 @@
                     let html = '';
 
                     if (rankedGuilds.length > 0) {
-                        let top3Html = '<div class="flex flex-row justify-center items-end gap-2 sm:gap-6 mb-10 pt-12">';
+                        let top3Html = '<div class="flex flex-row justify-center items-end gap-2 sm:gap-6 mb-8 sm:mb-10 pt-8 sm:pt-12">';
                         
                         const buildTopCard = (g, rank) => {
                             let order, borderCol, bgCol, rankImg, heightClass, textColor, badgeCol;
                             if(rank === 1) {
                                 order = 'order-2'; borderCol = 'border-yellow-400'; bgCol = 'bg-yellow-50'; textColor = 'text-yellow-700'; badgeCol = 'bg-gradient-to-b from-yellow-200 to-yellow-500';
-                                rankImg = `<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-14 h-14 ${badgeCol} rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-2xl drop-shadow-md"><i class="fa-solid fa-crown text-yellow-100 text-sm absolute -top-3"></i>1</div>`;
-                                heightClass = 'z-10 sm:scale-110 scale-105';
+                                rankImg = `<div class="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 w-10 h-10 sm:w-14 sm:h-14 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-lg sm:text-2xl drop-shadow-md"><i class="fa-solid fa-crown text-yellow-100 text-[10px] sm:text-sm absolute -top-2 sm:-top-3"></i>1</div>`;
+                                heightClass = 'z-10 scale-105 sm:scale-110';
                             } else if(rank === 2) {
                                 order = 'order-1'; borderCol = 'border-gray-300'; bgCol = 'bg-gray-50'; textColor = 'text-gray-700'; badgeCol = 'bg-gradient-to-b from-gray-200 to-gray-400';
-                                rankImg = `<div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 ${badgeCol} rounded-full border-4 border-white shadow flex items-center justify-center text-white font-bold text-xl drop-shadow">2</div>`;
-                                heightClass = 'sm:scale-100 scale-95 opacity-95';
+                                rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">2</div>`;
+                                heightClass = 'scale-95 sm:scale-100 opacity-95';
                             } else if(rank === 3) {
                                 order = 'order-3'; borderCol = 'border-orange-300'; bgCol = 'bg-orange-50'; textColor = 'text-orange-700'; badgeCol = 'bg-gradient-to-b from-orange-200 to-orange-400';
-                                rankImg = `<div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 ${badgeCol} rounded-full border-4 border-white shadow flex items-center justify-center text-white font-bold text-xl drop-shadow">3</div>`;
-                                heightClass = 'sm:scale-100 scale-95 opacity-95';
+                                rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">3</div>`;
+                                heightClass = 'scale-95 sm:scale-100 opacity-95';
                             }
 
                             return `
-                                <div class="${order} ${heightClass} relative w-[32%] max-w-[220px] bg-white border-4 ${borderCol} rounded-3xl shadow-xl p-2 sm:p-4 pt-8 sm:pt-10 text-center flex flex-col items-center transition-transform hover:-translate-y-2">
+                                <div class="${order} ${heightClass} relative w-[31%] max-w-[220px] bg-white border-[3px] sm:border-4 ${borderCol} rounded-2xl sm:rounded-3xl shadow-xl p-2 sm:p-4 pt-6 sm:pt-10 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2">
                                     ${rankImg}
-                                    <div class="relative w-16 h-16 sm:w-24 sm:h-24 mb-3">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-4 ${borderCol} object-cover bg-white">
-                                        <div class="absolute -bottom-2 -right-2 sm:-right-0 bg-gray-800 text-white text-[9px] sm:text-xs font-bold px-2 py-0.5 rounded-full border border-white">No.${rank}</div>
+                                    <div class="relative w-12 h-12 sm:w-24 sm:h-24 mb-2 sm:mb-3">
+                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 ${borderCol} object-cover bg-white">
+                                        <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-gray-800 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${rank}</div>
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-xs sm:text-lg text-gray-800 leading-tight mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center">${g.name}</h3>
+                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
                                     
-                                    <div class="w-full ${bgCol} rounded-full py-1.5 sm:py-2 px-1 sm:px-2 mb-2 border ${borderCol.replace('border-', 'border-opacity-50 border-')} shadow-inner">
-                                        <span class="font-bold ${textColor} text-xs sm:text-base">${g.score} <span class="text-[8px] sm:text-[10px] opacity-80">FAME</span></span>
+                                    <div class="w-full ${bgCol} rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border ${borderCol.replace('border-', 'border-opacity-50 border-')} shadow-inner">
+                                        <span class="font-bold ${textColor} text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
                                     </div>
                                     
-                                    <div class="w-full bg-green-400 rounded-xl py-1.5 sm:py-2 px-1 border-b-4 border-green-600 text-white font-bold text-[10px] sm:text-sm shadow-sm cursor-default">
+                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
                                         <i class="fa-solid fa-coins"></i> ${g.coins}
                                     </div>
                                 </div>
@@ -925,23 +938,23 @@
                         }
                         top3Html += '</div>';
 
-                        let listHtml = '<div class="flex flex-wrap justify-center gap-4 pb-4">';
+                        let listHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-4">';
                         for(let i=3; i<rankedGuilds.length; i++) {
                             const g = rankedGuilds[i];
                             listHtml += `
-                                <div class="relative w-[45%] sm:w-[30%] max-w-[200px] bg-white border-4 border-purple-200 rounded-3xl shadow-md p-2 sm:p-4 pt-6 sm:pt-8 text-center flex flex-col items-center transition-transform hover:-translate-y-2 mt-4">
-                                    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border-4 border-white shadow flex items-center justify-center text-purple-700 font-bold text-lg drop-shadow">${i+1}</div>
-                                    <div class="relative w-16 h-16 sm:w-20 sm:h-20 mb-3">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-4 border-purple-200 object-cover bg-white">
-                                        <div class="absolute -bottom-2 -right-2 sm:-right-0 bg-purple-700 text-white text-[9px] sm:text-xs font-bold px-2 py-0.5 rounded-full border border-white">No.${i+1}</div>
+                                <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-purple-200 rounded-2xl sm:rounded-3xl shadow-md p-2 sm:p-4 pt-5 sm:pt-8 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2 mt-2 sm:mt-4">
+                                    <div class="absolute -top-4 sm:-top-5 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-purple-700 font-bold text-sm sm:text-lg drop-shadow">${i+1}</div>
+                                    <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3">
+                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 border-purple-200 object-cover bg-white">
+                                        <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-purple-700 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${i+1}</div>
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-xs sm:text-lg text-gray-800 leading-tight mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center">${g.name}</h3>
+                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
                                     
-                                    <div class="w-full bg-blue-50 rounded-full py-1.5 sm:py-2 px-1 sm:px-2 mb-2 border border-blue-200 shadow-inner">
-                                        <span class="font-bold text-blue-700 text-xs sm:text-base">${g.score} <span class="text-[8px] sm:text-[10px] opacity-80">FAME</span></span>
+                                    <div class="w-full bg-blue-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-blue-200 shadow-inner">
+                                        <span class="font-bold text-blue-700 text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
                                     </div>
                                     
-                                    <div class="w-full bg-green-400 rounded-xl py-1.5 sm:py-2 px-1 border-b-4 border-green-600 text-white font-bold text-[10px] sm:text-sm shadow-sm cursor-default">
+                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
                                         <i class="fa-solid fa-coins"></i> ${g.coins}
                                     </div>
                                 </div>
@@ -954,24 +967,24 @@
 
                     if (unrankedGuilds.length > 0) {
                         if (rankedGuilds.length > 0) {
-                            html += `<div class="w-full border-t-2 border-dashed border-gray-200 my-6"></div>`;
-                            html += `<h4 class="text-center text-gray-500 font-bold mb-4 font-fantasy">🛡️ กิลด์ที่กำลังรวบรวม FAME (ยังไม่จัดอันดับ)</h4>`;
+                            html += `<div class="w-full border-t-2 border-dashed border-gray-200 my-4 sm:my-6"></div>`;
+                            html += `<h4 class="text-center text-gray-500 font-bold mb-3 sm:mb-4 font-fantasy text-sm sm:text-base">🛡️ กิลด์ที่กำลังรวบรวม FAME (ยังไม่จัดอันดับ)</h4>`;
                         }
-                        let unrankedHtml = '<div class="flex flex-wrap justify-center gap-4 pb-4">';
+                        let unrankedHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-2 sm:pb-4">';
                         for(let i=0; i<unrankedGuilds.length; i++) {
                             const g = unrankedGuilds[i];
                             unrankedHtml += `
-                                <div class="relative w-[45%] sm:w-[30%] max-w-[200px] bg-white border-4 border-gray-200 rounded-3xl shadow-sm p-2 sm:p-4 pt-4 text-center flex flex-col items-center transition-transform hover:-translate-y-1 mt-2">
-                                    <div class="relative w-16 h-16 sm:w-20 sm:h-20 mb-3 opacity-90">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-4 border-gray-200 object-cover bg-gray-50">
+                                <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-gray-200 rounded-2xl sm:rounded-3xl shadow-sm p-2 sm:p-4 pt-3 sm:pt-4 text-center flex flex-col items-center transition-transform hover:-translate-y-1 mt-1 sm:mt-2">
+                                    <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3 opacity-90">
+                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 border-gray-200 object-cover bg-gray-50">
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-xs sm:text-lg text-gray-600 leading-tight mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center">${g.name}</h3>
+                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-600 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
                                     
-                                    <div class="w-full bg-gray-50 rounded-full py-1.5 sm:py-2 px-1 sm:px-2 mb-2 border border-gray-200 shadow-inner">
-                                        <span class="font-bold text-gray-500 text-xs sm:text-base">0 <span class="text-[8px] sm:text-[10px] opacity-80">FAME</span></span>
+                                    <div class="w-full bg-gray-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-gray-200 shadow-inner">
+                                        <span class="font-bold text-gray-500 text-[10px] sm:text-base">0 <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
                                     </div>
                                     
-                                    <div class="w-full bg-green-400 rounded-xl py-1.5 sm:py-2 px-1 border-b-4 border-green-600 text-white font-bold text-[10px] sm:text-sm shadow-sm cursor-default opacity-90">
+                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default opacity-90">
                                         <i class="fa-solid fa-coins"></i> ${g.coins}
                                     </div>
                                 </div>
@@ -994,18 +1007,20 @@
                         guildListBody.innerHTML = '';
                         guilds.forEach(g => {
                             const nfcStatus = g.nfcId 
-                                ? `<span class="bg-green-50 text-green-600 font-bold px-3 py-1 rounded-full text-xs border border-green-200"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
-                                : `<span class="bg-gray-50 text-gray-400 font-bold px-3 py-1 rounded-full text-xs border border-gray-200"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
+                                ? `<span class="bg-green-50 text-green-600 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-green-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
+                                : `<span class="bg-gray-50 text-gray-400 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-gray-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
 
                             guildListBody.innerHTML += `
                                 <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
-                                    <td class="p-3 text-center font-bold text-purple-600 text-lg">${g.teamNo || '-'}</td>
-                                    <td class="p-3 text-center"><img src="${g.avatar}" class="w-10 h-10 rounded-full mx-auto bg-gray-100 border border-gray-200 object-cover shadow-sm"></td>
-                                    <td class="p-3 font-bold text-gray-800">${g.name}</td>
-                                    <td class="p-3 text-center">${nfcStatus}</td>
-                                    <td class="p-3 text-right space-x-1">
-                                        <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 mr-2 text-xs font-bold border border-blue-100"><i class="fa-solid fa-pen"></i> แก้ไข</button>
-                                        <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-xs font-bold border border-red-100"><i class="fa-solid fa-trash"></i> ลบ</button>
+                                    <td class="p-2 sm:p-3 text-center font-bold text-purple-600 text-sm sm:text-lg">${g.teamNo || '-'}</td>
+                                    <td class="p-2 sm:p-3 text-center"><img src="${g.avatar}" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full mx-auto bg-gray-100 border border-gray-200 object-cover shadow-sm"></td>
+                                    <td class="p-2 sm:p-3 font-bold text-gray-800 text-xs sm:text-sm whitespace-nowrap">${g.name}</td>
+                                    <td class="p-2 sm:p-3 text-center">${nfcStatus}</td>
+                                    <td class="p-2 sm:p-3 text-right align-middle">
+                                        <div class="flex flex-col sm:flex-row justify-end gap-1.5">
+                                            <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 text-[10px] sm:text-xs font-bold border border-blue-100 w-full sm:w-auto"><i class="fa-solid fa-pen"></i> แก้ไข</button>
+                                            <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-[10px] sm:text-xs font-bold border border-red-100 w-full sm:w-auto"><i class="fa-solid fa-trash"></i> ลบ</button>
+                                        </div>
                                     </td>
                                 </tr>
                             `;
@@ -1037,12 +1052,12 @@
                     title: 'แก้ไขข้อมูลกิลด์',
                     html: `
                         <div class="text-left mt-4 space-y-4">
-                            <div class="flex gap-4">
-                                <div class="w-1/4">
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                                <div class="w-full sm:w-1/4">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">ทีมที่:</label>
                                     <input id="swal-input-teamNo" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-center" value="${currentTeamNo}">
                                 </div>
-                                <div class="w-3/4">
+                                <div class="w-full sm:w-3/4">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อกิลด์:</label>
                                     <input id="swal-input-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentName}">
                                 </div>
@@ -1057,14 +1072,13 @@
                     showCancelButton: true, 
                     confirmButtonText: 'บันทึกการแก้ไข', 
                     cancelButtonText: 'ยกเลิก',
-                    width: '32rem',
-                    padding: '2rem',
+                    width: '95%',
                     customClass: {
-                        popup: 'rounded-2xl shadow-2xl border-0',
-                        title: 'text-2xl font-bold text-gray-700',
-                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
-                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
-                        actions: 'mt-6'
+                        popup: 'rounded-2xl shadow-2xl border-0 max-w-lg',
+                        title: 'text-xl sm:text-2xl font-bold text-gray-700 mt-2',
+                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-1 sm:mx-2 text-sm sm:text-base w-full sm:w-auto',
+                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-1 sm:mx-2 text-sm sm:text-base w-full sm:w-auto mt-2 sm:mt-0',
+                        actions: 'mt-6 flex-col sm:flex-row w-full sm:w-auto px-4 sm:px-0'
                     },
                     buttonsStyling: false,
                     preConfirm: () => { 
@@ -1124,7 +1138,6 @@
                 }
             },
 
-            // --- ฟังก์ชันแยกแยะ Effect String ให้ออกมาเป็นประเภทและตัวเลข ---
             parseEffectString: function(effStr) {
                 if (!effStr) return { type: '', value: '' };
                 let s = String(effStr).replace(/^'/, '').trim();
@@ -1219,34 +1232,34 @@
                     items.forEach(item => {
                         const displayEffect = item.effect === '#ERROR!' || !item.effect ? '<span class="text-gray-400">ไม่มีพลังพิเศษ</span>' : `<span class="text-purple-600">${item.effect}</span>`;
                         grid.innerHTML += `
-                            <div class="glass-card p-4 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group">
-                                <div class="absolute top-2 right-2 flex gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                            <div class="glass-card p-4 sm:p-5 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group">
+                                <div class="absolute top-2 right-2 flex flex-col sm:flex-row gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                     <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition" title="แก้ไขไอเทม"><i class="fa-solid fa-pen text-xs"></i></button>
                                     <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition" title="ลบไอเทม"><i class="fa-solid fa-trash text-xs"></i></button>
                                 </div>
                                 <div class="relative z-10 flex flex-col items-center w-full mt-2">
-                                    <div class="relative w-20 h-20 mx-auto mb-3 flex items-center justify-center">
+                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 flex items-center justify-center">
                                         <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
-                                        <div class="relative z-10 w-20 h-20 bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                        <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
                                             <img src="${item.image}" class="w-full h-full object-cover">
                                         </div>
                                     </div>
-                                    <h3 class="font-fantasy font-bold text-lg text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
-                                    <p class="text-[11px] text-gray-500 mb-2 h-8 overflow-hidden font-medium px-2 leading-snug">${item.description}</p>
+                                    <h3 class="font-fantasy font-bold text-lg sm:text-xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                    <p class="text-[10px] sm:text-xs text-gray-500 mb-2 h-8 overflow-hidden font-medium px-1 sm:px-2 leading-snug">${item.description}</p>
                                     
-                                    <div class="w-full bg-yellow-50 rounded-lg py-1.5 px-3 mb-2 border border-yellow-100 flex justify-between items-center text-xs shadow-inner">
+                                    <div class="w-full bg-yellow-50 rounded-lg py-1.5 px-2 sm:px-3 mb-1.5 sm:mb-2 border border-yellow-100 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
                                         <span class="font-bold text-yellow-700">ราคา:</span>
                                         <span class="font-bold text-yellow-600"><i class="fa-solid fa-coins"></i> ${item.price}</span>
                                     </div>
-                                    <div class="w-full bg-gray-50 rounded-lg py-1.5 px-3 mb-3 border border-gray-200 flex justify-between items-center text-xs shadow-inner">
+                                    <div class="w-full bg-gray-50 rounded-lg py-1.5 px-2 sm:px-3 mb-2 sm:mb-3 border border-gray-200 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
                                         <span class="font-bold text-gray-600">สต็อก:</span>
                                         <span class="font-mono font-bold text-gray-700">${item.stock} ชิ้น</span>
                                     </div>
                                     
-                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
-                                    ${item.maxPerGuild ? `<div class="text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
+                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[9px] sm:text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                    ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
                                 </div>
-                                <button onclick="app.testItemEffect('${item.itemId}')" class="w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold py-2 rounded-xl text-[11px] mt-2 transition flex items-center justify-center gap-2 border border-indigo-100 shadow-sm">
+                                <button onclick="app.testItemEffect('${item.itemId}')" class="w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold py-2 rounded-xl text-[10px] sm:text-xs mt-2 transition flex items-center justify-center gap-2 border border-indigo-100 shadow-sm">
                                     <i class="fa-solid fa-flask"></i> ดูตัวอย่างพลัง
                                 </button>
                             </div>
@@ -1277,7 +1290,7 @@
                         case 'MultiplyScore': actionText = `คูณคะแนน Fame ของตัวเอง <b>${parsed.value} เท่า</b>`; break;
                         case 'Random': actionText = `สุ่มผลลัพธ์ (อาจจะได้ Gold, ได้ Fame หรือซวยโดนหัก Gold)`; break;
                     }
-                    msg = `เมื่อผู้เล่นใช้งาน ไอเทมนี้จะ:<br><br><div class="text-lg text-purple-700 bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-inner">${actionText}</div>`;
+                    msg = `เมื่อผู้เล่นใช้งาน ไอเทมนี้จะ:<br><br><div class="text-sm sm:text-lg text-purple-700 bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-inner">${actionText}</div>`;
                 }
 
                 Swal.fire({
@@ -1299,24 +1312,24 @@
                 const { value: formValues } = await Swal.fire({
                     title: 'แก้ไขไอเทม',
                     html: `
-                        <div class="text-left mt-4 space-y-4">
+                        <div class="text-left mt-4 space-y-3 sm:space-y-4">
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อไอเทม:</label>
                                 <input id="swal-item-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.name}">
                             </div>
                             
-                            <div class="flex gap-4">
-                                <div class="w-1/2">
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                                <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">ราคา (Gold):</label>
                                     <input id="swal-item-price" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.price}">
                                 </div>
-                                <div class="w-1/2">
+                                <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">สต็อก (ชิ้น):</label>
                                     <input id="swal-item-stock" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.stock}">
                                 </div>
                             </div>
 
-                            <div class="flex flex-col gap-4 sm:flex-row">
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                                 <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">จำกัดถือครอง (ต่อทีม):</label>
                                     <input id="swal-item-max" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.maxPerGuild || ''}" placeholder="ไม่จำกัด">
@@ -1324,7 +1337,7 @@
                                 <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">Effect:</label>
                                     <div class="flex gap-2">
-                                        <select id="swal-edit-effect-type" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" onchange="app.toggleEditEffectInput()">
+                                        <select id="swal-edit-effect-type" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-xs sm:text-base" onchange="app.toggleEditEffectInput()">
                                             <option value="" ${isSelected('')}>ไม่มีพลังพิเศษ</option>
                                             <option value="+Score" ${isSelected('+Score')}>เพิ่ม Fame (+Score)</option>
                                             <option value="-Score" ${isSelected('-Score')}>ลด Fame (-Score) [โจมตี]</option>
@@ -1343,7 +1356,7 @@
 
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Image URL:</label>
-                                <input id="swal-item-image" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.image || ''}">
+                                <input id="swal-item-image" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-xs sm:text-base" value="${item.image || ''}">
                             </div>
 
                             <div>
@@ -1356,14 +1369,13 @@
                     showCancelButton: true,
                     confirmButtonText: 'บันทึกการแก้ไข',
                     cancelButtonText: 'ยกเลิก',
-                    width: '36rem',
-                    padding: '2rem',
+                    width: '95%',
                     customClass: {
-                        popup: 'rounded-2xl shadow-2xl border-0',
-                        title: 'text-2xl font-bold text-gray-700',
-                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
-                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-2 w-32',
-                        actions: 'mt-6'
+                        popup: 'rounded-2xl shadow-2xl border-0 max-w-lg',
+                        title: 'text-xl sm:text-2xl font-bold text-gray-700 mt-2',
+                        confirmButton: 'bg-[#7c5ff0] hover:bg-[#6b4ce6] text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-1 sm:mx-2 text-sm sm:text-base w-full sm:w-auto',
+                        cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition mx-1 sm:mx-2 text-sm sm:text-base w-full sm:w-auto mt-2 sm:mt-0',
+                        actions: 'mt-4 sm:mt-6 flex-col sm:flex-row w-full sm:w-auto px-4 sm:px-0'
                     },
                     buttonsStyling: false,
                     preConfirm: () => {
@@ -1460,7 +1472,7 @@
                     
                     el.classList.remove('bg-gradient-to-br', 'from-indigo-500', 'to-purple-600', 'cursor-pointer');
                     el.classList.add('bg-white', 'opened');
-                    el.innerHTML = `<div class="text-center p-2"><i class="fa-solid ${outcome.icon} text-3xl ${outcome.color} mb-2 drop-shadow-sm"></i><div class="text-[11px] font-bold text-gray-700 leading-tight">${outcome.desc}</div></div>`;
+                    el.innerHTML = `<div class="text-center p-2"><i class="fa-solid ${outcome.icon} text-2xl sm:text-3xl ${outcome.color} mb-1 sm:mb-2 drop-shadow-sm"></i><div class="text-[9px] sm:text-[11px] font-bold text-gray-700 leading-tight">${outcome.desc}</div></div>`;
                     
                     Swal.fire({ title: 'ดวงดาวตอบรับ!', text: `กิลด์ ${tempLoginData.guild.name} ได้รับ: ${outcome.desc}`, icon: outcome.value > 0 ? 'success' : 'warning' });
                     this.loadAdminData();
@@ -1469,8 +1481,8 @@
 
             resetCards: function() {
                 document.querySelectorAll('.event-card').forEach(el => {
-                    el.className = 'event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group';
-                    el.innerHTML = '<i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i>';
+                    el.className = 'event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group';
+                    el.innerHTML = '<i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i>';
                 });
             },
 
@@ -1482,24 +1494,24 @@
                     
                     const tbody = document.getElementById('logs-body');
                     tbody.innerHTML = '';
-                    if (logs.length === 0) return tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-400">ยังไม่มีประวัติในระบบ</td></tr>`;
+                    if (logs.length === 0) return tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">ยังไม่มีประวัติในระบบ</td></tr>`;
 
                     logs.forEach(log => {
                         const dateObj = new Date(log.timestamp);
                         const timeStr = dateObj.toLocaleDateString('th-TH') + ' ' + dateObj.toLocaleTimeString('th-TH');
                         let actionBadge = '';
-                        if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-100 text-blue-700';
-                        else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-100 text-yellow-700';
-                        else if(log.action.includes('USE_ITEM')) actionBadge = 'bg-green-100 text-green-700';
-                        else if(log.action.includes('EVENT')) actionBadge = 'bg-purple-100 text-purple-700';
-                        else actionBadge = 'bg-gray-200 text-gray-700';
+                        if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-50 text-blue-600 border border-blue-200';
+                        else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-50 text-yellow-600 border border-yellow-200';
+                        else if(log.action.includes('USE_ITEM')) actionBadge = 'bg-green-50 text-green-600 border border-green-200';
+                        else if(log.action.includes('EVENT')) actionBadge = 'bg-purple-50 text-purple-600 border border-purple-200';
+                        else actionBadge = 'bg-gray-50 text-gray-600 border border-gray-200';
 
                         tbody.innerHTML += `
-                            <tr class="border-b border-gray-100 hover:bg-gray-100 transition">
-                                <td class="p-3 text-xs text-gray-500 whitespace-nowrap">${timeStr}</td>
-                                <td class="p-3 font-mono text-xs text-gray-600">${log.guildId}</td>
-                                <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-bold ${actionBadge}">${log.action}</span></td>
-                                <td class="p-3 text-gray-700 text-sm">${log.detail}</td>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
+                                <td class="p-2 sm:p-3 text-[10px] sm:text-xs text-gray-500 whitespace-nowrap">${timeStr}</td>
+                                <td class="p-2 sm:p-3 font-mono text-[10px] sm:text-xs text-gray-600 whitespace-nowrap">${log.guildId}</td>
+                                <td class="p-2 sm:p-3 text-center"><span class="px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold ${actionBadge} whitespace-nowrap shadow-sm">${log.action}</span></td>
+                                <td class="p-2 sm:p-3 text-gray-700 text-xs sm:text-sm whitespace-nowrap">${log.detail}</td>
                             </tr>
                         `;
                     });
