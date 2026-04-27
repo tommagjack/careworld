@@ -95,7 +95,7 @@
                     <span class="font-fantasy font-bold text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-base sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -105,7 +105,7 @@
     <nav class="p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
             <h1 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
-                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORLD
+                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORKSHOP WORLD
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-2 sm:gap-4 font-semibold text-xs sm:text-base">
                 <span id="nav-coins" class="bg-yellow-50 text-yellow-700 px-2 sm:px-3 py-1 rounded-full border-2 border-yellow-200"><i class="fa-solid fa-coins text-yellow-500"></i> 0</span>
@@ -125,9 +125,7 @@
             <div class="max-w-md mx-auto glass-card p-10 mt-10 sm:mt-16">
                 <!-- Logo Area -->
                 <div class="relative w-40 h-40 mx-auto mb-4 flex items-center justify-center">
-                    <!-- พื้นหลังวงกลมสีเหลืองอ่อน -->
                     <div class="absolute inset-0 bg-yellow-50/80 rounded-full scale-110"></div>
-                    <!-- กรอบวงกลมโลโก้ -->
                     <div class="relative z-10 w-28 h-28 bg-[#f4f6ff] rounded-full flex items-center justify-center border-[4px] border-white shadow-sm animate-float overflow-hidden">
                         <img src="https://img1.pic.in.th/images/l.ogo.png" class="w-full h-full object-cover" alt="Logo">
                     </div>
@@ -137,7 +135,7 @@
                 <p class="text-gray-500 mb-8 font-medium text-sm sm:text-base">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
                 <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-4 rounded-2xl shadow-md hover:shadow-lg text-lg sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อเข้าเกม
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อเข้ากิลด์
                 </button>
 
                 <div class="mt-8 border-t border-dashed border-gray-200 pt-6">
@@ -217,12 +215,10 @@
             </div>
 
             <div class="glass-card rounded-[2rem] p-4 sm:p-6 shadow-lg min-h-[400px]">
-                <!-- Tab: Leaderboard (New Card Design) -->
+                <!-- Tab: Leaderboard -->
                 <div id="tab-leaderboard" class="admin-content active">
                     <h3 class="text-2xl font-fantasy font-bold mb-4 text-purple-700">🏆 อันดับกิลด์นักผจญภัย</h3>
-                    <div id="leaderboard-cards" class="flex flex-col gap-4 bg-gray-50 p-4 rounded-2xl border-2 border-purple-100">
-                        <!-- Cards will be injected here -->
-                    </div>
+                    <div id="leaderboard-cards" class="flex flex-col gap-4 bg-gray-50 p-4 rounded-2xl border-2 border-purple-100"></div>
                 </div>
 
                 <!-- Tab: Manage Guild -->
@@ -230,7 +226,10 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white p-4 rounded-2xl border-2 border-pink-100">
                             <h3 class="font-bold mb-4">➕ สร้างทีมใหม่</h3>
-                            <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-full p-2 mb-3 border rounded-lg focus:outline-none focus:border-pink-400">
+                            <div class="flex gap-2 mb-3">
+                                <input type="text" id="new-guild-teamNo" placeholder="ทีมที่" class="w-1/4 p-2 border rounded-lg focus:outline-none focus:border-pink-400 text-center">
+                                <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-3/4 p-2 border rounded-lg focus:outline-none focus:border-pink-400">
+                            </div>
                             <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2 mb-3 border rounded-lg focus:outline-none focus:border-pink-400">
                             <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2 rounded-lg font-bold">สร้างทีม</button>
                         </div>
@@ -254,15 +253,20 @@
                         </div>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border-2 border-gray-100 mt-6 shadow-sm">
-                        <h3 class="font-bold mb-4 text-pastel-dark">📋 รายชื่อทีมทั้งหมด</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
+                    <!-- อัปเดตตารางรายชื่อทีมทั้งหมด ให้สวยงามเหมือนในรูป -->
+                    <div class="bg-white rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 bg-white">
+                            <h3 class="font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
+                        </div>
+                        <div class="overflow-x-auto p-4 pt-0">
+                            <table class="w-full text-left border-collapse text-sm mt-4">
                                 <thead>
                                     <tr class="bg-gray-100 text-gray-700">
-                                        <th class="p-3 rounded-tl-xl w-16">Avatar</th>
-                                        <th class="p-3">ชื่อทีม</th>
-                                        <th class="p-3 rounded-tr-xl text-center">จัดการ</th>
+                                        <th class="p-3 rounded-tl-lg rounded-bl-lg w-16 text-center font-bold">ทีมที่</th>
+                                        <th class="p-3 w-20 text-center font-bold">Avatar</th>
+                                        <th class="p-3 font-bold">ชื่อทีม</th>
+                                        <th class="p-3 text-center font-bold">สถานะ NFC</th>
+                                        <th class="p-3 rounded-tr-lg rounded-br-lg text-right w-48 font-bold">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="manage-guild-list"></tbody>
@@ -271,7 +275,7 @@
                     </div>
                 </div>
 
-                <!-- Tab: Manage Item (Dropdown Update) -->
+                <!-- Tab: Manage Item -->
                 <div id="tab-manage-item" class="admin-content hidden">
                     <h3 class="text-xl font-bold mb-4">📦 สร้างไอเทมใหม่ลงตลาด</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl bg-gray-50 p-6 rounded-2xl border-2 border-gray-100">
@@ -310,15 +314,13 @@
                         <h3 class="text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> จัดการตลาดไอเทม</h3>
                         <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
                     </div>
-                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4">
-                        <!-- Admin market items inject here -->
-                    </div>
+                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4"></div>
                 </div>
 
                 <!-- Tab: Special Event -->
                 <div id="tab-special-event" class="admin-content hidden text-center">
                     <h3 class="text-xl font-bold mb-2">🃏 สุ่มการ์ดโชคชะตา</h3>
-                    <p class="text-gray-500 mb-6">เลือกการ์ด 1 ใบ แล้วแตะ NFC เพื่อรับผล</p>
+                    <p class="text-gray-500 mb-6">เลือกการ์ด 1 ใบ แล้วแตะ การ์ด เพื่อรับผล</p>
                     <div class="flex justify-center gap-4 flex-wrap mb-8">
                         <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
                         <div onclick="app.selectCard(this)" class="event-card w-24 h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-110 transition flex items-center justify-center group"><i class="fa-solid fa-question text-4xl text-white group-hover:animate-spin"></i></div>
@@ -361,14 +363,8 @@
     </main>
 
     <script>
-        // =========================================================================
-        // CONFIGURATION
-        // =========================================================================
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbyHO3Vlgm4nJipNe2fklc5sbxZFJpKcj0Hzr1doA31nUkITnhoSMKOT2htwbfKSDTmu7A/exec';
         
-        // =========================================================================
-        // MAIN APP STATE & LOGIC
-        // =========================================================================
         const app = {
             state: {
                 currentGuild: null,
@@ -430,6 +426,38 @@
                 return result.data;
             },
 
+            // --- NFC Smart Matcher (แปลงรหัสให้ตรงกับเครื่องอ่าน USB) ---
+            generateNFCVariants: function(serialNumber) {
+                if (!serialNumber) return [];
+                const parts = serialNumber.split(':');
+                const variants = [serialNumber, serialNumber.toUpperCase()];
+                
+                const hexFull = parts.join('');
+                variants.push(hexFull);
+                variants.push(hexFull.toUpperCase());
+                
+                if (parts.length >= 4) {
+                    const hex4 = parts.slice(0, 4).join('');
+                    variants.push(parseInt(hex4, 16).toString());
+                    variants.push(parseInt(hex4, 16).toString().padStart(10, '0'));
+                    
+                    const hex4Rev = parts.slice(0, 4).reverse().join('');
+                    variants.push(parseInt(hex4Rev, 16).toString());
+                    variants.push(parseInt(hex4Rev, 16).toString().padStart(10, '0'));
+                }
+                
+                if (parts.length === 7) {
+                    try {
+                        const hex7 = parts.join('');
+                        variants.push(BigInt('0x' + hex7).toString());
+                        const hex7Rev = parts.slice().reverse().join('');
+                        variants.push(BigInt('0x' + hex7Rev).toString());
+                    } catch (e) {}
+                }
+                
+                return [...new Set(variants)];
+            },
+
             scanNFC: async function(promptText = "กรุณาแตะบัตร NFC") {
                 return new Promise((resolve, reject) => {
                     if ('NDEFReader' in window) {
@@ -440,7 +468,11 @@
                                 try {
                                     const ndef = new NDEFReader();
                                     await ndef.scan();
-                                    ndef.onreading = event => { Swal.close(); resolve(event.serialNumber); };
+                                    ndef.onreading = event => { 
+                                        Swal.close(); 
+                                        const variants = app.generateNFCVariants(event.serialNumber);
+                                        resolve(variants); 
+                                    };
                                 } catch (error) {
                                     Swal.close(); this.fallbackNFCPrompt(resolve, reject, promptText);
                                 }
@@ -481,7 +513,7 @@
                 }).then((result) => {
                     if (result.isConfirmed && result.value) {
                         const correctedValue = convertThaiToEng(result.value.trim());
-                        resolve(correctedValue);
+                        resolve([correctedValue]);
                     }
                     else reject('ยกเลิก');
                 });
@@ -594,7 +626,6 @@
                 }
             },
 
-            // --- CART SYSTEM ---
             addToCart: function(itemId, name, price, image, maxLimit) {
                 const invItem = this.state.inventory.find(i => i.itemId === itemId);
                 const currentInvQty = invItem ? Number(invItem.qty) : 0;
@@ -794,13 +825,10 @@
                         return;
                     }
                     
-                    // แบ่งกลุ่มกิลด์ที่มีคะแนน (Ranked) และไม่มีคะแนน (Unranked)
                     const rankedGuilds = guilds.filter(g => Number(g.score) > 0);
                     const unrankedGuilds = guilds.filter(g => Number(g.score) <= 0);
-
                     let html = '';
 
-                    // === ส่วนที่ 1: กิลด์ที่มีคะแนน (จัดอันดับ) ===
                     if (rankedGuilds.length > 0) {
                         let top3Html = '<div class="flex flex-row justify-center items-end gap-2 sm:gap-6 mb-10 pt-12">';
                         
@@ -872,7 +900,6 @@
                         html += top3Html + (rankedGuilds.length > 3 ? listHtml : '');
                     }
 
-                    // === ส่วนที่ 2: กิลด์ที่ยังไม่มีคะแนน (Score = 0) ===
                     if (unrankedGuilds.length > 0) {
                         if (rankedGuilds.length > 0) {
                             html += `<div class="w-full border-t-2 border-dashed border-gray-200 my-6"></div>`;
@@ -904,7 +931,6 @@
 
                     container.innerHTML = html;
 
-                    // Lists dropdown updates
                     const mapSelect = document.getElementById('map-guild-id');
                     const editSelect = document.getElementById('edit-guild-id');
                     let options = '<option value="">-- เลือกกิลด์ --</option>';
@@ -915,13 +941,20 @@
                     if (guildListBody) {
                         guildListBody.innerHTML = '';
                         guilds.forEach(g => {
+                            // การแสดงผลสถานะการผูกบัตรให้ตรงตามภาพ
+                            const nfcStatus = g.nfcId 
+                                ? `<span class="bg-green-50 text-green-600 font-bold px-3 py-1 rounded-full text-xs border border-green-200"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
+                                : `<span class="bg-gray-50 text-gray-400 font-bold px-3 py-1 rounded-full text-xs border border-gray-200"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
+
                             guildListBody.innerHTML += `
-                                <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                    <td class="p-3"><img src="${g.avatar}" class="w-10 h-10 rounded-full bg-gray-200 border border-gray-300"></td>
+                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
+                                    <td class="p-3 text-center font-bold text-purple-600 text-lg">${g.teamNo || '-'}</td>
+                                    <td class="p-3 text-center"><img src="${g.avatar}" class="w-10 h-10 rounded-full mx-auto bg-gray-100 border border-gray-200 object-cover shadow-sm"></td>
                                     <td class="p-3 font-bold text-gray-800">${g.name}</td>
-                                    <td class="p-3 text-center">
-                                        <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}')" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-lg shadow-sm hover:bg-blue-200 mr-2 text-sm"><i class="fa-solid fa-pen"></i> แก้ไข</button>
-                                        <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-100 text-red-600 px-3 py-1 rounded-lg shadow-sm hover:bg-red-200 text-sm"><i class="fa-solid fa-trash"></i> ลบ</button>
+                                    <td class="p-3 text-center">${nfcStatus}</td>
+                                    <td class="p-3 text-right space-x-1">
+                                        <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 mr-2 text-xs font-bold border border-blue-100"><i class="fa-solid fa-pen"></i> แก้ไข</button>
+                                        <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-4 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-xs font-bold border border-red-100"><i class="fa-solid fa-trash"></i> ลบ</button>
                                     </td>
                                 </tr>
                             `;
@@ -931,29 +964,38 @@
             },
 
             createGuild: async function() {
+                const teamNo = document.getElementById('new-guild-teamNo').value;
                 const name = document.getElementById('new-guild-name').value;
                 let avatar = document.getElementById('new-guild-avatar').value;
-                if(!name) return;
+                if(!name) return Swal.fire('ข้อมูลไม่ครบ', 'กรุณาระบุชื่อทีม', 'warning');
                 
                 // หากไม่ได้ใส่รูปมา ให้ใช้รูปขวดน้ำยาเวทมนตร์เป็นค่าเริ่มต้นแทนรูปหุ่นยนต์
                 if(!avatar) avatar = 'https://img.icons8.com/fluency/256/magic-potion.png';
                 
                 try {
                     Swal.fire({ title: 'กำลังสร้าง...', didOpen: () => Swal.showLoading() });
-                    await this.apiCall('createGuild', { name, avatar });
-                    document.getElementById('new-guild-name').value = ''; document.getElementById('new-guild-avatar').value = '';
+                    await this.apiCall('createGuild', { teamNo, name, avatar });
+                    document.getElementById('new-guild-teamNo').value = ''; 
+                    document.getElementById('new-guild-name').value = ''; 
+                    document.getElementById('new-guild-avatar').value = '';
                     Swal.fire('✅ สร้างสำเร็จ', '', 'success'); this.loadAdminData();
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
-            editGuildPrompt: async function(guildId, currentName, currentAvatar) {
+            editGuildPrompt: async function(guildId, currentName, currentAvatar, currentTeamNo) {
                 const { value: formValues } = await Swal.fire({
                     title: 'แก้ไขข้อมูลกิลด์',
                     html: `
                         <div class="text-left mt-4 space-y-4">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อกิลด์:</label>
-                                <input id="swal-input-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentName}">
+                            <div class="flex gap-4">
+                                <div class="w-1/4">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">ทีมที่:</label>
+                                    <input id="swal-input-teamNo" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-center" value="${currentTeamNo}">
+                                </div>
+                                <div class="w-3/4">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อกิลด์:</label>
+                                    <input id="swal-input-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentName}">
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-1">Avatar URL:</label>
@@ -975,14 +1017,20 @@
                         actions: 'mt-6'
                     },
                     buttonsStyling: false,
-                    preConfirm: () => { return { name: document.getElementById('swal-input-name').value, avatar: document.getElementById('swal-input-avatar').value } }
+                    preConfirm: () => { 
+                        return { 
+                            teamNo: document.getElementById('swal-input-teamNo').value,
+                            name: document.getElementById('swal-input-name').value, 
+                            avatar: document.getElementById('swal-input-avatar').value 
+                        } 
+                    }
                 });
 
                 if (formValues) {
                     if (!formValues.name) return Swal.fire('Error', 'ต้องระบุชื่อกิลด์', 'error');
                     try {
                         Swal.fire({ title: 'กำลังบันทึก...', didOpen: () => Swal.showLoading() });
-                        await this.apiCall('editGuild', { guildId, name: formValues.name, avatar: formValues.avatar });
+                        await this.apiCall('editGuild', { guildId, teamNo: formValues.teamNo, name: formValues.name, avatar: formValues.avatar });
                         Swal.fire('✅ แก้ไขสำเร็จ', '', 'success'); this.loadAdminData();
                     } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
                 }
@@ -1011,10 +1059,10 @@
                     Swal.fire({ title: 'กำลังผูกจิตวิญญาณ...', didOpen: () => Swal.showLoading() });
                     await this.apiCall('mapNFC', { nfcId, guildId });
                     Swal.fire('✅ ผูกการ์ดสำเร็จ', '', 'success');
+                    this.loadAdminData(); // โหลดใหม่ให้ตารางอัปเดต
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message, 'error'); }
             },
 
-            // ระบบ Effect Dropdown
             toggleEffectInput: function() {
                 const type = document.getElementById('new-item-effect-type').value;
                 const valInput = document.getElementById('new-item-effect-val');
@@ -1031,7 +1079,6 @@
                 const val = document.getElementById('new-item-effect-val').value;
                 let finalEffect = "";
                 
-                // แปลงค่าให้ตรงกับ Parser ด้านหลัง (เพิ่ม ' ด้านหน้าเพื่อป้องกัน Google Sheet มองเป็นสูตร)
                 if (type === 'Random') finalEffect = "สุ่ม";
                 else if (type === '+Score') finalEffect = `'+${val} Score`;
                 else if (type === '-Score') finalEffect = `'-${val} Score`;
@@ -1063,7 +1110,7 @@
                         const el = document.getElementById(`new-item-${id}`);
                         if(el) el.value = '';
                     });
-                    this.toggleEffectInput(); // ซ่อน input
+                    this.toggleEffectInput();
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
@@ -1123,7 +1170,6 @@
                 const item = this.state.marketItems.find(i => i.itemId === itemId);
                 if (!item) return;
                 
-                // นำ ' ออกเวลาแสดงผลให้แอดมินดู (ถ้ามี)
                 let displayEffect = item.effect || '';
                 if(displayEffect.startsWith("'")) {
                     displayEffect = displayEffect.substring(1);
@@ -1187,7 +1233,6 @@
                     buttonsStyling: false,
                     preConfirm: () => {
                         let parsedEffect = document.getElementById('swal-item-effect').value;
-                        // ป้องกัน Error จาก Google Sheet มองเป็นสูตรเวลาแอดมินพิมพ์มือ
                         if (parsedEffect.startsWith('+') || parsedEffect.startsWith('-') || parsedEffect.startsWith('=')) {
                             parsedEffect = "'" + parsedEffect;
                         }
