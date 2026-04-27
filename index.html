@@ -95,7 +95,7 @@
                     <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -122,11 +122,11 @@
         </div>
     </nav>
 
-    <main class="max-w-6xl mx-auto p-3 sm:p-4 py-6 sm:py-8">
+    <main class="max-w-6xl mx-auto p-3 sm:p-4 py-6 sm:py-8 w-full">
         
         <!-- ================= LOGIN VIEW ================= -->
         <section id="view-login" class="view-section active text-center">
-            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-16">
+            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-16 w-full">
                 <!-- Logo Area -->
                 <div class="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-4 flex items-center justify-center">
                     <div class="absolute inset-0 bg-yellow-50/80 rounded-full scale-110"></div>
@@ -139,7 +139,7 @@
                 <p class="text-gray-500 mb-6 sm:mb-8 font-medium text-xs sm:text-sm px-4">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
                 <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-3 sm:py-4 rounded-2xl shadow-md hover:shadow-lg text-base sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อเข้าเกม
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อเข้าเกม
                 </button>
 
                 <div class="mt-6 sm:mt-8 border-t border-dashed border-gray-200 pt-4 sm:pt-6">
@@ -152,7 +152,7 @@
 
         <!-- ================= ADMIN LOGIN ================= -->
         <section id="view-admin-login" class="view-section text-center">
-            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10">
+            <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10 w-full">
                 <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
                 <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-base sm:text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
                 <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700 text-sm sm:text-base">เข้าสู่กิลด์</button>
@@ -163,7 +163,7 @@
         <!-- ================= PLAYER DASHBOARD ================= -->
         <section id="view-dashboard" class="view-section">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div class="col-span-1 glass-card p-4 sm:p-6 text-center hover-bounce">
+                <div class="col-span-1 glass-card p-4 sm:p-6 text-center hover-bounce w-full">
                     <div class="relative w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
                         <img id="dash-avatar" src="" class="w-full h-full rounded-full border-4 border-yellow-400 shadow-md bg-white object-cover">
                         <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-lg border-2 border-white shadow">Lv.1</div>
@@ -184,7 +184,7 @@
                     <button onclick="app.navigate('market')" class="w-full bg-pink-400 text-white font-fantasy font-bold py-2 sm:py-3 rounded-xl hover:bg-pink-500 border-2 border-white text-sm sm:text-base"><i class="fa-solid fa-shop"></i> ไปร้านค้าเวทมนตร์</button>
                 </div>
 
-                <div class="col-span-1 lg:col-span-2 glass-card p-4 sm:p-6">
+                <div class="col-span-1 lg:col-span-2 glass-card p-4 sm:p-6 w-full">
                     <h3 class="text-xl sm:text-2xl font-fantasy font-bold mb-4 text-purple-600 border-b-2 border-purple-100 pb-2"><i class="fa-solid fa-briefcase text-yellow-500"></i> กระเป๋ามิติ</h3>
                     <div id="inventory-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                         <!-- Items inject here -->
@@ -195,7 +195,7 @@
 
         <!-- ================= PLAYER MARKET ================= -->
         <section id="view-market" class="view-section">
-            <div class="flex items-center justify-between mb-4 sm:mb-6 glass-card p-3 sm:p-4">
+            <div class="flex items-center justify-between mb-4 sm:mb-6 glass-card p-3 sm:p-4 w-full">
                 <h2 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-shop text-pink-400"></i> ร้านค้าเวทมนตร์</h2>
                 <button onclick="app.navigate('dashboard')" class="bg-purple-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-purple-700 font-bold hover:bg-purple-200 border-2 border-purple-200 text-xs sm:text-base whitespace-nowrap"><i class="fa-solid fa-arrow-left"></i> กลับกระเป๋า</button>
             </div>
@@ -221,9 +221,9 @@
                 </div>
             </div>
 
-            <div class="glass-card rounded-2xl sm:rounded-[2rem] p-3 sm:p-6 shadow-lg min-h-[400px]">
+            <div class="glass-card rounded-2xl sm:rounded-[2rem] p-3 sm:p-6 shadow-lg min-h-[400px] w-full">
                 <!-- Tab: Leaderboard -->
-                <div id="tab-leaderboard" class="admin-content active">
+                <div id="tab-leaderboard" class="admin-content active w-full">
                     <h3 class="text-xl sm:text-2xl font-fantasy font-bold mb-4 text-purple-700">🏆 อันดับกิลด์นักผจญภัย</h3>
                     <div id="leaderboard-cards" class="flex flex-col gap-3 sm:gap-4 bg-gray-50 p-2 sm:p-4 rounded-xl sm:rounded-2xl border border-purple-100">
                         <!-- Cards will be injected here -->
@@ -231,43 +231,50 @@
                 </div>
 
                 <!-- Tab: Manage Guild -->
-                <div id="tab-manage-guild" class="admin-content hidden">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-pink-100">
+                <div id="tab-manage-guild" class="admin-content hidden w-full">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 w-full">
+                        
+                        <!-- สร้างทีมใหม่ -->
+                        <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-pink-100 shadow-sm w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-pink-600"><i class="fa-solid fa-circle-plus"></i> สร้างทีมใหม่</h3>
-                            <div class="flex gap-2 mb-3">
-                                <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-16 sm:w-20 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center">
-                                <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="flex-1 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400">
+                            <!-- Responsive Flex: Column on Mobile, Row on Desktop -->
+                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
+                                <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-full sm:w-24 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center bg-gray-50">
+                                <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 bg-gray-50">
                             </div>
-                            <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2 text-sm sm:text-base mb-3 border rounded-lg focus:outline-none focus:border-pink-400">
-                            <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm">สร้างทีม</button>
+                            <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2.5 text-sm sm:text-base mb-4 border rounded-lg focus:outline-none focus:border-pink-400 bg-gray-50">
+                            <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-green-500 transition"><i class="fa-solid fa-magic"></i> สร้างทีม</button>
                         </div>
                         
-                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-blue-100">
+                        <!-- ผูก NFC กับทีม -->
+                        <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-blue-100 shadow-sm w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-blue-600"><i class="fa-solid fa-link"></i> ผูก NFC กับทีม</h3>
-                            <select id="map-guild-id" class="w-full p-2 text-sm sm:text-base mb-3 border rounded-lg focus:outline-none focus:border-blue-400">
+                            <select id="map-guild-id" class="w-full p-2.5 text-sm sm:text-base mb-4 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-50">
                                 <option value="">-- เลือกทีม --</option>
                             </select>
-                            <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm">แตะ NFC เพื่อผูก</button>
+                            <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-blue-500 transition"><i class="fa-solid fa-wifi"></i> แตะ NFC เพื่อผูก</button>
                         </div>
 
-                        <div class="bg-white p-4 rounded-xl sm:rounded-2xl border-2 border-yellow-100 lg:col-span-2">
+                        <!-- มอบ / ลด คะแนนและเหรียญ -->
+                        <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-yellow-100 shadow-sm lg:col-span-2 w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-yellow-600"><i class="fa-solid fa-bullseye"></i> มอบ / ลด คะแนนและเหรียญ</h3>
-                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
-                                <select id="edit-guild-id" class="w-full sm:flex-1 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400"></select>
-                            </div>
-                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                                <div class="flex gap-2 w-full sm:flex-1">
-                                    <input type="number" id="edit-score" placeholder="คะแนน (+/-)" class="w-1/2 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400">
-                                    <input type="number" id="edit-coins" placeholder="เหรียญ (+/-)" class="w-1/2 p-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400">
+                            
+                            <!-- Responsive Form: Stacked tightly on mobile -->
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+                                <select id="edit-guild-id" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400 bg-gray-50"></select>
+                                
+                                <div class="flex flex-row sm:flex-row gap-2 w-full sm:flex-1">
+                                    <input type="number" id="edit-score" placeholder="คะแนน (+/-)" class="w-1/2 sm:w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400 text-center bg-gray-50">
+                                    <input type="number" id="edit-coins" placeholder="เหรียญ (+/-)" class="w-1/2 sm:w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400 text-center bg-gray-50">
                                 </div>
-                                <button onclick="app.updateScore()" class="w-full sm:w-auto bg-yellow-400 text-white px-6 py-2 rounded-lg font-bold text-sm sm:text-base shadow-sm whitespace-nowrap">อัปเดต</button>
+
+                                <button onclick="app.updateScore()" class="w-full sm:w-32 bg-yellow-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-yellow-500 transition whitespace-nowrap"><i class="fa-solid fa-bolt"></i> อัปเดต</button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Responsive Admin Table -->
-                    <div class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden">
+                    <div class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden w-full">
                         <div class="p-3 sm:p-4 border-b border-gray-100 bg-gray-50/50">
                             <h3 class="font-bold text-gray-700 text-sm sm:text-base flex items-center gap-2"><i class="fa-solid fa-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
                         </div>
@@ -277,7 +284,7 @@
                                     <tr class="bg-gray-100 text-gray-600 text-xs sm:text-sm whitespace-nowrap border-b border-gray-200">
                                         <th class="p-2 sm:p-3 w-12 sm:w-16 text-center font-bold">ทีมที่</th>
                                         <th class="p-2 sm:p-3 w-16 sm:w-20 text-center font-bold">Avatar</th>
-                                        <th class="p-2 sm:p-3 font-bold">ชื่อทีม</th>
+                                        <th class="p-2 sm:p-3 font-bold w-[30%]">ชื่อทีม</th>
                                         <th class="p-2 sm:p-3 text-center font-bold">สถานะ NFC</th>
                                         <th class="p-2 sm:p-3 text-right w-24 sm:w-40 font-bold pr-4">จัดการ</th>
                                     </tr>
@@ -289,21 +296,21 @@
                 </div>
 
                 <!-- Tab: Manage Item -->
-                <div id="tab-manage-item" class="admin-content hidden">
+                <div id="tab-manage-item" class="admin-content hidden w-full">
                     <h3 class="text-lg sm:text-xl font-bold mb-4">📦 สร้างไอเทมใหม่ลงตลาด</h3>
-                    <div class="flex flex-col gap-3 max-w-2xl mx-auto bg-gray-50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 shadow-inner">
+                    <div class="flex flex-col gap-3 sm:gap-4 max-w-2xl mx-auto bg-gray-50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 shadow-inner">
                         <input type="text" id="new-item-name" placeholder="ชื่อไอเทม" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
                         
-                        <div class="flex gap-2">
-                            <input type="number" id="new-item-price" placeholder="ราคา (Gold)" class="w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
-                            <input type="number" id="new-item-stock" placeholder="จำนวน (เว้นว่าง=999)" class="w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <input type="number" id="new-item-price" placeholder="ราคา (Gold)" class="w-full sm:w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
+                            <input type="number" id="new-item-stock" placeholder="จำนวน (เว้นว่าง=999)" class="w-full sm:w-1/2 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
                         </div>
                         
                         <input type="text" id="new-item-image" placeholder="Image URL (เว้นว่างได้)" class="p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400">
                         
                         <div class="bg-purple-50 p-3 sm:p-4 rounded-xl border border-purple-200">
                             <label class="block text-xs sm:text-sm font-bold text-purple-700 mb-2">ตั้งค่าพลังเวทย์ (Effect)</label>
-                            <div class="flex flex-col sm:flex-row gap-2">
+                            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                                 <select id="new-item-effect-type" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-purple-400" onchange="app.toggleEffectInput()">
                                     <option value="">ไม่มีพลังพิเศษ</option>
                                     <option value="+Score">เพิ่ม Fame (+Score)</option>
@@ -316,7 +323,7 @@
                                     <option value="MultiplyScore">คูณ Fame (x เท่า)</option>
                                     <option value="Random">สุ่มดวง (Gacha)</option>
                                 </select>
-                                <input type="number" id="new-item-effect-val" placeholder="ตัวเลข" class="w-full sm:w-24 p-2.5 text-sm sm:text-base border rounded-lg hidden focus:outline-none focus:border-purple-400 text-center">
+                                <input type="number" id="new-item-effect-val" placeholder="ตัวเลข" class="w-full sm:w-32 p-2.5 text-sm sm:text-base border rounded-lg hidden focus:outline-none focus:border-purple-400 text-center">
                             </div>
                         </div>
 
@@ -328,7 +335,7 @@
                 </div>
 
                 <!-- Tab: Manage Market -->
-                <div id="tab-manage-market" class="admin-content hidden">
+                <div id="tab-manage-market" class="admin-content hidden w-full">
                     <div class="flex justify-between items-center mb-4 bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-100">
                         <h3 class="text-base sm:text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> ตลาดไอเทม</h3>
                         <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold flex items-center gap-1.5"><i class="fa-solid fa-rotate"></i> <span class="hidden sm:inline">รีเฟรช</span></button>
@@ -339,9 +346,9 @@
                 </div>
 
                 <!-- Tab: Special Event -->
-                <div id="tab-special-event" class="admin-content hidden text-center">
+                <div id="tab-special-event" class="admin-content hidden text-center w-full">
                     <h3 class="text-xl sm:text-2xl font-bold mb-2 mt-4 text-purple-800">🃏 สุ่มการ์ดโชคชะตา</h3>
-                    <p class="text-gray-500 mb-6 text-sm sm:text-base">เลือกการ์ด 1 ใบ แล้วให้กิลด์แตะการ์ด เพื่อรับผลลัพธ์</p>
+                    <p class="text-gray-500 mb-6 text-sm sm:text-base">เลือกการ์ด 1 ใบ แล้วให้กิลด์แตะ NFC เพื่อรับผลลัพธ์</p>
                     <div class="flex justify-center gap-3 sm:gap-4 flex-wrap mb-8">
                         <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
                         <div onclick="app.selectCard(this)" class="event-card w-20 h-28 sm:w-24 sm:h-36 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border-2 border-white cursor-pointer hover:scale-105 transition flex items-center justify-center group"><i class="fa-solid fa-question text-3xl sm:text-4xl text-white group-hover:animate-spin"></i></div>
@@ -353,7 +360,7 @@
                 </div>
 
                 <!-- Tab: Logs -->
-                <div id="tab-logs" class="admin-content hidden">
+                <div id="tab-logs" class="admin-content hidden w-full">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-700"><i class="fa-solid fa-scroll text-purple-400"></i> ประวัติ</h3>
                         <div class="flex gap-2">
