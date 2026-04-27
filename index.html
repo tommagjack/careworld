@@ -95,7 +95,7 @@
                     <span class="font-fantasy font-bold text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-base sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ การ์ด เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -105,15 +105,19 @@
     <nav class="p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
             <h1 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
-                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORKSHOP WORLD
+                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORLD
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-2 sm:gap-4 font-semibold text-xs sm:text-base">
+                <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-2 sm:px-3 py-1 rounded-full border border-purple-200 transition shadow-sm" title="รีเฟรชข้อมูล"><i class="fa-solid fa-rotate-right"></i></button>
                 <span id="nav-coins" class="bg-yellow-50 text-yellow-700 px-2 sm:px-3 py-1 rounded-full border-2 border-yellow-200"><i class="fa-solid fa-coins text-yellow-500"></i> 0</span>
                 <span id="nav-score" class="bg-blue-50 text-blue-700 px-2 sm:px-3 py-1 rounded-full border-2 border-blue-200"><i class="fa-solid fa-star text-blue-500"></i> 0</span>
                 <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold ml-1 sm:ml-0"><i class="fa-solid fa-sign-out-alt"></i></button>
             </div>
             <div id="nav-admin" class="hidden">
-                <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold text-sm sm:text-base"><i class="fa-solid fa-sign-out-alt"></i> ออกจากระบบ</button>
+                <div class="flex items-center gap-2 sm:gap-4 font-semibold text-xs sm:text-base">
+                    <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200 transition shadow-sm"><i class="fa-solid fa-rotate-right"></i> รีเฟรช</button>
+                    <button onclick="app.logout()" class="text-red-400 hover:text-red-600 font-bold text-sm sm:text-base"><i class="fa-solid fa-sign-out-alt"></i> ออกจากระบบ</button>
+                </div>
             </div>
         </div>
     </nav>
@@ -135,7 +139,7 @@
                 <p class="text-gray-500 mb-8 font-medium text-sm sm:text-base">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
                 <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-4 rounded-2xl shadow-md hover:shadow-lg text-lg sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อเข้ากิลด์
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ การ์ด เพื่อเข้าเกม
                 </button>
 
                 <div class="mt-8 border-t border-dashed border-gray-200 pt-6">
@@ -424,6 +428,40 @@
                 const result = await response.json();
                 if (!result.success) throw new Error(result.error);
                 return result.data;
+            },
+
+            // --- REFRESH DATA (Smart Refresh) ---
+            refreshData: async function() {
+                if (document.getElementById('view-dashboard').classList.contains('active')) {
+                    if (this.state.currentGuild) {
+                        try {
+                            Swal.fire({ title: 'กำลังอัปเดตข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                            const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
+                            this.state.currentGuild = freshData.guild;
+                            this.state.inventory = freshData.inventory;
+                            this.state.otherGuilds = freshData.otherGuilds; 
+                            this.loadDashboard();
+                            Swal.close();
+                            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                        } catch (error) {
+                            Swal.fire('❌ ผิดพลาด', error.message || error, 'error');
+                        }
+                    }
+                } else if (document.getElementById('view-market').classList.contains('active')) {
+                    this.loadMarket();
+                } else if (document.getElementById('view-admin').classList.contains('active')) {
+                    if (document.getElementById('tab-leaderboard').classList.contains('active') || 
+                        document.getElementById('tab-manage-guild').classList.contains('active')) {
+                        Swal.fire({ title: 'กำลังอัปเดตข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                        await this.loadAdminData();
+                        Swal.close();
+                        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                    } else if (document.getElementById('tab-manage-market').classList.contains('active')) {
+                        this.loadAdminMarket();
+                    } else if (document.getElementById('tab-logs').classList.contains('active')) {
+                        this.loadLogs();
+                    }
+                }
             },
 
             // --- NFC Smart Matcher (แปลงรหัสให้ตรงกับเครื่องอ่าน USB) ---
