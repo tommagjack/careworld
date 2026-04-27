@@ -222,7 +222,9 @@
                 <!-- Tab: Leaderboard -->
                 <div id="tab-leaderboard" class="admin-content active">
                     <h3 class="text-2xl font-fantasy font-bold mb-4 text-purple-700">🏆 อันดับกิลด์นักผจญภัย</h3>
-                    <div id="leaderboard-cards" class="flex flex-col gap-4 bg-gray-50 p-4 rounded-2xl border-2 border-purple-100"></div>
+                    <div id="leaderboard-cards" class="flex flex-col gap-4 bg-gray-50 p-4 rounded-2xl border-2 border-purple-100">
+                        <!-- Cards will be injected here -->
+                    </div>
                 </div>
 
                 <!-- Tab: Manage Guild -->
@@ -257,7 +259,6 @@
                         </div>
                     </div>
 
-                    <!-- อัปเดตตารางรายชื่อทีมทั้งหมด ให้สวยงามเหมือนในรูป -->
                     <div class="bg-white rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden">
                         <div class="p-4 border-b border-gray-100 bg-white">
                             <h3 class="font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
@@ -294,10 +295,11 @@
                                 <select id="new-item-effect-type" class="p-2 border rounded-lg flex-1 focus:outline-none focus:border-purple-400" onchange="app.toggleEffectInput()">
                                     <option value="">ไม่มีพลังพิเศษ</option>
                                     <option value="+Score">เพิ่ม Fame (+Score)</option>
-                                    <option value="-Score">ลด Fame (-Score)</option>
+                                    <option value="-Score">ลด Fame (-Score) [โจมตี]</option>
                                     <option value="+Coins">เพิ่ม Gold (+Coins)</option>
-                                    <option value="-Coins">ลด Gold (-Coins)</option>
+                                    <option value="-Coins">ลด Gold (-Coins) [โจมตี]</option>
                                     <option value="StealScore">ขโมย Fame (จากทีมอื่น)</option>
+                                    <option value="StealCoins">ขโมย Gold (จากทีมอื่น)</option>
                                     <option value="HelpScore">ช่วยเหลือ Fame (มอบให้ทีมอื่น)</option>
                                     <option value="MultiplyScore">คูณ Fame (x เท่า)</option>
                                     <option value="Random">สุ่มดวง (Gacha)</option>
@@ -318,7 +320,9 @@
                         <h3 class="text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> จัดการตลาดไอเทม</h3>
                         <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-200 text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-rotate"></i> รีเฟรช</button>
                     </div>
-                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4"></div>
+                    <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4">
+                        <!-- Admin market items inject here -->
+                    </div>
                 </div>
 
                 <!-- Tab: Special Event -->
@@ -367,8 +371,14 @@
     </main>
 
     <script>
+        // =========================================================================
+        // CONFIGURATION
+        // =========================================================================
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbyHO3Vlgm4nJipNe2fklc5sbxZFJpKcj0Hzr1doA31nUkITnhoSMKOT2htwbfKSDTmu7A/exec';
         
+        // =========================================================================
+        // MAIN APP STATE & LOGIC
+        // =========================================================================
         const app = {
             state: {
                 currentGuild: null,
@@ -664,6 +674,7 @@
                 }
             },
 
+            // --- CART SYSTEM ---
             addToCart: function(itemId, name, price, image, maxLimit) {
                 const invItem = this.state.inventory.find(i => i.itemId === itemId);
                 const currentInvQty = invItem ? Number(invItem.qty) : 0;
@@ -784,7 +795,10 @@
             useItem: async function(itemId, itemName, effectStr) {
                 let targetGuildId = null;
                 const lowEff = (effectStr || '').toLowerCase();
-                const isTargetSkill = lowEff.includes('ขโมย') || lowEff.includes('steal') || lowEff.includes('โจมตี') || lowEff.includes('ช่วย') || lowEff.includes('help');
+                const isTargetSkill = lowEff.includes('ขโมย') || lowEff.includes('steal') || 
+                                      lowEff.includes('ลด') || lowEff.includes('reduce') || 
+                                      lowEff.includes('ช่วย') || lowEff.includes('help') ||
+                                      lowEff.includes('โจมตี') || lowEff.includes('-');
 
                 if (isTargetSkill) {
                     if (!this.state.otherGuilds || this.state.otherGuilds.length === 0) {
@@ -979,7 +993,6 @@
                     if (guildListBody) {
                         guildListBody.innerHTML = '';
                         guilds.forEach(g => {
-                            // การแสดงผลสถานะการผูกบัตรให้ตรงตามภาพ
                             const nfcStatus = g.nfcId 
                                 ? `<span class="bg-green-50 text-green-600 font-bold px-3 py-1 rounded-full text-xs border border-green-200"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
                                 : `<span class="bg-gray-50 text-gray-400 font-bold px-3 py-1 rounded-full text-xs border border-gray-200"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
@@ -1007,7 +1020,6 @@
                 let avatar = document.getElementById('new-guild-avatar').value;
                 if(!name) return Swal.fire('ข้อมูลไม่ครบ', 'กรุณาระบุชื่อทีม', 'warning');
                 
-                // หากไม่ได้ใส่รูปมา ให้ใช้รูปขวดน้ำยาเวทมนตร์เป็นค่าเริ่มต้นแทนรูปหุ่นยนต์
                 if(!avatar) avatar = 'https://img.icons8.com/fluency/256/magic-potion.png';
                 
                 try {
@@ -1097,7 +1109,7 @@
                     Swal.fire({ title: 'กำลังผูกจิตวิญญาณ...', didOpen: () => Swal.showLoading() });
                     await this.apiCall('mapNFC', { nfcId, guildId });
                     Swal.fire('✅ ผูกการ์ดสำเร็จ', '', 'success');
-                    this.loadAdminData(); // โหลดใหม่ให้ตารางอัปเดต
+                    this.loadAdminData(); 
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message, 'error'); }
             },
 
@@ -1119,10 +1131,11 @@
                 
                 if (type === 'Random') finalEffect = "สุ่ม";
                 else if (type === '+Score') finalEffect = `'+${val} Score`;
-                else if (type === '-Score') finalEffect = `'-${val} Score`;
+                else if (type === '-Score') finalEffect = `ลด ${val} Score`;
                 else if (type === '+Coins') finalEffect = `'+${val} Coins`;
-                else if (type === '-Coins') finalEffect = `'-${val} Coins`;
+                else if (type === '-Coins') finalEffect = `ลด ${val} Coins`;
                 else if (type === 'StealScore') finalEffect = `ขโมย ${val} Score`;
+                else if (type === 'StealCoins') finalEffect = `ขโมย ${val} Coins`;
                 else if (type === 'HelpScore') finalEffect = `ช่วย ${val} Score`;
                 else if (type === 'MultiplyScore') finalEffect = `x${val} Score`;
 
