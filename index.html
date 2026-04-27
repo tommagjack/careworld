@@ -1124,6 +1124,43 @@
                 }
             },
 
+            // --- ฟังก์ชันแยกแยะ Effect String ให้ออกมาเป็นประเภทและตัวเลข ---
+            parseEffectString: function(effStr) {
+                if (!effStr) return { type: '', value: '' };
+                let s = String(effStr).replace(/^'/, '').trim();
+                let type = '';
+                let value = '';
+
+                if (s === 'สุ่ม') return { type: 'Random', value: '' };
+
+                const numMatch = s.match(/\d+(\.\d+)?/);
+                if (numMatch) value = numMatch[0];
+
+                if (s.includes('Score') || s.includes('Fame') || s.includes('คะแนน')) {
+                    if (s.includes('+') || s.includes('เพิ่ม')) type = '+Score';
+                    else if (s.includes('-') || s.includes('ลด')) type = '-Score';
+                    else if (s.includes('ขโมย') || s.includes('Steal')) type = 'StealScore';
+                    else if (s.includes('ช่วย') || s.includes('Help')) type = 'HelpScore';
+                    else if (s.includes('x') || s.includes('คูณ')) type = 'MultiplyScore';
+                } else if (s.includes('Coins') || s.includes('Gold') || s.includes('เหรียญ')) {
+                    if (s.includes('+') || s.includes('เพิ่ม')) type = '+Coins';
+                    else if (s.includes('-') || s.includes('ลด')) type = '-Coins';
+                    else if (s.includes('ขโมย') || s.includes('Steal')) type = 'StealCoins';
+                }
+                return { type, value };
+            },
+
+            toggleEditEffectInput: function() {
+                const type = document.getElementById('swal-edit-effect-type').value;
+                const valInput = document.getElementById('swal-edit-effect-val');
+                if(type === '' || type === 'Random') {
+                    valInput.classList.add('hidden');
+                    valInput.value = '';
+                } else {
+                    valInput.classList.remove('hidden');
+                }
+            },
+
             createItem: async function() {
                 const type = document.getElementById('new-item-effect-type').value;
                 const val = document.getElementById('new-item-effect-val').value;
@@ -1184,8 +1221,8 @@
                         grid.innerHTML += `
                             <div class="glass-card p-4 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group">
                                 <div class="absolute top-2 right-2 flex gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                                    <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition"><i class="fa-solid fa-pen text-xs"></i></button>
-                                    <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition"><i class="fa-solid fa-trash text-xs"></i></button>
+                                    <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition" title="แก้ไขไอเทม"><i class="fa-solid fa-pen text-xs"></i></button>
+                                    <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition" title="ลบไอเทม"><i class="fa-solid fa-trash text-xs"></i></button>
                                 </div>
                                 <div class="relative z-10 flex flex-col items-center w-full mt-2">
                                     <div class="relative w-20 h-20 mx-auto mb-3 flex items-center justify-center">
@@ -1209,6 +1246,9 @@
                                     <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
                                     ${item.maxPerGuild ? `<div class="text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
                                 </div>
+                                <button onclick="app.testItemEffect('${item.itemId}')" class="w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold py-2 rounded-xl text-[11px] mt-2 transition flex items-center justify-center gap-2 border border-indigo-100 shadow-sm">
+                                    <i class="fa-solid fa-flask"></i> ดูตัวอย่างพลัง
+                                </button>
                             </div>
                         `;
                     });
@@ -1217,14 +1257,44 @@
                 }
             },
 
+            testItemEffect: function(itemId) {
+                const item = this.state.marketItems.find(i => i.itemId === itemId);
+                if (!item) return;
+
+                const parsed = this.parseEffectString(item.effect);
+                let msg = "ไอเทมนี้ <b>ไม่มีพลังเวทย์พิเศษ</b> ใดๆ";
+
+                if (parsed.type) {
+                    let actionText = "";
+                    switch (parsed.type) {
+                        case '+Score': actionText = `เพิ่ม Fame ให้กับทีมตัวเอง <b>${parsed.value} แต้ม</b>`; break;
+                        case '-Score': actionText = `โจมตีลด Fame ทีมเป้าหมาย <b>${parsed.value} แต้ม</b>`; break;
+                        case '+Coins': actionText = `เพิ่ม Gold ให้กับทีมตัวเอง <b>${parsed.value} เหรียญ</b>`; break;
+                        case '-Coins': actionText = `โจมตีลด Gold ทีมเป้าหมาย <b>${parsed.value} เหรียญ</b>`; break;
+                        case 'StealScore': actionText = `ขโมย Fame จากทีมอื่น มาให้ตัวเอง <b>${parsed.value} แต้ม</b>`; break;
+                        case 'StealCoins': actionText = `ขโมย Gold จากทีมอื่น มาให้ตัวเอง <b>${parsed.value} เหรียญ</b>`; break;
+                        case 'HelpScore': actionText = `มอบ Fame ช่วยเหลือทีมอื่น <b>${parsed.value} แต้ม</b>`; break;
+                        case 'MultiplyScore': actionText = `คูณคะแนน Fame ของตัวเอง <b>${parsed.value} เท่า</b>`; break;
+                        case 'Random': actionText = `สุ่มผลลัพธ์ (อาจจะได้ Gold, ได้ Fame หรือซวยโดนหัก Gold)`; break;
+                    }
+                    msg = `เมื่อผู้เล่นใช้งาน ไอเทมนี้จะ:<br><br><div class="text-lg text-purple-700 bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-inner">${actionText}</div>`;
+                }
+
+                Swal.fire({
+                    title: `🧪 ผลลัพธ์ของ ${item.name}`,
+                    html: msg,
+                    icon: parsed.type ? 'info' : 'question',
+                    confirmButtonColor: '#7c5ff0',
+                    confirmButtonText: 'รับทราบ'
+                });
+            },
+
             editItemPrompt: async function(itemId) {
                 const item = this.state.marketItems.find(i => i.itemId === itemId);
                 if (!item) return;
                 
-                let displayEffect = item.effect || '';
-                if(displayEffect.startsWith("'")) {
-                    displayEffect = displayEffect.substring(1);
-                }
+                const parsed = this.parseEffectString(item.effect);
+                const isSelected = (val) => parsed.type === val ? 'selected' : '';
 
                 const { value: formValues } = await Swal.fire({
                     title: 'แก้ไขไอเทม',
@@ -1246,14 +1316,28 @@
                                 </div>
                             </div>
 
-                            <div class="flex gap-4">
-                                <div class="w-1/2">
+                            <div class="flex flex-col gap-4 sm:flex-row">
+                                <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">จำกัดถือครอง (ต่อทีม):</label>
                                     <input id="swal-item-max" type="number" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${item.maxPerGuild || ''}" placeholder="ไม่จำกัด">
                                 </div>
-                                <div class="w-1/2">
+                                <div class="w-full sm:w-1/2">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">Effect:</label>
-                                    <input id="swal-item-effect" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${displayEffect}" placeholder="เช่น +10 Score">
+                                    <div class="flex gap-2">
+                                        <select id="swal-edit-effect-type" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" onchange="app.toggleEditEffectInput()">
+                                            <option value="" ${isSelected('')}>ไม่มีพลังพิเศษ</option>
+                                            <option value="+Score" ${isSelected('+Score')}>เพิ่ม Fame (+Score)</option>
+                                            <option value="-Score" ${isSelected('-Score')}>ลด Fame (-Score) [โจมตี]</option>
+                                            <option value="+Coins" ${isSelected('+Coins')}>เพิ่ม Gold (+Coins)</option>
+                                            <option value="-Coins" ${isSelected('-Coins')}>ลด Gold (-Coins) [โจมตี]</option>
+                                            <option value="StealScore" ${isSelected('StealScore')}>ขโมย Fame (จากทีมอื่น)</option>
+                                            <option value="StealCoins" ${isSelected('StealCoins')}>ขโมย Gold (จากทีมอื่น)</option>
+                                            <option value="HelpScore" ${isSelected('HelpScore')}>ช่วยเหลือ Fame (มอบให้ทีมอื่น)</option>
+                                            <option value="MultiplyScore" ${isSelected('MultiplyScore')}>คูณ Fame (x เท่า)</option>
+                                            <option value="Random" ${isSelected('Random')}>สุ่มดวง (Gacha)</option>
+                                        </select>
+                                        <input type="number" id="swal-edit-effect-val" placeholder="ตัวเลข" class="w-20 p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-center ${parsed.type === 'Random' || parsed.type === '' ? 'hidden' : ''}" value="${parsed.value}">
+                                    </div>
                                 </div>
                             </div>
 
@@ -1272,7 +1356,7 @@
                     showCancelButton: true,
                     confirmButtonText: 'บันทึกการแก้ไข',
                     cancelButtonText: 'ยกเลิก',
-                    width: '32rem',
+                    width: '36rem',
                     padding: '2rem',
                     customClass: {
                         popup: 'rounded-2xl shadow-2xl border-0',
@@ -1283,9 +1367,23 @@
                     },
                     buttonsStyling: false,
                     preConfirm: () => {
-                        let parsedEffect = document.getElementById('swal-item-effect').value;
-                        if (parsedEffect.startsWith('+') || parsedEffect.startsWith('-') || parsedEffect.startsWith('=')) {
-                            parsedEffect = "'" + parsedEffect;
+                        const type = document.getElementById('swal-edit-effect-type').value;
+                        const val = document.getElementById('swal-edit-effect-val').value;
+                        let finalEffect = "";
+                        
+                        if (type === 'Random') finalEffect = "สุ่ม";
+                        else if (type === '+Score') finalEffect = `'+${val} Score`;
+                        else if (type === '-Score') finalEffect = `ลด ${val} Score`;
+                        else if (type === '+Coins') finalEffect = `'+${val} Coins`;
+                        else if (type === '-Coins') finalEffect = `ลด ${val} Coins`;
+                        else if (type === 'StealScore') finalEffect = `ขโมย ${val} Score`;
+                        else if (type === 'StealCoins') finalEffect = `ขโมย ${val} Coins`;
+                        else if (type === 'HelpScore') finalEffect = `ช่วย ${val} Score`;
+                        else if (type === 'MultiplyScore') finalEffect = `x${val} Score`;
+
+                        if (type && type !== 'Random' && !val) {
+                            Swal.showValidationMessage('กรุณาระบุจำนวนตัวเลขเวทมนตร์ด้วย!');
+                            return false;
                         }
 
                         return {
@@ -1294,7 +1392,7 @@
                             price: document.getElementById('swal-item-price').value,
                             stock: document.getElementById('swal-item-stock').value,
                             maxPerGuild: document.getElementById('swal-item-max').value,
-                            effect: parsedEffect,
+                            effect: finalEffect,
                             image: document.getElementById('swal-item-image').value,
                             description: document.getElementById('swal-item-desc').value,
                         }
