@@ -63,6 +63,23 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
         .inv-slot { background: #f8fafc; border: 3px solid #e2e8f0; border-bottom-color: #cbd5e1; border-right-color: #cbd5e1; border-radius: 1rem; box-shadow: inset 0 3px 6px rgba(0,0,0,0.05); }
+        
+        /* Item Animations */
+        .animate-fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .item-float {
+            animation: itemFloat 2.5s ease-in-out infinite;
+        }
+        @keyframes itemFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
     </style>
 </head>
 <body class="text-gray-700 min-h-screen relative font-sans">
@@ -95,7 +112,7 @@
                     <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -105,7 +122,7 @@
     <nav class="p-3 sm:p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
             <h1 class="text-lg sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
-                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORLD
+                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORKSHOP WORLD
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-1.5 sm:gap-4 font-semibold text-[10px] sm:text-base">
                 <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-2 sm:px-3 py-1 rounded-full border border-purple-200 transition shadow-sm" title="รีเฟรชข้อมูล"><i class="fa-solid fa-rotate-right"></i></button>
@@ -139,7 +156,7 @@
                 <p class="text-gray-500 mb-6 sm:mb-8 font-medium text-xs sm:text-sm px-4">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
                 <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-3 sm:py-4 rounded-2xl shadow-md hover:shadow-lg text-base sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อเข้าเกม
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อเข้ากิลด์
                 </button>
 
                 <div class="mt-6 sm:mt-8 border-t border-dashed border-gray-200 pt-4 sm:pt-6">
@@ -408,6 +425,81 @@
                 marketItems: [],
                 inventory: []
             },
+            
+            pollingInterval: null,
+
+            startPolling: function() {
+                if (this.pollingInterval) clearInterval(this.pollingInterval);
+                this.pollingInterval = setInterval(() => {
+                    if (this.state.currentGuild && !Swal.isVisible()) {
+                        this.checkUpdates();
+                    }
+                }, 10000); // Check every 10 seconds
+            },
+
+            stopPolling: function() {
+                if (this.pollingInterval) clearInterval(this.pollingInterval);
+            },
+
+            playAlert: function() {
+                try {
+                    if (navigator.vibrate) {
+                        navigator.vibrate([500, 200, 500, 200, 500]); // สั่น
+                    }
+                    const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg'); // เสียงแจ้งเตือน
+                    audio.volume = 0.5;
+                    audio.play();
+                } catch(e) { console.log("Audio play blocked", e); }
+            },
+
+            checkUpdates: async function() {
+                try {
+                    const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
+                    const oldScore = Number(this.state.currentGuild.score);
+                    const oldCoins = Number(this.state.currentGuild.coins);
+                    const newScore = Number(freshData.guild.score);
+                    const newCoins = Number(freshData.guild.coins);
+
+                    let alertHtml = '';
+                    if (newScore < oldScore) alertHtml += `<div class="text-red-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-down"></i> Fame ลดลง ${oldScore - newScore} แต้ม!</div>`;
+                    if (newCoins < oldCoins) alertHtml += `<div class="text-yellow-600 font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i> Gold หายไป ${oldCoins - newCoins} เหรียญ!</div>`;
+
+                    if (alertHtml !== '') {
+                        this.playAlert();
+                        Swal.fire({
+                            title: '🚨 ระวัง! ทีมโดนโจมตี!',
+                            html: alertHtml,
+                            icon: 'warning',
+                            confirmButtonColor: '#ef4444',
+                            confirmButtonText: 'ตั้งสติรับมือ!',
+                            backdrop: `rgba(239, 68, 68, 0.4)`
+                        });
+                    } else if (newScore > oldScore || newCoins > oldCoins) {
+                        // กรณีได้รับการช่วยเหลือหรือสุ่มได้บัฟ
+                        let buffHtml = '';
+                        if (newScore > oldScore) buffHtml += `<div class="text-blue-500 font-bold text-sm"><i class="fa-solid fa-arrow-trend-up"></i> Fame เพิ่มขึ้น ${newScore - oldScore} แต้ม!</div>`;
+                        if (newCoins > oldCoins) buffHtml += `<div class="text-yellow-500 font-bold text-sm"><i class="fa-solid fa-arrow-trend-up"></i> Gold เพิ่มขึ้น ${newCoins - oldCoins} เหรียญ!</div>`;
+                        Swal.fire({
+                            toast: true, position: 'top-end', icon: 'success', title: 'มีข่าวดี!', html: buffHtml, showConfirmButton: false, timer: 3000
+                        });
+                    }
+
+                    this.state.currentGuild = freshData.guild;
+                    this.state.inventory = freshData.inventory;
+                    this.state.otherGuilds = freshData.otherGuilds;
+
+                    // อัปเดตตัวเลขแบบเงียบๆ ไม่ต้องกระพริบหน้าจอ
+                    document.getElementById('dash-coins-val').textContent = newCoins;
+                    document.getElementById('dash-score-val').textContent = newScore;
+                    document.getElementById('nav-coins-text').textContent = newCoins;
+                    document.getElementById('nav-score-text').textContent = newScore;
+                    
+                    // ถ้าอยู่หน้า Dashboard ให้โหลดกระเป๋าใหม่แบบไม่แสดงแอนิเมชัน
+                    if (document.getElementById('view-dashboard').classList.contains('active')) {
+                        this.loadDashboard(true);
+                    }
+                } catch(e) {}
+            },
 
             navigate: function(viewId) {
                 document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
@@ -598,6 +690,7 @@
                     this.state.otherGuilds = data.otherGuilds; 
                     
                     Swal.close();
+                    this.startPolling();
                     this.navigate('dashboard');
                 } catch (error) {
                     if(error !== 'ยกเลิก') {
@@ -609,6 +702,7 @@
             },
 
             logout: function() {
+                this.stopPolling();
                 this.state.currentGuild = null;
                 this.state.otherGuilds = [];
                 this.state.cart = []; 
@@ -616,11 +710,11 @@
                 this.navigate('login');
             },
 
-            loadDashboard: function() {
+            loadDashboard: function(silent = false) {
                 const g = this.state.currentGuild;
                 if(!g) return this.navigate('login');
 
-                document.getElementById('dash-avatar').src = g.avatar;
+                document.getElementById('dash-avatar').src = g.avatar || 'https://img.icons8.com/fluency/256/magic-potion.png';
                 document.getElementById('dash-name').textContent = g.name;
                 document.getElementById('dash-coins-val').textContent = g.coins;
                 document.getElementById('dash-score-val').textContent = g.score;
@@ -635,14 +729,17 @@
                 if(validInventory.length === 0) {
                     invGrid.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">🪹 ยังไม่มีไอเทมในกระเป๋า</div>';
                 } else {
-                    validInventory.forEach(item => {
+                    validInventory.forEach((item, index) => {
                         const effectStr = (item.effect || '').replace(/'/g, "\\'");
+                        const animClass = silent ? '' : 'animate-fade-in-up';
+                        const animStyle = silent ? '' : `style="animation-delay: ${index * 0.05}s"`;
+                        
                         invGrid.innerHTML += `
-                            <div class="inv-slot p-2 sm:p-3 text-center hover-bounce relative flex flex-col justify-between group bg-white">
+                            <div class="inv-slot p-2 sm:p-3 text-center hover-bounce relative flex flex-col justify-between group bg-white ${animClass}" ${animStyle}>
                                 <div class="absolute inset-0 bg-white opacity-50 rounded-lg pointer-events-none group-hover:opacity-80 transition"></div>
                                 <div class="relative z-10">
                                     <div class="absolute -top-3 -right-3 bg-red-500 text-white text-[10px] sm:text-xs font-bold w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center border-2 border-white shadow-md">${item.qty}</div>
-                                    <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-2 bg-gray-50">
+                                    <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-2 bg-gray-50 item-float">
                                         <img src="${item.image}" class="w-full h-full object-cover" alt="${item.name}">
                                     </div>
                                     <div class="font-fantasy font-bold text-xs sm:text-sm text-gray-800 truncate leading-tight">${item.name}</div>
@@ -665,12 +762,12 @@
 
                     const grid = document.getElementById('market-grid');
                     grid.innerHTML = '';
-                    items.forEach(item => {
+                    items.forEach((item, index) => {
                         const displayEffect = item.effect === '#ERROR!' || !item.effect ? 'ไม่มีพลังพิเศษ' : item.effect;
                         grid.innerHTML += `
-                            <div class="glass-card p-4 sm:p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md">
+                            <div class="glass-card p-4 sm:p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md animate-fade-in-up" style="animation-delay: ${index * 0.05}s">
                                 <div class="relative z-10 flex flex-col items-center w-full">
-                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 flex items-center justify-center item-float">
                                         <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
                                         <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
                                             <img src="${item.image}" class="w-full h-full object-cover">
@@ -1236,16 +1333,16 @@
                         return;
                     }
 
-                    items.forEach(item => {
+                    items.forEach((item, index) => {
                         const displayEffect = item.effect === '#ERROR!' || !item.effect ? '<span class="text-gray-400">ไม่มีพลังพิเศษ</span>' : `<span class="text-purple-600">${item.effect}</span>`;
                         grid.innerHTML += `
-                            <div class="glass-card p-4 sm:p-5 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group">
+                            <div class="glass-card p-4 sm:p-5 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group animate-fade-in-up" style="animation-delay: ${index * 0.05}s">
                                 <div class="absolute top-2 right-2 flex flex-col sm:flex-row gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                     <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition" title="แก้ไขไอเทม"><i class="fa-solid fa-pen text-xs"></i></button>
                                     <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition" title="ลบไอเทม"><i class="fa-solid fa-trash text-xs"></i></button>
                                 </div>
                                 <div class="relative z-10 flex flex-col items-center w-full mt-2">
-                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 flex items-center justify-center">
+                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 flex items-center justify-center item-float">
                                         <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
                                         <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
                                             <img src="${item.image}" class="w-full h-full object-cover">
