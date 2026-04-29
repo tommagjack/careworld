@@ -112,7 +112,7 @@
                     <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -170,7 +170,7 @@
         <!-- ================= ADMIN LOGIN ================= -->
         <section id="view-admin-login" class="view-section text-center">
             <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10 w-full">
-                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
+                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">มาสเตอร์กิลด์</h2>
                 <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-base sm:text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
                 <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700 text-sm sm:text-base">เข้าสู่กิลด์</button>
                 <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-xs sm:text-sm font-bold">กลับหน้าหลัก</button>
@@ -432,7 +432,8 @@
             },
             
             pollingInterval: null,
-            alertAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียง
+            alertAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียงเตือนโจมตี
+            successAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียงรับของ
 
             initAudio: function() {
                 // ฟังก์ชันปลดล็อก Autoplay Policy ของเบราว์เซอร์ (สำคัญมากสำหรับ PC)
@@ -443,6 +444,14 @@
                     this.alertAudio.play().then(() => {
                         this.alertAudio.pause();
                         this.alertAudio.currentTime = 0;
+                    }).catch(e => console.log("Audio init blocked", e));
+                }
+                if (!this.successAudio) {
+                    this.successAudio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+                    this.successAudio.volume = 0.5;
+                    this.successAudio.play().then(() => {
+                        this.successAudio.pause();
+                        this.successAudio.currentTime = 0;
                     }).catch(e => console.log("Audio init blocked", e));
                 }
             },
@@ -460,20 +469,35 @@
                 if (this.pollingInterval) clearInterval(this.pollingInterval);
             },
 
-            playAlert: function() {
+            playAlert: function(type = 'danger') {
                 try {
                     // สำหรับมือถือ (ระบบสั่น)
                     if (navigator.vibrate) {
-                        navigator.vibrate([500, 200, 500, 200, 500]);
+                        if (type === 'danger') {
+                            navigator.vibrate([500, 200, 500, 200, 500]); // สั่นเตือนยาว
+                        } else {
+                            navigator.vibrate([100, 100, 100, 100, 100]); // สั่นถี่ๆ สั้นๆ แบบดีใจ
+                        }
                     }
                     // สำหรับเล่นเสียง (ทำงานได้ทั้งคอมและมือถือ)
-                    if (this.alertAudio) {
-                        this.alertAudio.currentTime = 0;
-                        this.alertAudio.play();
-                    } else {
-                        const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
-                        audio.volume = 0.5;
-                        audio.play();
+                    if (type === 'danger') {
+                        if (this.alertAudio) {
+                            this.alertAudio.currentTime = 0;
+                            this.alertAudio.play();
+                        } else {
+                            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
+                            audio.volume = 0.5;
+                            audio.play();
+                        }
+                    } else if (type === 'success') {
+                        if (this.successAudio) {
+                            this.successAudio.currentTime = 0;
+                            this.successAudio.play();
+                        } else {
+                            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+                            audio.volume = 0.5;
+                            audio.play();
+                        }
                     }
                 } catch(e) { console.log("Audio play blocked", e); }
             },
@@ -486,27 +510,37 @@
                     const newScore = Number(freshData.guild.score);
                     const newCoins = Number(freshData.guild.coins);
 
-                    let alertHtml = '';
-                    if (newScore < oldScore) alertHtml += `<div class="text-red-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-down"></i> Fame ลดลง ${oldScore - newScore} แต้ม!</div>`;
-                    if (newCoins < oldCoins) alertHtml += `<div class="text-yellow-600 font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i> Gold หายไป ${oldCoins - newCoins} เหรียญ!</div>`;
+                    let dangerHtml = '';
+                    let successHtml = '';
 
-                    if (alertHtml !== '') {
-                        this.playAlert();
+                    // กรณีคะแนนลดลง (โดนโจมตี)
+                    if (newScore < oldScore) dangerHtml += `<div class="text-red-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-down"></i> Fame ลดลง ${oldScore - newScore} แต้ม!</div>`;
+                    if (newCoins < oldCoins) dangerHtml += `<div class="text-yellow-600 font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i> Gold หายไป ${oldCoins - newCoins} เหรียญ!</div>`;
+
+                    // กรณีคะแนนเพิ่มขึ้น (ได้รับการช่วยเหลือ/แอดมินมอบให้) มี Animation เด้งดึ๋งๆ
+                    if (newScore > oldScore) successHtml += `<div class="text-blue-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-up animate-bounce inline-block"></i> Fame เพิ่มขึ้น ${newScore - oldScore} แต้ม!</div>`;
+                    if (newCoins > oldCoins) successHtml += `<div class="text-yellow-500 font-bold text-lg"><i class="fa-solid fa-arrow-trend-up animate-bounce inline-block"></i> Gold เพิ่มขึ้น ${newCoins - oldCoins} เหรียญ!</div>`;
+
+                    // แสดง Popup 
+                    if (dangerHtml !== '') {
+                        this.playAlert('danger');
                         Swal.fire({
                             title: '🚨 ระวัง! ทีมโดนโจมตี!',
-                            html: alertHtml,
+                            html: dangerHtml,
                             icon: 'warning',
                             confirmButtonColor: '#ef4444',
                             confirmButtonText: 'ตั้งสติรับมือ!',
                             backdrop: `rgba(239, 68, 68, 0.4)`
                         });
-                    } else if (newScore > oldScore || newCoins > oldCoins) {
-                        // กรณีได้รับการช่วยเหลือหรือสุ่มได้บัฟ
-                        let buffHtml = '';
-                        if (newScore > oldScore) buffHtml += `<div class="text-blue-500 font-bold text-sm"><i class="fa-solid fa-arrow-trend-up"></i> Fame เพิ่มขึ้น ${newScore - oldScore} แต้ม!</div>`;
-                        if (newCoins > oldCoins) buffHtml += `<div class="text-yellow-500 font-bold text-sm"><i class="fa-solid fa-arrow-trend-up"></i> Gold เพิ่มขึ้น ${newCoins - oldCoins} เหรียญ!</div>`;
+                    } else if (successHtml !== '') {
+                        this.playAlert('success');
                         Swal.fire({
-                            toast: true, position: 'top-end', icon: 'success', title: 'มีข่าวดี!', html: buffHtml, showConfirmButton: false, timer: 3000
+                            title: '🎉 ข่าวดี! ได้รับพลังเวทมนตร์',
+                            html: successHtml,
+                            icon: 'success',
+                            confirmButtonColor: '#10b981',
+                            confirmButtonText: 'ยอดเยี่ยม!',
+                            backdrop: `rgba(16, 185, 129, 0.4)`
                         });
                     }
 
