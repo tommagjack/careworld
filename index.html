@@ -59,18 +59,18 @@
         ::-webkit-scrollbar-thumb { background: #fff; border: 2px solid #e0c3fc; border-radius: 10px; }
         
         .view-section { display: none; }
-        .view-section.active { display: block; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
         
         .inv-slot { background: #f8fafc; border: 3px solid #e2e8f0; border-bottom-color: #cbd5e1; border-right-color: #cbd5e1; border-radius: 1rem; box-shadow: inset 0 3px 6px rgba(0,0,0,0.05); }
         
         /* Item Animations */
         .animate-fade-in-up {
             opacity: 0;
-            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(20px); }
+            0% { opacity: 0; transform: translateY(15px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         .item-float {
@@ -144,7 +144,6 @@
         <!-- ================= LOGIN VIEW ================= -->
         <section id="view-login" class="view-section active text-center">
             <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-16 w-full">
-                <!-- Logo Area -->
                 <div class="relative w-36 h-36 sm:w-48 sm:h-48 mx-auto mb-4 flex items-center justify-center">
                     <div class="absolute inset-0 bg-yellow-50/80 rounded-full scale-110"></div>
                     <div class="relative z-10 w-28 h-28 sm:w-40 sm:h-40 bg-[#f4f6ff] rounded-full flex items-center justify-center border-[4px] border-white shadow-sm animate-float overflow-hidden">
@@ -161,7 +160,7 @@
 
                 <div class="mt-6 sm:mt-8 border-t border-dashed border-gray-200 pt-4 sm:pt-6">
                     <button onclick="app.navigate('admin-login')" class="text-[#a855f7] hover:text-[#8a4fff] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 mx-auto transition">
-                        <i class="fa-solid fa-crown"></i> สำหรับมาสเตอร์กิลด์ (Admin)
+                        <i class="fa-solid fa-crown"></i> สำหรับกิลด์มาสเตอร์
                     </button>
                 </div>
             </div>
@@ -170,7 +169,7 @@
         <!-- ================= ADMIN LOGIN ================= -->
         <section id="view-admin-login" class="view-section text-center">
             <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10 w-full">
-                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">มาสเตอร์กิลด์</h2>
+                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">กิลด์มาสเตอร์</h2>
                 <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-base sm:text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
                 <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700 text-sm sm:text-base">เข้าสู่กิลด์</button>
                 <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-xs sm:text-sm font-bold">กลับหน้าหลัก</button>
@@ -225,7 +224,6 @@
         <section id="view-admin" class="view-section">
             <h2 class="text-xl sm:text-3xl font-fantasy font-bold text-purple-800 mb-4 sm:mb-6 drop-shadow-sm flex items-center gap-2"><i class="fa-solid fa-chess-king text-yellow-500"></i> สมาคมกิลด์ (Admin)</h2>
             
-            <!-- Admin Tabs Scrollable on Mobile -->
             <div class="w-full overflow-x-auto pb-2 mb-4 sm:mb-6 custom-scrollbar">
                 <div class="flex gap-2 w-max sm:w-auto sm:flex-wrap">
                     <button onclick="app.switchAdminTab('leaderboard')" class="admin-tab bg-purple-500 text-white px-3 sm:px-4 py-2 rounded-xl shadow text-xs sm:text-sm whitespace-nowrap"><i class="fa-solid fa-trophy mr-1"></i> Leaderboard</button>
@@ -251,10 +249,8 @@
                 <div id="tab-manage-guild" class="admin-content hidden w-full">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 w-full">
                         
-                        <!-- สร้างทีมใหม่ -->
                         <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-pink-100 shadow-sm w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-pink-600"><i class="fa-solid fa-circle-plus"></i> สร้างทีมใหม่</h3>
-                            <!-- Responsive Flex: Column on Mobile, Row on Desktop -->
                             <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
                                 <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-full sm:w-24 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center bg-gray-50">
                                 <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 bg-gray-50">
@@ -263,7 +259,6 @@
                             <button onclick="app.createGuild()" class="w-full bg-green-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-green-500 transition"><i class="fa-solid fa-magic"></i> สร้างทีม</button>
                         </div>
                         
-                        <!-- ผูก NFC กับทีม -->
                         <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-blue-100 shadow-sm w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-blue-600"><i class="fa-solid fa-link"></i> ผูก NFC กับทีม</h3>
                             <select id="map-guild-id" class="w-full p-2.5 text-sm sm:text-base mb-4 border rounded-lg focus:outline-none focus:border-blue-400 bg-gray-50">
@@ -272,11 +267,9 @@
                             <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-blue-500 transition"><i class="fa-solid fa-wifi"></i> แตะ NFC เพื่อผูก</button>
                         </div>
 
-                        <!-- มอบ / ลด คะแนนและเหรียญ -->
                         <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-yellow-100 shadow-sm lg:col-span-2 w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-yellow-600"><i class="fa-solid fa-bullseye"></i> มอบ / ลด คะแนนและเหรียญ</h3>
                             
-                            <!-- Responsive Form: Stacked tightly on mobile -->
                             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
                                 <select id="edit-guild-id" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-yellow-400 bg-gray-50"></select>
                                 
@@ -290,7 +283,6 @@
                         </div>
                     </div>
 
-                    <!-- Responsive Admin Table -->
                     <div class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 mt-6 shadow-sm overflow-hidden w-full">
                         <div class="p-3 sm:p-4 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
                             <h3 class="font-bold text-gray-700 text-sm sm:text-base flex items-center gap-2"><i class="fa-solid fa-list text-[#f472b6]"></i> รายชื่อทีมทั้งหมด</h3>
@@ -360,7 +352,7 @@
                 <div id="tab-manage-market" class="admin-content hidden w-full">
                     <div class="flex justify-between items-center mb-4 bg-white p-3 sm:p-4 rounded-xl shadow-sm border border-gray-100">
                         <h3 class="text-base sm:text-xl font-bold text-gray-700 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-gray-400"></i> ตลาดไอเทม</h3>
-                        <button onclick="app.loadAdminMarket()" class="bg-gray-100 text-gray-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold flex items-center gap-1.5"><i class="fa-solid fa-rotate"></i> <span class="hidden sm:inline">รีเฟรช</span></button>
+                        <button onclick="app.loadAdminMarket(true)" class="bg-gray-100 text-gray-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold flex items-center gap-1.5"><i class="fa-solid fa-rotate"></i> <span class="hidden sm:inline">รีเฟรช</span></button>
                     </div>
                     <div id="admin-market-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 pb-4">
                         <!-- Admin market items inject here -->
@@ -386,7 +378,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-700"><i class="fa-solid fa-scroll text-purple-400"></i> ประวัติ</h3>
                         <div class="flex gap-2">
-                            <button onclick="app.loadLogs()" class="bg-gray-100 text-gray-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold"><i class="fa-solid fa-rotate"></i></button>
+                            <button onclick="app.loadLogs(true)" class="bg-gray-100 text-gray-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-sm hover:bg-gray-200 text-xs sm:text-sm font-bold"><i class="fa-solid fa-rotate"></i></button>
                             <button onclick="app.clearLogs()" class="bg-red-100 text-red-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow-sm hover:bg-red-200 text-xs sm:text-sm font-bold flex items-center gap-1"><i class="fa-solid fa-trash"></i> <span class="hidden sm:inline">ล้างประวัติ</span></button>
                         </div>
                     </div>
@@ -401,7 +393,7 @@
                                 </tr>
                             </thead>
                             <tbody id="logs-body">
-                                <tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">คลิกที่ปุ่มรีเฟรชเพื่อโหลดประวัติ</td></tr>
+                                <tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">กำลังโหลดข้อมูล...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -428,19 +420,18 @@
                 otherGuilds: [], 
                 cart: [],
                 marketItems: [],
-                inventory: []
+                inventory: [],
+                logs: []
             },
             
             pollingInterval: null,
-            alertAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียงเตือนโจมตี
-            successAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียงรับของ
+            alertAudio: null,
+            successAudio: null,
 
             initAudio: function() {
-                // ฟังก์ชันปลดล็อก Autoplay Policy ของเบราว์เซอร์ (สำคัญมากสำหรับ PC)
                 if (!this.alertAudio) {
                     this.alertAudio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
                     this.alertAudio.volume = 0.5;
-                    // สั่งเล่นแบบเงียบๆ แล้วหยุดทันทีเมื่อผู้ใช้คลิกหน้าจอครั้งแรก
                     this.alertAudio.play().then(() => {
                         this.alertAudio.pause();
                         this.alertAudio.currentTime = 0;
@@ -462,7 +453,7 @@
                     if (this.state.currentGuild && !Swal.isVisible()) {
                         this.checkUpdates();
                     }
-                }, 10000); // Check every 10 seconds
+                }, 10000); 
             },
 
             stopPolling: function() {
@@ -471,32 +462,24 @@
 
             playAlert: function(type = 'danger') {
                 try {
-                    // สำหรับมือถือ (ระบบสั่น)
                     if (navigator.vibrate) {
-                        if (type === 'danger') {
-                            navigator.vibrate([500, 200, 500, 200, 500]); // สั่นเตือนยาว
-                        } else {
-                            navigator.vibrate([100, 100, 100, 100, 100]); // สั่นถี่ๆ สั้นๆ แบบดีใจ
-                        }
+                        if (type === 'danger') navigator.vibrate([500, 200, 500, 200, 500]); 
+                        else navigator.vibrate([100, 100, 100, 100, 100]); 
                     }
-                    // สำหรับเล่นเสียง (ทำงานได้ทั้งคอมและมือถือ)
+                    
                     if (type === 'danger') {
                         if (this.alertAudio) {
                             this.alertAudio.currentTime = 0;
                             this.alertAudio.play();
                         } else {
-                            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
-                            audio.volume = 0.5;
-                            audio.play();
+                            new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg').play();
                         }
                     } else if (type === 'success') {
                         if (this.successAudio) {
                             this.successAudio.currentTime = 0;
                             this.successAudio.play();
                         } else {
-                            const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-                            audio.volume = 0.5;
-                            audio.play();
+                            new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
                         }
                     }
                 } catch(e) { console.log("Audio play blocked", e); }
@@ -513,15 +496,12 @@
                     let dangerHtml = '';
                     let successHtml = '';
 
-                    // กรณีคะแนนลดลง (โดนโจมตี)
                     if (newScore < oldScore) dangerHtml += `<div class="text-red-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-down"></i> Fame ลดลง ${oldScore - newScore} แต้ม!</div>`;
                     if (newCoins < oldCoins) dangerHtml += `<div class="text-yellow-600 font-bold text-lg"><i class="fa-solid fa-arrow-trend-down"></i> Gold หายไป ${oldCoins - newCoins} เหรียญ!</div>`;
 
-                    // กรณีคะแนนเพิ่มขึ้น (ได้รับการช่วยเหลือ/แอดมินมอบให้) มี Animation เด้งดึ๋งๆ
                     if (newScore > oldScore) successHtml += `<div class="text-blue-500 font-bold text-lg mb-2"><i class="fa-solid fa-arrow-trend-up animate-bounce inline-block"></i> Fame เพิ่มขึ้น ${newScore - oldScore} แต้ม!</div>`;
                     if (newCoins > oldCoins) successHtml += `<div class="text-yellow-500 font-bold text-lg"><i class="fa-solid fa-arrow-trend-up animate-bounce inline-block"></i> Gold เพิ่มขึ้น ${newCoins - oldCoins} เหรียญ!</div>`;
 
-                    // แสดง Popup 
                     if (dangerHtml !== '') {
                         this.playAlert('danger');
                         Swal.fire({
@@ -548,13 +528,11 @@
                     this.state.inventory = freshData.inventory;
                     this.state.otherGuilds = freshData.otherGuilds;
 
-                    // อัปเดตตัวเลขแบบเงียบๆ ไม่ต้องกระพริบหน้าจอ
                     document.getElementById('dash-coins-val').textContent = newCoins;
                     document.getElementById('dash-score-val').textContent = newScore;
                     document.getElementById('nav-coins-text').textContent = newCoins;
                     document.getElementById('nav-score-text').textContent = newScore;
                     
-                    // ถ้าอยู่หน้า Dashboard ให้โหลดกระเป๋าใหม่แบบไม่แสดงแอนิเมชัน
                     if (document.getElementById('view-dashboard').classList.contains('active')) {
                         this.loadDashboard(true);
                     }
@@ -575,14 +553,14 @@
 
                 if (viewId === 'dashboard' || viewId === 'market') {
                     navUser.classList.remove('hidden');
-                    if (viewId === 'dashboard') this.loadDashboard();
+                    if (viewId === 'dashboard') this.loadDashboard(); // จะเรียกแบบ cache อัตโนมัติ
                     if (viewId === 'market') {
-                        this.loadMarket();
+                        this.loadMarket(); // จะเรียกแบบ cache อัตโนมัติ
                         if(floatingCart) floatingCart.classList.remove('hidden');
                     }
                 } else if (viewId === 'admin') {
                     navAdmin.classList.remove('hidden');
-                    this.loadAdminData();
+                    this.loadAdminData(); // จะเรียกแบบ cache อัตโนมัติ
                 }
             },
 
@@ -614,15 +592,16 @@
             },
 
             refreshData: async function() {
+                this.initAudio();
                 if (document.getElementById('view-dashboard').classList.contains('active')) {
                     if (this.state.currentGuild) {
                         try {
-                            Swal.fire({ title: 'กำลังอัปเดตข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                            Swal.fire({ title: 'กำลังซิงค์ข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                             const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
                             this.state.currentGuild = freshData.guild;
                             this.state.inventory = freshData.inventory;
                             this.state.otherGuilds = freshData.otherGuilds; 
-                            this.loadDashboard();
+                            this.loadDashboard(true);
                             Swal.close();
                             Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
                         } catch (error) {
@@ -630,18 +609,15 @@
                         }
                     }
                 } else if (document.getElementById('view-market').classList.contains('active')) {
-                    this.loadMarket();
+                    this.loadMarket(true);
                 } else if (document.getElementById('view-admin').classList.contains('active')) {
                     if (document.getElementById('tab-leaderboard').classList.contains('active') || 
                         document.getElementById('tab-manage-guild').classList.contains('active')) {
-                        Swal.fire({ title: 'กำลังอัปเดตข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                        await this.loadAdminData();
-                        Swal.close();
-                        Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                        this.loadAdminData(true);
                     } else if (document.getElementById('tab-manage-market').classList.contains('active')) {
-                        this.loadAdminMarket();
+                        this.loadAdminMarket(true);
                     } else if (document.getElementById('tab-logs').classList.contains('active')) {
-                        this.loadLogs();
+                        this.loadLogs(true);
                     }
                 }
             },
@@ -678,9 +654,8 @@
             },
 
             scanNFC: async function(promptText = "กรุณาแตะบัตร NFC") {
-                this.initAudio(); // ปลดล็อกเสียงตั้งแต่จังหวะเริ่มกดปุ่มเข้าระบบ
+                this.initAudio(); 
                 return new Promise((resolve, reject) => {
-                    // ระบบช่วยเปลี่ยนภาษาไทยเป็นอังกฤษอัตโนมัติ (กรณีลืมเปลี่ยนภาษาคีย์บอร์ด)
                     const convertThaiToEng = (str) => {
                         const map = {
                             'ๅ':'1', '/':'2', '-':'3', 'ภ':'4', 'ถ':'5', 'ุ':'6', 'ึ':'7', 'ค':'8', 'ต':'9', 'จ':'0',
@@ -718,15 +693,14 @@
                             const input = Swal.getInput();
                             if (input) input.focus();
 
-                            // หากเครื่องรองรับ NFC (มือถือ Android) ให้เปิดเซนเซอร์รอรับบัตรไปพร้อมๆ กับช่องพิมพ์
                             if ('NDEFReader' in window) {
                                 try {
                                     const ndef = new NDEFReader();
                                     const scanOptions = abortController ? { signal: abortController.signal } : {};
                                     await ndef.scan(scanOptions);
                                     ndef.onreading = event => { 
-                                        if (abortController) abortController.abort(); // สั่งปิดเซนเซอร์ NFC
-                                        Swal.close(); // ปิดหน้าต่างพิมพ์
+                                        if (abortController) abortController.abort(); 
+                                        Swal.close(); 
                                         const variants = app.generateNFCVariants(event.serialNumber);
                                         resolve(variants); 
                                     };
@@ -736,13 +710,12 @@
                             }
                         },
                         willClose: () => {
-                            // ปิดเซนเซอร์ NFC หากผู้ใช้กดยกเลิก
                             if (abortController) abortController.abort();
                         }
                     }).then((result) => {
                         if (result.isConfirmed && result.value) {
                             const correctedValue = convertThaiToEng(result.value.trim());
-                            resolve([correctedValue]); // ส่งรหัสที่พิมพ์ด้วยมือไปตรวจสอบ
+                            resolve([correctedValue]); 
                         } else if (result.isDismissed) {
                             reject('ยกเลิก');
                         }
@@ -782,6 +755,7 @@
                 this.navigate('login');
             },
 
+            // --- DOM OPTIMIZATION: ใช้ String Builder ในการจัดหน้าทั้งหมด ---
             loadDashboard: function(silent = false) {
                 const g = this.state.currentGuild;
                 if(!g) return this.navigate('login');
@@ -795,18 +769,18 @@
                 document.getElementById('nav-score-text').textContent = g.score;
 
                 const invGrid = document.getElementById('inventory-grid');
-                invGrid.innerHTML = '';
                 const validInventory = this.state.inventory.filter(item => Number(item.qty) > 0);
 
+                let html = '';
                 if(validInventory.length === 0) {
-                    invGrid.innerHTML = '<div class="col-span-full text-center text-gray-400 font-bold py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">🪹 ยังไม่มีไอเทมในกระเป๋า</div>';
+                    html = '<div class="col-span-full text-center text-gray-400 font-bold py-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">🪹 ยังไม่มีไอเทมในกระเป๋า</div>';
                 } else {
                     validInventory.forEach((item, index) => {
                         const effectStr = (item.effect || '').replace(/'/g, "\\'");
                         const animClass = silent ? '' : 'animate-fade-in-up';
                         const animStyle = silent ? '' : `style="animation-delay: ${index * 0.05}s"`;
                         
-                        invGrid.innerHTML += `
+                        html += `
                             <div class="inv-slot p-2 sm:p-3 text-center hover-bounce relative flex flex-col justify-between group bg-white ${animClass}" ${animStyle}>
                                 <div class="absolute inset-0 bg-white opacity-50 rounded-lg pointer-events-none group-hover:opacity-80 transition"></div>
                                 <div class="relative z-10">
@@ -824,42 +798,67 @@
                         `;
                     });
                 }
+                invGrid.innerHTML = html; // DOM Painting 1 ครั้ง
             },
 
-            loadMarket: async function() {
+            loadMarket: async function(force = false) {
+                // ถ้ามี cache อยู่ และไม่ได้บังคับโหลด (force) ให้โชว์ของเก่าทันทีแล้วค่อยดึงเบื้องหลัง
+                if (this.state.marketItems.length > 0 && !force) {
+                    this.renderMarket(this.state.marketItems, true);
+                    this.apiCall('getMarket').then(items => {
+                        this.state.marketItems = items;
+                        this.renderMarket(items, true); // วาดใหม่เงียบๆ
+                    }).catch(e => console.error(e));
+                    return;
+                }
+
                 try {
                     Swal.fire({ title: 'กำลังจัดเรียงร้านค้า...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                     const items = await this.apiCall('getMarket');
+                    this.state.marketItems = items;
                     Swal.close();
-
-                    const grid = document.getElementById('market-grid');
-                    grid.innerHTML = '';
-                    items.forEach((item, index) => {
-                        const displayEffect = item.effect === '#ERROR!' || !item.effect ? 'ไม่มีพลังพิเศษ' : item.effect;
-                        grid.innerHTML += `
-                            <div class="glass-card p-4 sm:p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md animate-fade-in-up" style="animation-delay: ${index * 0.05}s">
-                                <div class="relative z-10 flex flex-col items-center w-full">
-                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 flex items-center justify-center item-float">
-                                        <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
-                                        <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
-                                            <img src="${item.image}" class="w-full h-full object-cover">
-                                        </div>
-                                    </div>
-                                    <h3 class="font-fantasy font-bold text-xl sm:text-2xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
-                                    <p class="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 h-8 sm:h-10 overflow-hidden font-medium px-1 sm:px-2">${item.description}</p>
-                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
-                                    ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 px-2 sm:px-3 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น</div>` : '<div class="mb-3"></div>'}
-                                </div>
-                                
-                                <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-[#f472b6] hover:bg-[#ec4899] text-white font-fantasy font-bold py-2 sm:py-3 px-2 rounded-xl text-sm sm:text-lg relative z-10 flex justify-center items-center gap-1.5 sm:gap-2 shadow-md transition-transform mt-auto">
-                                    <i class="fa-solid fa-cart-plus"></i> เพิ่มลงตะกร้า (${item.price} Gold)
-                                </button>
-                            </div>
-                        `;
-                    });
+                    this.renderMarket(items, false);
+                    if (force) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตตลาดแล้ว', showConfirmButton: false, timer: 1000 });
                 } catch (error) {
                     Swal.fire('❌ ผิดพลาด', error.message || error, 'error');
                 }
+            },
+            
+            renderMarket: function(items, silent = false) {
+                const grid = document.getElementById('market-grid');
+                if (items.length === 0) {
+                    grid.innerHTML = '<div class="col-span-full text-center py-8 text-gray-400 font-bold bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">ยังไม่มีสินค้าในร้านค้า</div>';
+                    return;
+                }
+                
+                let html = '';
+                items.forEach((item, index) => {
+                    const displayEffect = item.effect === '#ERROR!' || !item.effect ? 'ไม่มีพลังพิเศษ' : item.effect;
+                    const animClass = silent ? '' : 'animate-fade-in-up';
+                    const animStyle = silent ? '' : `style="animation-delay: ${index * 0.05}s"`;
+                    
+                    html += `
+                        <div class="glass-card p-4 sm:p-6 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md ${animClass}" ${animStyle}>
+                            <div class="relative z-10 flex flex-col items-center w-full">
+                                <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 flex items-center justify-center item-float">
+                                    <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
+                                    <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                        <img src="${item.image}" class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+                                <h3 class="font-fantasy font-bold text-xl sm:text-2xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                <p class="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3 h-8 sm:h-10 overflow-hidden font-medium px-1 sm:px-2">${item.description}</p>
+                                <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[11px] text-red-500 font-bold mb-3 bg-red-50 py-1 px-2 sm:px-3 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัดถือครอง ${item.maxPerGuild} ชิ้น</div>` : '<div class="mb-3"></div>'}
+                            </div>
+                            
+                            <button onclick="app.addToCart('${item.itemId}', '${item.name}', ${item.price}, '${item.image}', ${item.maxPerGuild || 9999})" class="w-full bg-[#f472b6] hover:bg-[#ec4899] text-white font-fantasy font-bold py-2 sm:py-3 px-2 rounded-xl text-sm sm:text-lg relative z-10 flex justify-center items-center gap-1.5 sm:gap-2 shadow-md transition-transform mt-auto">
+                                <i class="fa-solid fa-cart-plus"></i> เพิ่มลงตะกร้า (${item.price} Gold)
+                            </button>
+                        </div>
+                    `;
+                });
+                grid.innerHTML = html; // DOM Painting 1 ครั้ง
             },
 
             // --- CART SYSTEM ---
@@ -893,17 +892,17 @@
                 badge.textContent = totalItems;
 
                 const cartContainer = document.getElementById('cart-items');
-                cartContainer.innerHTML = '';
                 
                 let total = 0;
+                let html = '';
                 if (this.state.cart.length === 0) {
-                    cartContainer.innerHTML = '<div class="text-center text-gray-400 py-8 font-bold border-2 border-dashed border-gray-200 rounded-xl text-sm sm:text-base">🛒 ตะกร้าว่างเปล่า</div>';
+                    html = '<div class="text-center text-gray-400 py-8 font-bold border-2 border-dashed border-gray-200 rounded-xl text-sm sm:text-base">🛒 ตะกร้าว่างเปล่า</div>';
                 } else {
                     this.state.cart.forEach((item, index) => {
                         total += item.price * item.qty;
-                        cartContainer.innerHTML += `
+                        html += `
                             <div class="flex items-center gap-2 sm:gap-3 bg-gray-50 p-2 sm:p-3 rounded-xl border border-gray-200 shadow-sm">
-                                <img src="${item.image}" class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border border-gray-200 object-cover shadow-sm shrink-0">
+                                <img src="${item.image}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/treasure-chest.png';" class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white border border-gray-200 object-cover shadow-sm shrink-0">
                                 <div class="flex-1 min-w-0">
                                     <div class="font-fantasy font-bold text-sm sm:text-base text-purple-700 leading-tight truncate">${item.name}</div>
                                     <div class="text-[10px] sm:text-xs font-bold text-gray-500 mt-0.5 sm:mt-1"><i class="fa-solid fa-coins text-yellow-500"></i> ${item.price} / ชิ้น</div>
@@ -917,6 +916,7 @@
                         `;
                     });
                 }
+                cartContainer.innerHTML = html; // DOM Painting 1 ครั้ง
                 document.getElementById('cart-total').textContent = total;
             },
 
@@ -966,14 +966,18 @@
                     });
                     
                     this.state.currentGuild.coins = res.newCoins;
+                    
+                    // ดึงข้อมูลใหม่เงียบๆ และรีเฟรชหน้ากระเป๋า
                     const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
                     this.state.inventory = freshData.inventory;
+                    
                     document.getElementById('nav-coins-text').textContent = res.newCoins;
 
                     this.state.cart = []; 
                     this.updateCartUI();
                     this.toggleCart(); 
-                    this.loadDashboard();
+                    
+                    this.loadDashboard(true);
 
                     Swal.fire('🎉 ซื้อสำเร็จ!', `ไอเทมทั้งหมดถูกส่งเข้ากระเป๋ามิติแล้ว`, 'success');
                 } catch (error) {
@@ -1029,7 +1033,8 @@
                     this.state.currentGuild = freshData.guild;
                     this.state.inventory = freshData.inventory;
                     this.state.otherGuilds = freshData.otherGuilds; 
-                    this.loadDashboard();
+                    
+                    this.loadDashboard(true);
                     
                     let effectHTML = res.effectMsg ? `<div class="mt-4 bg-pink-50 p-3 rounded-xl border-2 border-pink-200 text-pink-600 font-bold drop-shadow-sm text-sm">${res.effectMsg}</div>` : '';
                     Swal.fire({ title: '✨ ใช้งานสำเร็จ!', html: `พลังของ <b>${itemName}</b> ทำงานแล้ว! ${effectHTML}`, icon: 'success' });
@@ -1040,9 +1045,12 @@
 
             // --- ADMIN FEATURES ---
             adminLogin: function() {
-                this.initAudio(); // ปลดล็อกเสียงสำหรับหน้าต่างแอดมินเผื่อต้องการด้วย
+                this.initAudio();
                 const pass = document.getElementById('admin-pass').value;
-                if(pass === 'admin') { document.getElementById('admin-pass').value = ''; this.navigate('admin'); } 
+                if(pass === 'admin') { 
+                    document.getElementById('admin-pass').value = ''; 
+                    this.navigate('admin'); 
+                } 
                 else { Swal.fire('❌ รหัสผิดพลาด', 'คุณไม่ใช่มาสเตอร์ตัวจริง!', 'error'); }
             },
 
@@ -1051,161 +1059,179 @@
                     Swal.fire({ title: 'กำลังสร้างโลกใบใหม่...', text: 'ระบบกำลังเตรียมฐานข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                     await this.apiCall('init');
                     Swal.fire('✅ สำเร็จ', 'สร้าง Sheet ฐานข้อมูลเรียบร้อยแล้ว!', 'success');
-                    this.loadAdminData();
+                    this.loadAdminData(true);
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
-            loadAdminData: async function() {
-                try {
-                    const guilds = await this.apiCall('leaderboard');
-                    this.state.allGuilds = guilds;
-                    
-                    const container = document.getElementById('leaderboard-cards');
-                    container.innerHTML = '';
-                    if(guilds.length === 0) {
-                        container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border-2 border-dashed border-gray-200">ยังไม่มีกิลด์ในระบบ</div>`;
-                        return;
+            loadAdminData: async function(force = false) {
+                const fetchAndRender = async (showLoader = false) => {
+                    if (showLoader) Swal.fire({ title: 'กำลังดึงข้อมูลกิลด์...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                    try {
+                        const guilds = await this.apiCall('leaderboard');
+                        this.state.allGuilds = guilds;
+                        this.renderAdminData(guilds);
+                        if (showLoader) Swal.close();
+                        if (force && showLoader) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                    } catch (error) {
+                        if (showLoader) Swal.fire('❌ Error', error.message, 'error');
                     }
-                    
-                    const rankedGuilds = guilds.filter(g => Number(g.score) > 0);
-                    const unrankedGuilds = guilds.filter(g => Number(g.score) <= 0);
-                    let html = '';
+                };
 
+                // ถ้ามีข้อมูลอยู่แล้วและไม่ได้บังคับ ให้โชว์ของเก่าไปก่อน แล้วไปดึงข้อมูลใหม่มาทับลับหลัง
+                if (this.state.allGuilds.length > 0 && !force) {
+                    this.renderAdminData(this.state.allGuilds);
+                    fetchAndRender(false);
+                } else {
+                    fetchAndRender(true);
+                }
+            },
+            
+            renderAdminData: function(guilds) {
+                const container = document.getElementById('leaderboard-cards');
+                const guildListBody = document.getElementById('manage-guild-list');
+                
+                if(guilds.length === 0) {
+                    container.innerHTML = `<div class="text-center p-8 text-gray-400 bg-white rounded-2xl border-2 border-dashed border-gray-200">ยังไม่มีกิลด์ในระบบ</div>`;
+                    guildListBody.innerHTML = '';
+                    return;
+                }
+                
+                const rankedGuilds = guilds.filter(g => Number(g.score) > 0);
+                const unrankedGuilds = guilds.filter(g => Number(g.score) <= 0);
+                let html = '';
+
+                if (rankedGuilds.length > 0) {
+                    let top3Html = '<div class="flex flex-row justify-center items-end gap-2 sm:gap-6 mb-8 sm:mb-10 pt-8 sm:pt-12">';
+                    
+                    const buildTopCard = (g, rank) => {
+                        let order, borderCol, bgCol, rankImg, heightClass, textColor, badgeCol;
+                        if(rank === 1) {
+                            order = 'order-2'; borderCol = 'border-yellow-400'; bgCol = 'bg-yellow-50'; textColor = 'text-yellow-700'; badgeCol = 'bg-gradient-to-b from-yellow-200 to-yellow-500';
+                            rankImg = `<div class="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 w-10 h-10 sm:w-14 sm:h-14 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-lg sm:text-2xl drop-shadow-md"><i class="fa-solid fa-crown text-yellow-100 text-[10px] sm:text-sm absolute -top-2 sm:-top-3"></i>1</div>`;
+                            heightClass = 'z-10 scale-105 sm:scale-110';
+                        } else if(rank === 2) {
+                            order = 'order-1'; borderCol = 'border-gray-300'; bgCol = 'bg-gray-50'; textColor = 'text-gray-700'; badgeCol = 'bg-gradient-to-b from-gray-200 to-gray-400';
+                            rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">2</div>`;
+                            heightClass = 'scale-95 sm:scale-100 opacity-95';
+                        } else if(rank === 3) {
+                            order = 'order-3'; borderCol = 'border-orange-300'; bgCol = 'bg-orange-50'; textColor = 'text-orange-700'; badgeCol = 'bg-gradient-to-b from-orange-200 to-orange-400';
+                            rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">3</div>`;
+                            heightClass = 'scale-95 sm:scale-100 opacity-95';
+                        }
+
+                        return `
+                            <div class="${order} ${heightClass} relative w-[31%] max-w-[220px] bg-white border-[3px] sm:border-4 ${borderCol} rounded-2xl sm:rounded-3xl shadow-xl p-2 sm:p-4 pt-6 sm:pt-10 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2">
+                                ${rankImg}
+                                <div class="relative w-12 h-12 sm:w-24 sm:h-24 mb-2 sm:mb-3">
+                                    <img src="${g.avatar}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/magic-potion.png';" class="w-full h-full rounded-full border-2 sm:border-4 ${borderCol} object-cover bg-white">
+                                    <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-gray-800 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${rank}</div>
+                                </div>
+                                <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
+                                
+                                <div class="w-full ${bgCol} rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border ${borderCol.replace('border-', 'border-opacity-50 border-')} shadow-inner">
+                                    <span class="font-bold ${textColor} text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
+                                </div>
+                                
+                                <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
+                                    <i class="fa-solid fa-coins"></i> ${g.coins}
+                                </div>
+                            </div>
+                        `;
+                    };
+
+                    for(let i=0; i<Math.min(3, rankedGuilds.length); i++) {
+                        top3Html += buildTopCard(rankedGuilds[i], i+1);
+                    }
+                    top3Html += '</div>';
+
+                    let listHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-4">';
+                    for(let i=3; i<rankedGuilds.length; i++) {
+                        const g = rankedGuilds[i];
+                        listHtml += `
+                            <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-purple-200 rounded-2xl sm:rounded-3xl shadow-md p-2 sm:p-4 pt-5 sm:pt-8 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2 mt-2 sm:mt-4">
+                                <div class="absolute -top-4 sm:-top-5 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-purple-700 font-bold text-sm sm:text-lg drop-shadow">${i+1}</div>
+                                <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3">
+                                    <img src="${g.avatar}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/magic-potion.png';" class="w-full h-full rounded-full border-2 sm:border-4 border-purple-200 object-cover bg-white">
+                                    <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-purple-700 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${i+1}</div>
+                                </div>
+                                <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
+                                
+                                <div class="w-full bg-blue-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-blue-200 shadow-inner">
+                                    <span class="font-bold text-blue-700 text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
+                                </div>
+                                
+                                <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
+                                    <i class="fa-solid fa-coins"></i> ${g.coins}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    listHtml += '</div>';
+
+                    html += top3Html + (rankedGuilds.length > 3 ? listHtml : '');
+                }
+
+                if (unrankedGuilds.length > 0) {
                     if (rankedGuilds.length > 0) {
-                        let top3Html = '<div class="flex flex-row justify-center items-end gap-2 sm:gap-6 mb-8 sm:mb-10 pt-8 sm:pt-12">';
-                        
-                        const buildTopCard = (g, rank) => {
-                            let order, borderCol, bgCol, rankImg, heightClass, textColor, badgeCol;
-                            if(rank === 1) {
-                                order = 'order-2'; borderCol = 'border-yellow-400'; bgCol = 'bg-yellow-50'; textColor = 'text-yellow-700'; badgeCol = 'bg-gradient-to-b from-yellow-200 to-yellow-500';
-                                rankImg = `<div class="absolute -top-6 sm:-top-8 left-1/2 transform -translate-x-1/2 w-10 h-10 sm:w-14 sm:h-14 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow-lg flex items-center justify-center text-white font-bold text-lg sm:text-2xl drop-shadow-md"><i class="fa-solid fa-crown text-yellow-100 text-[10px] sm:text-sm absolute -top-2 sm:-top-3"></i>1</div>`;
-                                heightClass = 'z-10 scale-105 sm:scale-110';
-                            } else if(rank === 2) {
-                                order = 'order-1'; borderCol = 'border-gray-300'; bgCol = 'bg-gray-50'; textColor = 'text-gray-700'; badgeCol = 'bg-gradient-to-b from-gray-200 to-gray-400';
-                                rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">2</div>`;
-                                heightClass = 'scale-95 sm:scale-100 opacity-95';
-                            } else if(rank === 3) {
-                                order = 'order-3'; borderCol = 'border-orange-300'; bgCol = 'bg-orange-50'; textColor = 'text-orange-700'; badgeCol = 'bg-gradient-to-b from-orange-200 to-orange-400';
-                                rankImg = `<div class="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-12 sm:h-12 ${badgeCol} rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-white font-bold text-sm sm:text-xl drop-shadow">3</div>`;
-                                heightClass = 'scale-95 sm:scale-100 opacity-95';
-                            }
-
-                            return `
-                                <div class="${order} ${heightClass} relative w-[31%] max-w-[220px] bg-white border-[3px] sm:border-4 ${borderCol} rounded-2xl sm:rounded-3xl shadow-xl p-2 sm:p-4 pt-6 sm:pt-10 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2">
-                                    ${rankImg}
-                                    <div class="relative w-12 h-12 sm:w-24 sm:h-24 mb-2 sm:mb-3">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 ${borderCol} object-cover bg-white">
-                                        <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-gray-800 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${rank}</div>
-                                    </div>
-                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
-                                    
-                                    <div class="w-full ${bgCol} rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border ${borderCol.replace('border-', 'border-opacity-50 border-')} shadow-inner">
-                                        <span class="font-bold ${textColor} text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
-                                    </div>
-                                    
-                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
-                                        <i class="fa-solid fa-coins"></i> ${g.coins}
-                                    </div>
-                                </div>
-                            `;
-                        };
-
-                        for(let i=0; i<Math.min(3, rankedGuilds.length); i++) {
-                            top3Html += buildTopCard(rankedGuilds[i], i+1);
-                        }
-                        top3Html += '</div>';
-
-                        let listHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-4">';
-                        for(let i=3; i<rankedGuilds.length; i++) {
-                            const g = rankedGuilds[i];
-                            listHtml += `
-                                <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-purple-200 rounded-2xl sm:rounded-3xl shadow-md p-2 sm:p-4 pt-5 sm:pt-8 text-center flex flex-col items-center transition-transform hover:-translate-y-1 sm:hover:-translate-y-2 mt-2 sm:mt-4">
-                                    <div class="absolute -top-4 sm:-top-5 left-1/2 transform -translate-x-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-b from-purple-100 to-purple-300 rounded-full border-2 sm:border-4 border-white shadow flex items-center justify-center text-purple-700 font-bold text-sm sm:text-lg drop-shadow">${i+1}</div>
-                                    <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 border-purple-200 object-cover bg-white">
-                                        <div class="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-0 bg-purple-700 text-white text-[8px] sm:text-xs font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-white leading-none">No.${i+1}</div>
-                                    </div>
-                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-800 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
-                                    
-                                    <div class="w-full bg-blue-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-blue-200 shadow-inner">
-                                        <span class="font-bold text-blue-700 text-[10px] sm:text-base">${g.score} <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
-                                    </div>
-                                    
-                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default">
-                                        <i class="fa-solid fa-coins"></i> ${g.coins}
-                                    </div>
-                                </div>
-                            `;
-                        }
-                        listHtml += '</div>';
-
-                        html += top3Html + (rankedGuilds.length > 3 ? listHtml : '');
+                        html += `<div class="w-full border-t-2 border-dashed border-gray-200 my-4 sm:my-6"></div>`;
+                        html += `<h4 class="text-center text-gray-500 font-bold mb-3 sm:mb-4 font-fantasy text-sm sm:text-base">🛡️ กิลด์ที่กำลังรวบรวม FAME (ยังไม่จัดอันดับ)</h4>`;
                     }
-
-                    if (unrankedGuilds.length > 0) {
-                        if (rankedGuilds.length > 0) {
-                            html += `<div class="w-full border-t-2 border-dashed border-gray-200 my-4 sm:my-6"></div>`;
-                            html += `<h4 class="text-center text-gray-500 font-bold mb-3 sm:mb-4 font-fantasy text-sm sm:text-base">🛡️ กิลด์ที่กำลังรวบรวม FAME (ยังไม่จัดอันดับ)</h4>`;
-                        }
-                        let unrankedHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-2 sm:pb-4">';
-                        for(let i=0; i<unrankedGuilds.length; i++) {
-                            const g = unrankedGuilds[i];
-                            unrankedHtml += `
-                                <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-gray-200 rounded-2xl sm:rounded-3xl shadow-sm p-2 sm:p-4 pt-3 sm:pt-4 text-center flex flex-col items-center transition-transform hover:-translate-y-1 mt-1 sm:mt-2">
-                                    <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3 opacity-90">
-                                        <img src="${g.avatar}" class="w-full h-full rounded-full border-2 sm:border-4 border-gray-200 object-cover bg-gray-50">
-                                    </div>
-                                    <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-600 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
-                                    
-                                    <div class="w-full bg-gray-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-gray-200 shadow-inner">
-                                        <span class="font-bold text-gray-500 text-[10px] sm:text-base">0 <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
-                                    </div>
-                                    
-                                    <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default opacity-90">
-                                        <i class="fa-solid fa-coins"></i> ${g.coins}
-                                    </div>
+                    let unrankedHtml = '<div class="flex flex-wrap justify-center gap-3 sm:gap-4 pb-2 sm:pb-4">';
+                    for(let i=0; i<unrankedGuilds.length; i++) {
+                        const g = unrankedGuilds[i];
+                        unrankedHtml += `
+                            <div class="relative w-[46%] sm:w-[30%] max-w-[200px] bg-white border-[3px] sm:border-4 border-gray-200 rounded-2xl sm:rounded-3xl shadow-sm p-2 sm:p-4 pt-3 sm:pt-4 text-center flex flex-col items-center transition-transform hover:-translate-y-1 mt-1 sm:mt-2">
+                                <div class="relative w-12 h-12 sm:w-20 sm:h-20 mb-2 sm:mb-3 opacity-90">
+                                    <img src="${g.avatar}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/magic-potion.png';" class="w-full h-full rounded-full border-2 sm:border-4 border-gray-200 object-cover bg-gray-50">
                                 </div>
-                            `;
-                        }
-                        unrankedHtml += '</div>';
-                        html += unrankedHtml;
+                                <h3 class="font-fantasy font-bold text-[10px] sm:text-lg text-gray-600 leading-tight mb-2 sm:mb-3 h-8 sm:h-12 overflow-hidden flex items-center justify-center w-full px-1">${g.name}</h3>
+                                
+                                <div class="w-full bg-gray-50 rounded-full py-1 sm:py-2 px-1 sm:px-2 mb-1.5 sm:mb-2 border border-gray-200 shadow-inner">
+                                    <span class="font-bold text-gray-500 text-[10px] sm:text-base">0 <span class="text-[7px] sm:text-[10px] opacity-80">FAME</span></span>
+                                </div>
+                                
+                                <div class="w-full bg-green-400 rounded-lg sm:rounded-xl py-1 sm:py-2 px-1 border-b-2 sm:border-b-4 border-green-600 text-white font-bold text-[9px] sm:text-sm shadow-sm cursor-default opacity-90">
+                                    <i class="fa-solid fa-coins"></i> ${g.coins}
+                                </div>
+                            </div>
+                        `;
                     }
+                    unrankedHtml += '</div>';
+                    html += unrankedHtml;
+                }
 
-                    container.innerHTML = html;
+                container.innerHTML = html; // DOM Painting
 
-                    const mapSelect = document.getElementById('map-guild-id');
-                    const editSelect = document.getElementById('edit-guild-id');
-                    let options = '<option value="">-- เลือกกิลด์ --</option>';
-                    guilds.forEach(g => { options += `<option value="${g.id}">${g.name}</option>`; });
-                    mapSelect.innerHTML = options; editSelect.innerHTML = options;
+                const mapSelect = document.getElementById('map-guild-id');
+                const editSelect = document.getElementById('edit-guild-id');
+                let options = '<option value="">-- เลือกกิลด์ --</option>';
+                guilds.forEach(g => { options += `<option value="${g.id}">${g.name}</option>`; });
+                mapSelect.innerHTML = options; editSelect.innerHTML = options;
 
-                    const guildListBody = document.getElementById('manage-guild-list');
-                    if (guildListBody) {
-                        guildListBody.innerHTML = '';
-                        guilds.forEach(g => {
-                            const nfcStatus = g.nfcId 
-                                ? `<span class="bg-green-50 text-green-600 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-green-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
-                                : `<span class="bg-gray-50 text-gray-400 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-gray-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
+                let tableHtml = '';
+                guilds.forEach(g => {
+                    const nfcStatus = g.nfcId 
+                        ? `<span class="bg-green-50 text-green-600 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-green-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
+                        : `<span class="bg-gray-50 text-gray-400 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-gray-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
 
-                            guildListBody.innerHTML += `
-                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
-                                    <td class="p-2 sm:p-3 text-center font-bold text-purple-600 text-sm sm:text-lg">${g.teamNo || '-'}</td>
-                                    <td class="p-2 sm:p-3 text-center"><img src="${g.avatar}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/magic-potion.png';" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full mx-auto bg-gray-100 border border-gray-200 object-cover shadow-sm"></td>
-                                    <td class="p-2 sm:p-3 font-bold text-gray-800 text-xs sm:text-sm whitespace-nowrap">${g.name}</td>
-                                    <td class="p-2 sm:p-3 text-center font-bold text-blue-600 text-xs sm:text-sm">${g.score}</td>
-                                    <td class="p-2 sm:p-3 text-center font-bold text-yellow-600 text-xs sm:text-sm">${g.coins}</td>
-                                    <td class="p-2 sm:p-3 text-center">${nfcStatus}</td>
-                                    <td class="p-2 sm:p-3 text-right align-middle">
-                                        <div class="flex flex-col sm:flex-row justify-end gap-1.5">
-                                            <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 text-[10px] sm:text-xs font-bold border border-blue-100 w-full sm:w-auto"><i class="fa-solid fa-pen"></i> แก้ไข</button>
-                                            <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-[10px] sm:text-xs font-bold border border-red-100 w-full sm:w-auto"><i class="fa-solid fa-trash"></i> ลบ</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-                    }
-                } catch (error) { console.error(error); }
+                    tableHtml += `
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
+                            <td class="p-2 sm:p-3 text-center font-bold text-purple-600 text-sm sm:text-lg">${g.teamNo || '-'}</td>
+                            <td class="p-2 sm:p-3 text-center"><img src="${g.avatar}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/magic-potion.png';" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full mx-auto bg-gray-100 border border-gray-200 object-cover shadow-sm"></td>
+                            <td class="p-2 sm:p-3 font-bold text-gray-800 text-xs sm:text-sm whitespace-nowrap">${g.name}</td>
+                            <td class="p-2 sm:p-3 text-center font-bold text-blue-600 text-xs sm:text-sm">${g.score}</td>
+                            <td class="p-2 sm:p-3 text-center font-bold text-yellow-600 text-xs sm:text-sm">${g.coins}</td>
+                            <td class="p-2 sm:p-3 text-center">${nfcStatus}</td>
+                            <td class="p-2 sm:p-3 text-right align-middle">
+                                <div class="flex flex-col sm:flex-row justify-end gap-1.5">
+                                    <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 text-[10px] sm:text-xs font-bold border border-blue-100 w-full sm:w-auto"><i class="fa-solid fa-pen"></i> แก้ไข</button>
+                                    <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-[10px] sm:text-xs font-bold border border-red-100 w-full sm:w-auto"><i class="fa-solid fa-trash"></i> ลบ</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                guildListBody.innerHTML = tableHtml; // DOM Painting
             },
 
             createGuild: async function() {
@@ -1222,7 +1248,8 @@
                     document.getElementById('new-guild-teamNo').value = ''; 
                     document.getElementById('new-guild-name').value = ''; 
                     document.getElementById('new-guild-avatar').value = '';
-                    Swal.fire('✅ สร้างสำเร็จ', '', 'success'); this.loadAdminData();
+                    Swal.fire('✅ สร้างสำเร็จ', '', 'success'); 
+                    this.loadAdminData(true);
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
@@ -1274,7 +1301,8 @@
                     try {
                         Swal.fire({ title: 'กำลังบันทึก...', didOpen: () => Swal.showLoading() });
                         await this.apiCall('editGuild', { guildId, teamNo: formValues.teamNo, name: formValues.name, avatar: formValues.avatar });
-                        Swal.fire('✅ แก้ไขสำเร็จ', '', 'success'); this.loadAdminData();
+                        Swal.fire('✅ แก้ไขสำเร็จ', '', 'success'); 
+                        this.loadAdminData(true);
                     } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
                 }
             },
@@ -1289,7 +1317,8 @@
                     try {
                         Swal.fire({ title: 'กำลังร่ายคาถาลบ...', didOpen: () => Swal.showLoading() });
                         await this.apiCall('deleteGuild', { guildId });
-                        Swal.fire('✅ ยุบกิลด์สำเร็จ', '', 'success'); this.loadAdminData();
+                        Swal.fire('✅ ยุบกิลด์สำเร็จ', '', 'success'); 
+                        this.loadAdminData(true);
                     } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
                 }
             },
@@ -1311,7 +1340,7 @@
                         Swal.fire({ title: 'กำลังรีเซ็ตเวทมนตร์...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                         await this.apiCall('resetAllScores');
                         Swal.fire('✅ สำเร็จ!', 'รีเซ็ตคะแนนและเหรียญทุกทีมเรียบร้อยแล้ว', 'success');
-                        this.loadAdminData();
+                        this.loadAdminData(true);
                     } catch (error) {
                         Swal.fire('❌ Error', error.message, 'error');
                     }
@@ -1326,7 +1355,7 @@
                     Swal.fire({ title: 'กำลังผูกจิตวิญญาณ...', didOpen: () => Swal.showLoading() });
                     await this.apiCall('mapNFC', { nfcId, guildId });
                     Swal.fire('✅ ผูกการ์ดสำเร็จ', '', 'success');
-                    this.loadAdminData(); 
+                    this.loadAdminData(true); 
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message, 'error'); }
             },
 
@@ -1418,59 +1447,73 @@
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
-            loadAdminMarket: async function() {
-                try {
-                    Swal.fire({ title: 'กำลังดึงข้อมูลตลาด...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                    const items = await this.apiCall('getMarket');
-                    this.state.marketItems = items;
-                    Swal.close();
-                    
-                    const grid = document.getElementById('admin-market-grid');
-                    grid.innerHTML = '';
-                    if (items.length === 0) {
-                        grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 font-bold bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">ยังไม่มีไอเทมในตลาด</div>`;
-                        return;
+            loadAdminMarket: async function(force = false) {
+                const fetchAndRender = async (showLoader = false) => {
+                    if (showLoader) Swal.fire({ title: 'กำลังดึงข้อมูลตลาด...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                    try {
+                        const items = await this.apiCall('getMarket');
+                        this.state.marketItems = items;
+                        this.renderAdminMarket(items);
+                        if (showLoader) Swal.close();
+                        if (force && showLoader) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                    } catch (error) {
+                        if (showLoader) Swal.fire('❌ Error', error.message, 'error');
                     }
+                };
 
-                    items.forEach((item, index) => {
-                        const displayEffect = item.effect === '#ERROR!' || !item.effect ? '<span class="text-gray-400">ไม่มีพลังพิเศษ</span>' : `<span class="text-purple-600">${item.effect}</span>`;
-                        grid.innerHTML += `
-                            <div class="glass-card p-4 sm:p-5 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group animate-fade-in-up" style="animation-delay: ${index * 0.05}s">
-                                <div class="absolute top-2 right-2 flex flex-col sm:flex-row gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                                    <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition" title="แก้ไขไอเทม"><i class="fa-solid fa-pen text-xs"></i></button>
-                                    <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition" title="ลบไอเทม"><i class="fa-solid fa-trash text-xs"></i></button>
-                                </div>
-                                <div class="relative z-10 flex flex-col items-center w-full mt-2">
-                                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 flex items-center justify-center item-float">
-                                        <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
-                                        <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
-                                            <img src="${item.image}" class="w-full h-full object-cover">
-                                        </div>
-                                    </div>
-                                    <h3 class="font-fantasy font-bold text-lg sm:text-xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
-                                    <p class="text-[10px] sm:text-xs text-gray-500 mb-2 h-8 overflow-hidden font-medium px-1 sm:px-2 leading-snug">${item.description}</p>
-                                    
-                                    <div class="w-full bg-yellow-50 rounded-lg py-1.5 px-2 sm:px-3 mb-1.5 sm:mb-2 border border-yellow-100 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
-                                        <span class="font-bold text-yellow-700">ราคา:</span>
-                                        <span class="font-bold text-yellow-600"><i class="fa-solid fa-coins"></i> ${item.price}</span>
-                                    </div>
-                                    <div class="w-full bg-gray-50 rounded-lg py-1.5 px-2 sm:px-3 mb-2 sm:mb-3 border border-gray-200 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
-                                        <span class="font-bold text-gray-600">สต็อก:</span>
-                                        <span class="font-mono font-bold text-gray-700">${item.stock} ชิ้น</span>
-                                    </div>
-                                    
-                                    <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[9px] sm:text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
-                                    ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
-                                </div>
-                                <button onclick="app.testItemEffect('${item.itemId}')" class="w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold py-2 rounded-xl text-[10px] sm:text-xs mt-2 transition flex items-center justify-center gap-2 border border-indigo-100 shadow-sm">
-                                    <i class="fa-solid fa-flask"></i> ดูตัวอย่างพลัง
-                                </button>
-                            </div>
-                        `;
-                    });
-                } catch (error) {
-                    Swal.fire('❌ Error', error.message, 'error');
+                if (this.state.marketItems.length > 0 && !force) {
+                    this.renderAdminMarket(this.state.marketItems);
+                    fetchAndRender(false);
+                } else {
+                    fetchAndRender(true);
                 }
+            },
+            
+            renderAdminMarket: function(items) {
+                const grid = document.getElementById('admin-market-grid');
+                if (items.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400 font-bold bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">ยังไม่มีไอเทมในตลาด</div>`;
+                    return;
+                }
+                
+                let html = '';
+                items.forEach((item, index) => {
+                    const displayEffect = item.effect === '#ERROR!' || !item.effect ? '<span class="text-gray-400">ไม่มีพลังพิเศษ</span>' : `<span class="text-purple-600">${item.effect}</span>`;
+                    html += `
+                        <div class="glass-card p-4 sm:p-5 text-center hover-bounce flex flex-col justify-between items-center w-full max-w-[280px] mx-auto border-4 border-white shadow-md relative group animate-fade-in-up" style="animation-delay: ${index * 0.05}s">
+                            <div class="absolute top-2 right-2 flex flex-col sm:flex-row gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                                <button onclick="app.editItemPrompt('${item.itemId}')" class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full shadow-sm hover:bg-blue-200 flex items-center justify-center transition" title="แก้ไขไอเทม"><i class="fa-solid fa-pen text-xs"></i></button>
+                                <button onclick="app.deleteItem('${item.itemId}', '${item.name}')" class="bg-red-100 text-red-600 w-8 h-8 rounded-full shadow-sm hover:bg-red-200 flex items-center justify-center transition" title="ลบไอเทม"><i class="fa-solid fa-trash text-xs"></i></button>
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center w-full mt-2">
+                                <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 flex items-center justify-center item-float">
+                                    <div class="absolute inset-0 bg-[#fff5eb] rounded-2xl scale-110"></div>
+                                    <div class="relative z-10 w-full h-full bg-white rounded-2xl flex items-center justify-center border-[3px] border-white shadow-sm overflow-hidden">
+                                        <img src="${item.image}" onerror="this.onerror=null;this.src='https://img.icons8.com/fluency/256/treasure-chest.png';" class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+                                <h3 class="font-fantasy font-bold text-lg sm:text-xl text-[#8a4fff] mb-1 leading-tight tracking-wide">${item.name}</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-500 mb-2 h-8 overflow-hidden font-medium px-1 sm:px-2 leading-snug">${item.description}</p>
+                                
+                                <div class="w-full bg-yellow-50 rounded-lg py-1.5 px-2 sm:px-3 mb-1.5 sm:mb-2 border border-yellow-100 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
+                                    <span class="font-bold text-yellow-700">ราคา:</span>
+                                    <span class="font-bold text-yellow-600"><i class="fa-solid fa-coins"></i> ${item.price}</span>
+                                </div>
+                                <div class="w-full bg-gray-50 rounded-lg py-1.5 px-2 sm:px-3 mb-2 sm:mb-3 border border-gray-200 flex justify-between items-center text-[10px] sm:text-xs shadow-inner">
+                                    <span class="font-bold text-gray-600">สต็อก:</span>
+                                    <span class="font-mono font-bold text-gray-700">${item.stock} ชิ้น</span>
+                                </div>
+                                
+                                <div class="inline-flex items-center gap-1 bg-blue-50 text-blue-600 text-[9px] sm:text-[10px] font-bold px-2 py-1 rounded-full border border-blue-200 mb-2 shadow-inner"><i class="fa-solid fa-bolt"></i> ${displayEffect}</div>
+                                ${item.maxPerGuild ? `<div class="text-[9px] sm:text-[10px] text-red-500 font-bold bg-red-50 py-1 px-2 rounded-full border border-red-100"><i class="fa-solid fa-lock"></i> จำกัด ${item.maxPerGuild} ชิ้น/ทีม</div>` : '<div class="h-[22px]"></div>'}
+                            </div>
+                            <button onclick="app.testItemEffect('${item.itemId}')" class="w-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold py-2 rounded-xl text-[10px] sm:text-xs mt-2 transition flex items-center justify-center gap-2 border border-indigo-100 shadow-sm">
+                                <i class="fa-solid fa-flask"></i> ดูตัวอย่างพลัง
+                            </button>
+                        </div>
+                    `;
+                });
+                grid.innerHTML = html; // DOM Painting 1 ครั้ง
             },
 
             testItemEffect: function(itemId) {
@@ -1620,7 +1663,7 @@
                         Swal.fire({ title: 'กำลังบันทึก...', didOpen: () => Swal.showLoading() });
                         await this.apiCall('editItem', formValues);
                         Swal.fire('✅ แก้ไขสำเร็จ', '', 'success');
-                        this.loadAdminMarket();
+                        this.loadAdminMarket(true);
                     } catch (error) {
                         Swal.fire('❌ Error', error.message, 'error');
                     }
@@ -1638,7 +1681,7 @@
                         Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() });
                         await this.apiCall('deleteItem', { itemId });
                         Swal.fire('✅ ลบไอเทมสำเร็จ', '', 'success');
-                        this.loadAdminMarket();
+                        this.loadAdminMarket(true);
                     } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
                 }
             },
@@ -1653,7 +1696,7 @@
                     await this.apiCall('updateScore', { guildId, scoreChange, coinsChange });
                     Swal.fire('✅ มอบสำเร็จ', '', 'success');
                     document.getElementById('edit-score').value = ''; document.getElementById('edit-coins').value = '';
-                    this.loadAdminData();
+                    this.loadAdminData(true);
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
@@ -1678,7 +1721,7 @@
                     el.innerHTML = `<div class="text-center p-2"><i class="fa-solid ${outcome.icon} text-2xl sm:text-3xl ${outcome.color} mb-1 sm:mb-2 drop-shadow-sm"></i><div class="text-[9px] sm:text-[11px] font-bold text-gray-700 leading-tight">${outcome.desc}</div></div>`;
                     
                     Swal.fire({ title: 'ดวงดาวตอบรับ!', text: `กิลด์ ${tempLoginData.guild.name} ได้รับ: ${outcome.desc}`, icon: outcome.value > 0 ? 'success' : 'warning' });
-                    this.loadAdminData();
+                    this.loadAdminData(true);
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message || error, 'error'); }
             },
 
@@ -1689,36 +1732,56 @@
                 });
             },
 
-            loadLogs: async function() {
-                try {
-                    Swal.fire({ title: 'กำลังดึงประวัติ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-                    const logs = await this.apiCall('getLogs');
-                    Swal.close();
-                    
-                    const tbody = document.getElementById('logs-body');
-                    tbody.innerHTML = '';
-                    if (logs.length === 0) return tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">ยังไม่มีประวัติในระบบ</td></tr>`;
+            loadLogs: async function(force = false) {
+                const fetchAndRender = async (showLoader = false) => {
+                    if (showLoader) Swal.fire({ title: 'กำลังดึงประวัติ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                    try {
+                        const logs = await this.apiCall('getLogs');
+                        this.state.logs = logs;
+                        this.renderLogs(logs);
+                        if (showLoader) Swal.close();
+                        if (force && showLoader) Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
+                    } catch (error) {
+                        if (showLoader) Swal.fire('❌ ไม่สามารถดึงประวัติได้', error.message, 'error');
+                    }
+                };
 
-                    logs.forEach(log => {
-                        const dateObj = new Date(log.timestamp);
-                        const timeStr = dateObj.toLocaleDateString('th-TH') + ' ' + dateObj.toLocaleTimeString('th-TH');
-                        let actionBadge = '';
-                        if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-50 text-blue-600 border border-blue-200';
-                        else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-50 text-yellow-600 border border-yellow-200';
-                        else if(log.action.includes('USE_ITEM')) actionBadge = 'bg-green-50 text-green-600 border border-green-200';
-                        else if(log.action.includes('EVENT')) actionBadge = 'bg-purple-50 text-purple-600 border border-purple-200';
-                        else actionBadge = 'bg-gray-50 text-gray-600 border border-gray-200';
+                if (this.state.logs.length > 0 && !force) {
+                    this.renderLogs(this.state.logs);
+                    fetchAndRender(false);
+                } else {
+                    fetchAndRender(true);
+                }
+            },
+            
+            renderLogs: function(logs) {
+                const tbody = document.getElementById('logs-body');
+                if (logs.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-400 bg-gray-50/50">ยังไม่มีประวัติในระบบ</td></tr>`;
+                    return;
+                }
+                
+                let html = '';
+                logs.forEach(log => {
+                    const dateObj = new Date(log.timestamp);
+                    const timeStr = dateObj.toLocaleDateString('th-TH') + ' ' + dateObj.toLocaleTimeString('th-TH');
+                    let actionBadge = '';
+                    if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-50 text-blue-600 border border-blue-200';
+                    else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-50 text-yellow-600 border border-yellow-200';
+                    else if(log.action.includes('USE_ITEM')) actionBadge = 'bg-green-50 text-green-600 border border-green-200';
+                    else if(log.action.includes('EVENT')) actionBadge = 'bg-purple-50 text-purple-600 border border-purple-200';
+                    else actionBadge = 'bg-gray-50 text-gray-600 border border-gray-200';
 
-                        tbody.innerHTML += `
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
-                                <td class="p-2 sm:p-3 text-[10px] sm:text-xs text-gray-500 whitespace-nowrap">${timeStr}</td>
-                                <td class="p-2 sm:p-3 font-mono text-[10px] sm:text-xs text-gray-600 whitespace-nowrap">${log.guildId}</td>
-                                <td class="p-2 sm:p-3 text-center"><span class="px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold ${actionBadge} whitespace-nowrap shadow-sm">${log.action}</span></td>
-                                <td class="p-2 sm:p-3 text-gray-700 text-xs sm:text-sm whitespace-nowrap">${log.detail}</td>
-                            </tr>
-                        `;
-                    });
-                } catch (error) { Swal.fire('❌ ไม่สามารถดึงประวัติได้', error.message, 'error'); }
+                    html += `
+                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
+                            <td class="p-2 sm:p-3 text-[10px] sm:text-xs text-gray-500 whitespace-nowrap">${timeStr}</td>
+                            <td class="p-2 sm:p-3 font-mono text-[10px] sm:text-xs text-gray-600 whitespace-nowrap">${log.guildId}</td>
+                            <td class="p-2 sm:p-3 text-center"><span class="px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold ${actionBadge} whitespace-nowrap shadow-sm">${log.action}</span></td>
+                            <td class="p-2 sm:p-3 text-gray-700 text-xs sm:text-sm whitespace-nowrap">${log.detail}</td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html; // DOM Painting 1 ครั้ง
             },
 
             clearLogs: async function() {
@@ -1732,7 +1795,7 @@
                         Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
                         await this.apiCall('clearLogs');
                         Swal.fire('✅ สำเร็จ', 'ลบประวัติเรียบร้อย', 'success');
-                        this.loadLogs();
+                        this.loadLogs(true);
                     } catch (e) { Swal.fire('❌ Error', e.message, 'error'); }
                 }
             }
