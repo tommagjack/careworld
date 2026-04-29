@@ -112,7 +112,7 @@
                     <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ด เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -432,6 +432,20 @@
             },
             
             pollingInterval: null,
+            alertAudio: null, // เพิ่มตัวแปรสำหรับเก็บเสียง
+
+            initAudio: function() {
+                // ฟังก์ชันปลดล็อก Autoplay Policy ของเบราว์เซอร์ (สำคัญมากสำหรับ PC)
+                if (!this.alertAudio) {
+                    this.alertAudio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
+                    this.alertAudio.volume = 0.5;
+                    // สั่งเล่นแบบเงียบๆ แล้วหยุดทันทีเมื่อผู้ใช้คลิกหน้าจอครั้งแรก
+                    this.alertAudio.play().then(() => {
+                        this.alertAudio.pause();
+                        this.alertAudio.currentTime = 0;
+                    }).catch(e => console.log("Audio init blocked", e));
+                }
+            },
 
             startPolling: function() {
                 if (this.pollingInterval) clearInterval(this.pollingInterval);
@@ -448,12 +462,19 @@
 
             playAlert: function() {
                 try {
+                    // สำหรับมือถือ (ระบบสั่น)
                     if (navigator.vibrate) {
-                        navigator.vibrate([500, 200, 500, 200, 500]); // สั่น
+                        navigator.vibrate([500, 200, 500, 200, 500]);
                     }
-                    const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg'); // เสียงแจ้งเตือน
-                    audio.volume = 0.5;
-                    audio.play();
+                    // สำหรับเล่นเสียง (ทำงานได้ทั้งคอมและมือถือ)
+                    if (this.alertAudio) {
+                        this.alertAudio.currentTime = 0;
+                        this.alertAudio.play();
+                    } else {
+                        const audio = new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg');
+                        audio.volume = 0.5;
+                        audio.play();
+                    }
                 } catch(e) { console.log("Audio play blocked", e); }
             },
 
@@ -623,63 +644,75 @@
             },
 
             scanNFC: async function(promptText = "กรุณาแตะบัตร NFC") {
+                this.initAudio(); // ปลดล็อกเสียงตั้งแต่จังหวะเริ่มกดปุ่มเข้าระบบ
                 return new Promise((resolve, reject) => {
-                    if ('NDEFReader' in window) {
-                        Swal.fire({
-                            title: '📡 รอรับสัญญาณ NFC...', text: promptText, allowOutsideClick: false, showCancelButton: true,
-                            didOpen: async () => {
-                                Swal.showLoading();
+                    // ระบบช่วยเปลี่ยนภาษาไทยเป็นอังกฤษอัตโนมัติ (กรณีลืมเปลี่ยนภาษาคีย์บอร์ด)
+                    const convertThaiToEng = (str) => {
+                        const map = {
+                            'ๅ':'1', '/':'2', '-':'3', 'ภ':'4', 'ถ':'5', 'ุ':'6', 'ึ':'7', 'ค':'8', 'ต':'9', 'จ':'0',
+                            'ข':'-', 'ช':'=', 'ๆ':'q', 'ไ':'w', 'ำ':'e', 'พ':'r', 'ะ':'t', 'ั':'y', 'ี':'u', 'ร':'i',
+                            'น':'o', 'ย':'p', 'บ':'[', 'ล':']', 'ฟ':'a', 'ห':'s', 'ก':'d', 'ด':'f', 'เ':'g', '้':'h',
+                            '่':'j', 'า':'k', 'ส':'l', 'ว':';', 'ง':'\'', 'ผ':'z', 'ป':'x', 'แ':'c', 'อ':'v', 'ิ':'b',
+                            'ื':'n', 'ท':'m', 'ม':',', 'ใ':'.', 'ฝ':'/', '+':'!', '๑':'@', '๒':'#', '๓':'$', '๔':'%',
+                            'ู':'^', '฿':'&', '๕':'*', '๖':'(', '๗':')', '๘':'_', '๙':'+', '๐':'Q', '"':'W', 'ฎ':'E',
+                            'ฑ':'R', 'ธ':'T', 'ํ':'Y', '๊':'U', 'ณ':'I', 'ฯ':'O', 'ญ':'P', 'ฐ':'{', ',':'}', 'ฤ':'A',
+                            'ฆ':'S', 'ฏ':'D', 'โ':'F', 'ฌ':'G', '็':'H', '๋':'J', 'ษ':'K', 'ศ':'L', 'ซ':':', '.':'"',
+                            '(': 'Z', ')': 'X', 'ฉ':'C', 'ฮ':'V', 'ฺ':'B', '์':'N', '?':'M', 'ฒ':'<', 'ฬ':'>', 'ฦ':'?'
+                        };
+                        return str.split('').map(c => map[c] || c).join('');
+                    };
+
+                    let abortController;
+                    if (typeof AbortController !== 'undefined') {
+                        abortController = new AbortController();
+                    }
+
+                    Swal.fire({
+                        title: '📱 แตะบัตร หรือ พิมพ์รหัส', 
+                        html: `
+                            <div class="mb-3 text-gray-600 text-sm">${promptText}</div>
+                            <div class="text-[11px] sm:text-xs text-blue-600 font-bold bg-blue-50 p-2 rounded-lg border border-blue-100 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wifi animate-pulse"></i> สามารถนำบัตรมาแตะที่หลังมือถือได้ทันที
+                            </div>
+                        `,
+                        input: 'text', 
+                        inputPlaceholder: '...หรือพิมพ์รหัสบัตรที่นี่...',
+                        showCancelButton: true, 
+                        confirmButtonText: 'ยืนยัน', 
+                        cancelButtonText: 'ยกเลิก',
+                        didOpen: async () => {
+                            const input = Swal.getInput();
+                            if (input) input.focus();
+
+                            // หากเครื่องรองรับ NFC (มือถือ Android) ให้เปิดเซนเซอร์รอรับบัตรไปพร้อมๆ กับช่องพิมพ์
+                            if ('NDEFReader' in window) {
                                 try {
                                     const ndef = new NDEFReader();
-                                    await ndef.scan();
+                                    const scanOptions = abortController ? { signal: abortController.signal } : {};
+                                    await ndef.scan(scanOptions);
                                     ndef.onreading = event => { 
-                                        Swal.close(); 
+                                        if (abortController) abortController.abort(); // สั่งปิดเซนเซอร์ NFC
+                                        Swal.close(); // ปิดหน้าต่างพิมพ์
                                         const variants = app.generateNFCVariants(event.serialNumber);
                                         resolve(variants); 
                                     };
                                 } catch (error) {
-                                    Swal.close(); this.fallbackNFCPrompt(resolve, reject, promptText);
+                                    console.log("เซนเซอร์ NFC ไม่พร้อมใช้งาน:", error);
                                 }
                             }
-                        }).then((result) => { if(result.isDismissed) reject('ยกเลิก'); });
-                    } else {
-                        this.fallbackNFCPrompt(resolve, reject, promptText);
-                    }
-                });
-            },
-
-            fallbackNFCPrompt: function(resolve, reject, promptText) {
-                const convertThaiToEng = (str) => {
-                    const map = {
-                        'ๅ':'1', '/':'2', '-':'3', 'ภ':'4', 'ถ':'5', 'ุ':'6', 'ึ':'7', 'ค':'8', 'ต':'9', 'จ':'0',
-                        'ข':'-', 'ช':'=', 'ๆ':'q', 'ไ':'w', 'ำ':'e', 'พ':'r', 'ะ':'t', 'ั':'y', 'ี':'u', 'ร':'i',
-                        'น':'o', 'ย':'p', 'บ':'[', 'ล':']', 'ฟ':'a', 'ห':'s', 'ก':'d', 'ด':'f', 'เ':'g', '้':'h',
-                        '่':'j', 'า':'k', 'ส':'l', 'ว':';', 'ง':'\'', 'ผ':'z', 'ป':'x', 'แ':'c', 'อ':'v', 'ิ':'b',
-                        'ื':'n', 'ท':'m', 'ม':',', 'ใ':'.', 'ฝ':'/', '+':'!', '๑':'@', '๒':'#', '๓':'$', '๔':'%',
-                        'ู':'^', '฿':'&', '๕':'*', '๖':'(', '๗':')', '๘':'_', '๙':'+', '๐':'Q', '"':'W', 'ฎ':'E',
-                        'ฑ':'R', 'ธ':'T', 'ํ':'Y', '๊':'U', 'ณ':'I', 'ฯ':'O', 'ญ':'P', 'ฐ':'{', ',':'}', 'ฤ':'A',
-                        'ฆ':'S', 'ฏ':'D', 'โ':'F', 'ฌ':'G', '็':'H', '๋':'J', 'ษ':'K', 'ศ':'L', 'ซ':':', '.':'"',
-                        '(': 'Z', ')': 'X', 'ฉ':'C', 'ฮ':'V', 'ฺ':'B', '์':'N', '?':'M', 'ฒ':'<', 'ฬ':'>', 'ฦ':'?'
-                    };
-                    return str.split('').map(c => map[c] || c).join('');
-                };
-
-                Swal.fire({
-                    title: '📱 แตะบัตร NFC ของคุณ', 
-                    text: promptText, 
-                    input: 'text', 
-                    inputPlaceholder: 'แตะบัตรที่เครื่องอ่าน...',
-                    showCancelButton: true, confirmButtonText: 'ยืนยัน', cancelButtonText: 'ยกเลิก',
-                    didOpen: () => {
-                        const input = Swal.getInput();
-                        if (input) input.focus();
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed && result.value) {
-                        const correctedValue = convertThaiToEng(result.value.trim());
-                        resolve([correctedValue]);
-                    }
-                    else reject('ยกเลิก');
+                        },
+                        willClose: () => {
+                            // ปิดเซนเซอร์ NFC หากผู้ใช้กดยกเลิก
+                            if (abortController) abortController.abort();
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed && result.value) {
+                            const correctedValue = convertThaiToEng(result.value.trim());
+                            resolve([correctedValue]); // ส่งรหัสที่พิมพ์ด้วยมือไปตรวจสอบ
+                        } else if (result.isDismissed) {
+                            reject('ยกเลิก');
+                        }
+                    });
                 });
             },
 
@@ -973,6 +1006,7 @@
 
             // --- ADMIN FEATURES ---
             adminLogin: function() {
+                this.initAudio(); // ปลดล็อกเสียงสำหรับหน้าต่างแอดมินเผื่อต้องการด้วย
                 const pass = document.getElementById('admin-pass').value;
                 if(pass === 'admin') { document.getElementById('admin-pass').value = ''; this.navigate('admin'); } 
                 else { Swal.fire('❌ รหัสผิดพลาด', 'คุณไม่ใช่มาสเตอร์ตัวจริง!', 'error'); }
