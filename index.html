@@ -118,6 +118,21 @@
         </div>
     </div>
 
+    <!-- Player Logs Modal -->
+    <div id="player-logs-modal" class="fixed inset-0 bg-purple-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="glass-card w-[95%] sm:w-full max-w-2xl p-4 sm:p-6 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-purple-100 pb-2">
+                <h2 class="text-lg sm:text-2xl font-fantasy font-bold text-purple-600"><i class="fa-solid fa-book-open text-indigo-400"></i> บันทึกการผจญภัย</h2>
+                <button onclick="app.togglePlayerLogs()" class="text-gray-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-xl sm:text-2xl"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                <div id="player-logs-list" class="space-y-3">
+                    <!-- Logs Inject -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="p-3 sm:p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
@@ -198,6 +213,8 @@
                         </div>
                     </div>
                     <button onclick="app.navigate('market')" class="w-full bg-pink-400 text-white font-fantasy font-bold py-2 sm:py-3 rounded-xl hover:bg-pink-500 border-2 border-white text-sm sm:text-base"><i class="fa-solid fa-shop"></i> ไปร้านค้าเวทมนตร์</button>
+                    
+                    <button onclick="app.togglePlayerLogs()" class="w-full bg-indigo-400 text-white font-fantasy font-bold py-2 sm:py-3 rounded-xl hover:bg-indigo-500 border-2 border-white text-sm sm:text-base mt-3"><i class="fa-solid fa-scroll"></i> ดูบันทึกการผจญภัย</button>
                 </div>
 
                 <div class="col-span-1 lg:col-span-2 glass-card p-4 sm:p-6 w-full">
@@ -425,7 +442,8 @@
                 cart: [],
                 marketItems: [],
                 inventory: [],
-                logs: []
+                logs: [],
+                myLogs: [] // เก็บประวัติของทีมผู้เล่น
             },
             
             pollingInterval: null,
@@ -531,6 +549,7 @@
                     this.state.currentGuild = freshData.guild;
                     this.state.inventory = freshData.inventory;
                     this.state.otherGuilds = freshData.otherGuilds;
+                    this.state.myLogs = freshData.myLogs; // อัปเดตประวัติส่วนตัว
 
                     document.getElementById('dash-coins-val').textContent = newCoins;
                     document.getElementById('dash-score-val').textContent = newScore;
@@ -539,6 +558,11 @@
                     
                     if (document.getElementById('view-dashboard').classList.contains('active')) {
                         this.loadDashboard(true);
+                    }
+                    
+                    // ถ้าผู้เล่นเปิดหน้าต่างประวัติค้างไว้อยู่ ให้อัปเดตข้อมูลสดๆ
+                    if (!document.getElementById('player-logs-modal').classList.contains('hidden')) {
+                        this.renderPlayerLogs();
                     }
                 } catch(e) {}
             },
@@ -605,7 +629,11 @@
                             this.state.currentGuild = freshData.guild;
                             this.state.inventory = freshData.inventory;
                             this.state.otherGuilds = freshData.otherGuilds; 
+                            this.state.myLogs = freshData.myLogs; // อัปเดตประวัติ
                             this.loadDashboard(true);
+                            if (!document.getElementById('player-logs-modal').classList.contains('hidden')) {
+                                this.renderPlayerLogs();
+                            }
                             Swal.close();
                             Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'อัปเดตข้อมูลแล้ว', showConfirmButton: false, timer: 1000 });
                         } catch (error) {
@@ -741,6 +769,7 @@
                     this.state.currentGuild = data.guild;
                     this.state.inventory = data.inventory;
                     this.state.otherGuilds = data.otherGuilds; 
+                    this.state.myLogs = data.myLogs; // เก็บประวัติของทีม
                     
                     Swal.close();
                     this.startPolling();
@@ -955,6 +984,52 @@
                 }
             },
 
+            // --- PLAYER LOGS ---
+            togglePlayerLogs: function() {
+                const modal = document.getElementById('player-logs-modal');
+                if (modal.classList.contains('hidden')) {
+                    this.renderPlayerLogs();
+                    modal.classList.remove('hidden');
+                } else {
+                    modal.classList.add('hidden');
+                }
+            },
+            
+            renderPlayerLogs: function() {
+                const container = document.getElementById('player-logs-list');
+                const logs = this.state.myLogs || [];
+                if (logs.length === 0) {
+                    container.innerHTML = '<div class="text-center text-gray-400 py-8 font-bold border-2 border-dashed border-gray-200 rounded-xl text-sm sm:text-base">ยังไม่มีประวัติการทำรายการ</div>';
+                    return;
+                }
+                
+                let html = '';
+                logs.forEach(log => {
+                    const dateObj = new Date(log.timestamp);
+                    const timeStr = dateObj.toLocaleDateString('th-TH') + ' ' + dateObj.toLocaleTimeString('th-TH');
+                    
+                    let actionBadge = '';
+                    let icon = '';
+                    if(log.action.includes('LOGIN')) { actionBadge = 'text-blue-600'; icon = '<i class="fa-solid fa-right-to-bracket"></i>'; }
+                    else if(log.action.includes('BUY_ITEM')) { actionBadge = 'text-yellow-600'; icon = '<i class="fa-solid fa-cart-shopping"></i>'; }
+                    else if(log.action.includes('USE_ITEM')) { actionBadge = 'text-green-600'; icon = '<i class="fa-solid fa-hand-sparkles"></i>'; }
+                    else if(log.action.includes('EFFECT_RECEIVED')) { actionBadge = 'text-red-500'; icon = '<i class="fa-solid fa-bolt"></i>'; }
+                    else if(log.action.includes('UPDATE_STATS') || log.action.includes('SPECIAL_EVENT')) { actionBadge = 'text-purple-600'; icon = '<i class="fa-solid fa-gift"></i>'; }
+                    else { actionBadge = 'text-gray-600'; icon = '<i class="fa-solid fa-circle-info"></i>'; }
+
+                    html += `
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200 shadow-sm">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-xs sm:text-sm ${actionBadge}">${icon} ${log.action}</span>
+                                <span class="text-[9px] sm:text-[10px] text-gray-400">${timeStr}</span>
+                            </div>
+                            <div class="text-xs sm:text-sm text-gray-700">${log.detail}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            },
+
             checkoutCart: async function() {
                 if (this.state.cart.length === 0) return Swal.fire('ตะกร้าว่างเปล่า', 'ไปเลือกไอเทมเวทมนตร์ก่อนนะ', 'warning');
                 
@@ -975,9 +1050,9 @@
                     
                     this.state.currentGuild.coins = res.newCoins;
                     
-                    // ดึงข้อมูลใหม่เงียบๆ และรีเฟรชหน้ากระเป๋า
                     const freshData = await this.apiCall('getDashboard', { guildId: this.state.currentGuild.id });
                     this.state.inventory = freshData.inventory;
+                    this.state.myLogs = freshData.myLogs; // อัปเดตประวัติด้วย
                     
                     document.getElementById('nav-coins-text').textContent = res.newCoins;
 
@@ -1041,6 +1116,7 @@
                     this.state.currentGuild = freshData.guild;
                     this.state.inventory = freshData.inventory;
                     this.state.otherGuilds = freshData.otherGuilds; 
+                    this.state.myLogs = freshData.myLogs; // อัปเดตประวัติ
                     
                     this.loadDashboard(true);
                     
@@ -1833,7 +1909,8 @@
                     if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-50 text-blue-600 border border-blue-200';
                     else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-50 text-yellow-600 border border-yellow-200';
                     else if(log.action.includes('USE_ITEM')) actionBadge = 'bg-green-50 text-green-600 border border-green-200';
-                    else if(log.action.includes('EVENT')) actionBadge = 'bg-purple-50 text-purple-600 border border-purple-200';
+                    else if(log.action.includes('EVENT') || log.action.includes('UPDATE_STATS')) actionBadge = 'bg-purple-50 text-purple-600 border border-purple-200';
+                    else if(log.action.includes('EFFECT_RECEIVED')) actionBadge = 'bg-red-50 text-red-600 border border-red-200';
                     else actionBadge = 'bg-gray-50 text-gray-600 border border-gray-200';
 
                     html += `
