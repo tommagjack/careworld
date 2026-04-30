@@ -391,7 +391,7 @@
                             <thead>
                                 <tr class="bg-gray-50 text-gray-600 sticky top-0 shadow-sm z-10 border-b border-gray-200">
                                     <th class="p-3 w-32 font-bold whitespace-nowrap">เวลา</th>
-                                    <th class="p-3 w-40 font-bold whitespace-nowrap">กิลด์</th>
+                                    <th class="p-3 w-40 font-bold whitespace-nowrap">ชื่อทีม</th>
                                     <th class="p-3 w-28 font-bold text-center whitespace-nowrap">Action</th>
                                     <th class="p-3 font-bold whitespace-nowrap">รายละเอียด</th>
                                 </tr>
@@ -1824,6 +1824,11 @@
                 logs.forEach(log => {
                     const dateObj = new Date(log.timestamp);
                     const timeStr = dateObj.toLocaleDateString('th-TH') + ' ' + dateObj.toLocaleTimeString('th-TH');
+                    
+                    // ค้นหาและแปลงรหัสกิลด์ให้กลายเป็นชื่อทีม
+                    const guildObj = this.state.allGuilds.find(g => g.id === log.guildId);
+                    const guildNameDisplay = guildObj ? guildObj.name : (log.guildId === 'ADMIN' ? 'ระบบ (Admin)' : log.guildId);
+
                     let actionBadge = '';
                     if(log.action.includes('LOGIN')) actionBadge = 'bg-blue-50 text-blue-600 border border-blue-200';
                     else if(log.action.includes('BUY_ITEM')) actionBadge = 'bg-yellow-50 text-yellow-600 border border-yellow-200';
@@ -1834,7 +1839,7 @@
                     html += `
                         <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
                             <td class="p-2 sm:p-3 text-[10px] sm:text-xs text-gray-500 whitespace-nowrap">${timeStr}</td>
-                            <td class="p-2 sm:p-3 font-mono text-[10px] sm:text-xs text-gray-600 whitespace-nowrap">${log.guildId}</td>
+                            <td class="p-2 sm:p-3 font-bold text-[10px] sm:text-xs text-purple-600 whitespace-nowrap">${guildNameDisplay}</td>
                             <td class="p-2 sm:p-3 text-center"><span class="px-2 sm:px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold ${actionBadge} whitespace-nowrap shadow-sm">${log.action}</span></td>
                             <td class="p-2 sm:p-3 text-gray-700 text-xs sm:text-sm whitespace-nowrap">${log.detail}</td>
                         </tr>
