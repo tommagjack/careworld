@@ -112,7 +112,7 @@
                     <span class="font-fantasy font-bold text-xl sm:text-2xl text-yellow-600"><i class="fa-solid fa-coins"></i> <span id="cart-total">0</span></span>
                 </div>
                 <button onclick="app.checkoutCart()" class="w-full bg-green-400 hover:bg-green-500 text-white font-fantasy font-bold py-3 rounded-xl border-2 border-white text-sm sm:text-lg shadow-md flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อชำระเงิน
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อชำระเงิน
                 </button>
             </div>
         </div>
@@ -122,7 +122,7 @@
     <nav class="p-3 sm:p-4 bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b-4 border-purple-200 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-2">
             <h1 class="text-lg sm:text-3xl font-fantasy font-bold text-purple-600 flex items-center gap-2 cursor-pointer drop-shadow-sm" onclick="app.navigate('login')">
-                <i class="fa-solid fa-dungeon text-pink-400"></i> PANDORIAN CARE WORKSHOP
+                <i class="fa-solid fa-dungeon text-pink-400"></i> CARE WORLD
             </h1>
             <div id="nav-user" class="hidden flex items-center gap-1.5 sm:gap-4 font-semibold text-[10px] sm:text-base">
                 <button onclick="app.refreshData()" class="text-purple-500 hover:text-purple-700 bg-purple-50 px-2 sm:px-3 py-1 rounded-full border border-purple-200 transition shadow-sm" title="รีเฟรชข้อมูล"><i class="fa-solid fa-rotate-right"></i></button>
@@ -155,12 +155,12 @@
                 <p class="text-gray-500 mb-6 sm:mb-8 font-medium text-xs sm:text-sm px-4">แตะการ์ดประจำตัวกิลด์เพื่อเข้าสู่โลกเวทมนตร์</p>
                 
                 <button onclick="app.loginNFC()" class="w-full bg-gradient-to-r from-[#f06ecd] to-[#a855f7] text-white font-fantasy font-bold py-3 sm:py-4 rounded-2xl shadow-md hover:shadow-lg text-base sm:text-xl flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะการ์ดเพื่อเข้ากิลด์
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> แตะ NFC เพื่อเข้าเกม
                 </button>
 
                 <div class="mt-6 sm:mt-8 border-t border-dashed border-gray-200 pt-4 sm:pt-6">
                     <button onclick="app.navigate('admin-login')" class="text-[#a855f7] hover:text-[#8a4fff] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 mx-auto transition">
-                        <i class="fa-solid fa-crown"></i> สำหรับกิลด์มาสเตอร์
+                        <i class="fa-solid fa-crown"></i> สำหรับมาสเตอร์กิลด์ (Admin)
                     </button>
                 </div>
             </div>
@@ -169,7 +169,7 @@
         <!-- ================= ADMIN LOGIN ================= -->
         <section id="view-admin-login" class="view-section text-center">
             <div class="max-w-md mx-auto glass-card p-6 sm:p-10 mt-6 sm:mt-10 w-full">
-                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">กิลด์มาสเตอร์</h2>
+                <h2 class="text-2xl sm:text-3xl font-fantasy font-bold mb-6 text-purple-600">Admin Login</h2>
                 <input type="password" id="admin-pass" placeholder="ร่ายเวทมนต์..." class="w-full p-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:outline-none mb-4 text-center font-bold text-base sm:text-lg" onkeypress="if(event.key === 'Enter') app.adminLogin()">
                 <button onclick="app.adminLogin()" class="w-full bg-gray-800 text-white font-bold py-3 rounded-xl shadow hover:bg-gray-700 text-sm sm:text-base">เข้าสู่กิลด์</button>
                 <button onclick="app.navigate('login')" class="mt-4 text-gray-500 underline text-xs sm:text-sm font-bold">กลับหน้าหลัก</button>
@@ -252,7 +252,8 @@
                         <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-pink-100 shadow-sm w-full">
                             <h3 class="font-bold text-sm sm:text-base mb-4 flex items-center gap-2 text-pink-600"><i class="fa-solid fa-circle-plus"></i> สร้างทีมใหม่</h3>
                             <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
-                                <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-full sm:w-24 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center bg-gray-50">
+                                <input type="text" id="new-guild-teamNo" placeholder="เลขทีม" class="w-full sm:w-20 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center bg-gray-50">
+                                <input type="text" id="new-guild-pin" placeholder="รหัสผ่าน (PIN)" maxlength="4" class="w-full sm:w-28 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 text-center bg-gray-50">
                                 <input type="text" id="new-guild-name" placeholder="ชื่อทีม" class="w-full sm:flex-1 p-2.5 text-sm sm:text-base border rounded-lg focus:outline-none focus:border-pink-400 bg-gray-50">
                             </div>
                             <input type="text" id="new-guild-avatar" placeholder="Avatar URL (เว้นว่างเพื่อสุ่ม)" class="w-full p-2.5 text-sm sm:text-base mb-4 border rounded-lg focus:outline-none focus:border-pink-400 bg-gray-50">
@@ -265,6 +266,8 @@
                                 <option value="">-- เลือกทีม --</option>
                             </select>
                             <button onclick="app.mapNFC()" class="w-full bg-blue-400 text-white py-2.5 sm:py-3 rounded-lg font-bold text-sm sm:text-base shadow-md hover:bg-blue-500 transition"><i class="fa-solid fa-wifi"></i> แตะ NFC เพื่อผูก</button>
+                            
+                            <button onclick="app.formatNFC()" class="w-full bg-gray-100 text-gray-500 py-2 rounded-lg font-bold text-xs shadow-sm hover:bg-gray-200 transition mt-3 border border-gray-200"><i class="fa-solid fa-tools"></i> แก้ปัญหาบัตรแตะไม่ติด (ซ่อมบัตร)</button>
                         </div>
 
                         <div class="bg-white p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-yellow-100 shadow-sm lg:col-span-2 w-full">
@@ -291,14 +294,15 @@
                             </button>
                         </div>
                         <div class="w-full overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left border-collapse text-sm min-w-[550px]">
+                            <table class="w-full text-left border-collapse text-sm min-w-[650px]">
                                 <thead>
                                     <tr class="bg-gray-100 text-gray-600 text-xs sm:text-sm whitespace-nowrap border-b border-gray-200">
                                         <th class="p-2 sm:p-3 w-12 sm:w-16 text-center font-bold">ทีมที่</th>
                                         <th class="p-2 sm:p-3 w-12 sm:w-16 text-center font-bold">Avatar</th>
-                                        <th class="p-2 sm:p-3 font-bold w-[25%]">ชื่อทีม</th>
+                                        <th class="p-2 sm:p-3 font-bold w-[20%]">ชื่อทีม</th>
                                         <th class="p-2 sm:p-3 text-center font-bold">Fame</th>
                                         <th class="p-2 sm:p-3 text-center font-bold">Gold</th>
+                                        <th class="p-2 sm:p-3 text-center font-bold">รหัสผ่าน</th>
                                         <th class="p-2 sm:p-3 text-center font-bold">สถานะ NFC</th>
                                         <th class="p-2 sm:p-3 text-right w-24 sm:w-36 font-bold pr-4">จัดการ</th>
                                     </tr>
@@ -653,7 +657,7 @@
                 return [...new Set(variants)];
             },
 
-            scanNFC: async function(promptText = "กรุณาแตะบัตร NFC") {
+            scanNFC: async function(promptText = "กรุณาแตะบัตร NFC หรือพิมพ์รหัส PIN") {
                 this.initAudio(); 
                 return new Promise((resolve, reject) => {
                     const convertThaiToEng = (str) => {
@@ -677,7 +681,7 @@
                     }
 
                     Swal.fire({
-                        title: '📱 แตะบัตร หรือ พิมพ์รหัส', 
+                        title: '📱 แตะบัตร หรือ พิมพ์รหัส PIN', 
                         html: `
                             <div class="mb-3 text-gray-600 text-sm">${promptText}</div>
                             <div class="text-[11px] sm:text-xs text-blue-600 font-bold bg-blue-50 p-2 rounded-lg border border-blue-100 flex items-center justify-center gap-2">
@@ -685,7 +689,7 @@
                             </div>
                         `,
                         input: 'text', 
-                        inputPlaceholder: '...หรือพิมพ์รหัสบัตรที่นี่...',
+                        inputPlaceholder: 'พิมพ์รหัส PIN 4 หลัก หรือรหัสบัตร...',
                         showCancelButton: true, 
                         confirmButtonText: 'ยืนยัน', 
                         cancelButtonText: 'ยกเลิก',
@@ -703,6 +707,10 @@
                                         Swal.close(); 
                                         const variants = app.generateNFCVariants(event.serialNumber);
                                         resolve(variants); 
+                                    };
+                                    // เพิ่มดักจับ Error เวลาบัตรเปล่าเกินไป
+                                    ndef.onreadingerror = () => {
+                                        Swal.showValidationMessage('อ่านไม่ได้! บัตรนี้อาจเป็น "บัตรเปล่า" กรุณาให้แอดมินซ่อมบัตรก่อน');
                                     };
                                 } catch (error) {
                                     console.log("เซนเซอร์ NFC ไม่พร้อมใช้งาน:", error);
@@ -1213,6 +1221,8 @@
                     const nfcStatus = g.nfcId 
                         ? `<span class="bg-green-50 text-green-600 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-green-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-link"></i> ${g.nfcId}</span>`
                         : `<span class="bg-gray-50 text-gray-400 font-bold px-2 py-1 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs border border-gray-200 shadow-sm whitespace-nowrap"><i class="fa-solid fa-unlink"></i> ยังไม่ผูก</span>`;
+                        
+                    const pinDisplay = g.pin ? `<span class="font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">${g.pin}</span>` : `<span class="text-gray-400 text-xs">-</span>`;
 
                     tableHtml += `
                         <tr class="border-b border-gray-100 hover:bg-gray-50 transition bg-white">
@@ -1221,10 +1231,11 @@
                             <td class="p-2 sm:p-3 font-bold text-gray-800 text-xs sm:text-sm whitespace-nowrap">${g.name}</td>
                             <td class="p-2 sm:p-3 text-center font-bold text-blue-600 text-xs sm:text-sm">${g.score}</td>
                             <td class="p-2 sm:p-3 text-center font-bold text-yellow-600 text-xs sm:text-sm">${g.coins}</td>
+                            <td class="p-2 sm:p-3 text-center">${pinDisplay}</td>
                             <td class="p-2 sm:p-3 text-center">${nfcStatus}</td>
                             <td class="p-2 sm:p-3 text-right align-middle">
                                 <div class="flex flex-col sm:flex-row justify-end gap-1.5">
-                                    <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 text-[10px] sm:text-xs font-bold border border-blue-100 w-full sm:w-auto"><i class="fa-solid fa-pen"></i> แก้ไข</button>
+                                    <button onclick="app.editGuildPrompt('${g.id}', '${g.name}', '${g.avatar}', '${g.teamNo || ''}', '${g.pin || ''}')" class="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-blue-100 text-[10px] sm:text-xs font-bold border border-blue-100 w-full sm:w-auto"><i class="fa-solid fa-pen"></i> แก้ไข</button>
                                     <button onclick="app.deleteGuild('${g.id}', '${g.name}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-lg shadow-sm hover:bg-red-100 text-[10px] sm:text-xs font-bold border border-red-100 w-full sm:w-auto"><i class="fa-solid fa-trash"></i> ลบ</button>
                                 </div>
                             </td>
@@ -1236,6 +1247,7 @@
 
             createGuild: async function() {
                 const teamNo = document.getElementById('new-guild-teamNo').value;
+                const pin = document.getElementById('new-guild-pin').value;
                 const name = document.getElementById('new-guild-name').value;
                 let avatar = document.getElementById('new-guild-avatar').value;
                 if(!name) return Swal.fire('ข้อมูลไม่ครบ', 'กรุณาระบุชื่อทีม', 'warning');
@@ -1244,8 +1256,9 @@
                 
                 try {
                     Swal.fire({ title: 'กำลังสร้าง...', didOpen: () => Swal.showLoading() });
-                    await this.apiCall('createGuild', { teamNo, name, avatar });
+                    await this.apiCall('createGuild', { teamNo, pin, name, avatar });
                     document.getElementById('new-guild-teamNo').value = ''; 
+                    document.getElementById('new-guild-pin').value = ''; 
                     document.getElementById('new-guild-name').value = ''; 
                     document.getElementById('new-guild-avatar').value = '';
                     Swal.fire('✅ สร้างสำเร็จ', '', 'success'); 
@@ -1253,7 +1266,7 @@
                 } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
             },
 
-            editGuildPrompt: async function(guildId, currentName, currentAvatar, currentTeamNo) {
+            editGuildPrompt: async function(guildId, currentName, currentAvatar, currentTeamNo, currentPin) {
                 const { value: formValues } = await Swal.fire({
                     title: 'แก้ไขข้อมูลกิลด์',
                     html: `
@@ -1263,7 +1276,11 @@
                                     <label class="block text-sm font-bold text-gray-700 mb-1">ทีมที่:</label>
                                     <input id="swal-input-teamNo" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-center" value="${currentTeamNo}">
                                 </div>
-                                <div class="w-full sm:w-3/4">
+                                <div class="w-full sm:w-1/4">
+                                    <label class="block text-sm font-bold text-gray-700 mb-1">รหัส (PIN):</label>
+                                    <input id="swal-input-pin" maxlength="4" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700 text-center" value="${currentPin}">
+                                </div>
+                                <div class="w-full sm:w-2/4">
                                     <label class="block text-sm font-bold text-gray-700 mb-1">ชื่อกิลด์:</label>
                                     <input id="swal-input-name" class="w-full p-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-[#7c5ff0] focus:ring-2 focus:ring-purple-200 transition text-gray-700" value="${currentName}">
                                 </div>
@@ -1290,6 +1307,7 @@
                     preConfirm: () => { 
                         return { 
                             teamNo: document.getElementById('swal-input-teamNo').value,
+                            pin: document.getElementById('swal-input-pin').value,
                             name: document.getElementById('swal-input-name').value, 
                             avatar: document.getElementById('swal-input-avatar').value 
                         } 
@@ -1300,7 +1318,7 @@
                     if (!formValues.name) return Swal.fire('Error', 'ต้องระบุชื่อกิลด์', 'error');
                     try {
                         Swal.fire({ title: 'กำลังบันทึก...', didOpen: () => Swal.showLoading() });
-                        await this.apiCall('editGuild', { guildId, teamNo: formValues.teamNo, name: formValues.name, avatar: formValues.avatar });
+                        await this.apiCall('editGuild', { guildId, teamNo: formValues.teamNo, pin: formValues.pin, name: formValues.name, avatar: formValues.avatar });
                         Swal.fire('✅ แก้ไขสำเร็จ', '', 'success'); 
                         this.loadAdminData(true);
                     } catch (error) { Swal.fire('❌ Error', error.message, 'error'); }
@@ -1357,6 +1375,40 @@
                     Swal.fire('✅ ผูกการ์ดสำเร็จ', '', 'success');
                     this.loadAdminData(true); 
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message, 'error'); }
+            },
+
+            formatNFC: async function() {
+                if (!('NDEFReader' in window)) {
+                    return Swal.fire('ไม่รองรับ', 'อุปกรณ์นี้ไม่รองรับการเขียน NFC (โปรดใช้มือถือ Android ที่เปิดผ่าน Chrome)', 'error');
+                }
+                
+                let abortController = new AbortController();
+                
+                Swal.fire({
+                    title: '🛠️ แก้ปัญหาบัตรเปล่า',
+                    html: `
+                        <div class="text-sm text-gray-600 mb-3">มือถือ Chrome จะไม่อ่านบัตรที่มาจากโรงงานและยังไม่มีข้อมูลใดๆ (จะขึ้นว่า Empty Tag)</div>
+                        <div class="font-bold text-purple-600 p-2 bg-purple-50 rounded-lg border border-purple-200"><i class="fa-solid fa-wifi animate-pulse"></i> กรุณานำบัตรเปล่ามาแตะหลังมือถือค้างไว้...</div>
+                    `,
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showCancelButton: true,
+                    cancelButtonText: 'ยกเลิก',
+                    didOpen: async () => {
+                        Swal.showLoading();
+                        try {
+                            const ndef = new NDEFReader();
+                            // เขียนข้อมูลหลอก 1 ครั้ง เพื่อให้บัตรกลายเป็น NDEF Formatted
+                            await ndef.write("CAREWORLD", { signal: abortController.signal });
+                            Swal.fire('✅ ซ่อมบัตรสำเร็จ!', 'ตอนนี้บัตรใบนี้สามารถนำไปใช้ ผูกทีม หรือ เข้าระบบ ได้ตามปกติแล้วครับ', 'success');
+                        } catch (error) {
+                            Swal.showValidationMessage('ล้มเหลว: ' + error.message + ' (ลองขยับบัตรช้าๆ)');
+                        }
+                    },
+                    willClose: () => {
+                        abortController.abort();
+                    }
+                });
             },
 
             toggleEffectInput: function() {
