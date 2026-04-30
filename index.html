@@ -1763,17 +1763,24 @@
                 ];
                 const outcome = effects[Math.floor(Math.random() * effects.length)];
                 try {
-                    const nfcId = await this.scanNFC('ให้กิลด์แตะ NFC เพื่อรับผลการ์ด');
-                    Swal.fire({ title: 'กำลังเปิดชะตากรรม...', didOpen: () => Swal.showLoading() });
-                    const tempLoginData = await this.apiCall('loginWithNFC', { nfcId });
-                    await this.apiCall('specialEvent', { guildId: tempLoginData.guild.id, effectType: outcome.type, value: outcome.value });
+                    const nfcId = await this.scanNFC('แตะ NFC หรือพิมพ์รหัส PIN เพื่อรับผลการ์ด');
+                    Swal.fire({ title: 'กำลังเปิดชะตากรรม...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+                    
+                    // รวบรวมคำสั่งเป็น 1 API Call เพื่อความรวดเร็วขั้นสุด
+                    const res = await this.apiCall('specialEvent', { nfcId: nfcId, effectType: outcome.type, value: outcome.value });
                     
                     el.classList.remove('bg-gradient-to-br', 'from-indigo-500', 'to-purple-600', 'cursor-pointer');
                     el.classList.add('bg-white', 'opened');
                     el.innerHTML = `<div class="text-center p-2"><i class="fa-solid ${outcome.icon} text-2xl sm:text-3xl ${outcome.color} mb-1 sm:mb-2 drop-shadow-sm"></i><div class="text-[9px] sm:text-[11px] font-bold text-gray-700 leading-tight">${outcome.desc}</div></div>`;
                     
-                    Swal.fire({ title: 'ดวงดาวตอบรับ!', text: `กิลด์ ${tempLoginData.guild.name} ได้รับ: ${outcome.desc}`, icon: outcome.value > 0 ? 'success' : 'warning' });
-                    this.loadAdminData(true);
+                    // อัปเดตตารางแอดมินเบื้องหลังแบบเงียบๆ ไม่ต้องโหลดหน้าจอ
+                    this.loadAdminData(false);
+                    
+                    Swal.fire({ 
+                        title: 'ดวงดาวตอบรับ!', 
+                        text: `กิลด์ ${res.guildName || 'ของคุณ'} ได้รับ: ${outcome.desc}`, 
+                        icon: outcome.value > 0 ? 'success' : 'warning' 
+                    });
                 } catch (error) { if(error !== 'ยกเลิก') Swal.fire('❌ Error', error.message || error, 'error'); }
             },
 
